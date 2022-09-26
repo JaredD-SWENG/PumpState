@@ -17,6 +17,6 @@ samples, guidance on mobile development, and a full API reference.
 
 SDK: Flutter v3.3.1 Language: Dart v2.18.0
 
-Storage: //AWS Cognito (if we use it, document here?) //AWS DynamoDB (if we use it, document here?)
+Storage: Local
 
-Kits: //Enter any used kits here for documentation/citation purposes.
+Kits: Path_Provider, UUID
