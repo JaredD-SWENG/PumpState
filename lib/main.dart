@@ -18,21 +18,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget newExercise = ExerciseForm();
 
-
-
     return MaterialApp(
         title: 'Pump State',
         home: Scaffold(
             appBar: AppBar(
+              backgroundColor: Colors.indigo[900],
               title: const Text('PumpState'),
             ),
             body: ListView(
               children: [
                 newExercise,
               ],
-            )
-        )
-    );
+            )));
   }
 }
 
@@ -51,44 +48,43 @@ class _ExerciseFormState extends State<ExerciseForm> {
 
   @override
   Widget build(BuildContext context) {
-    void setName(String s){
+    void setName(String s) {
       setState(() {
         _name = s;
       });
     }
 
-    void incrementSets(){
+    void incrementSets() {
       setState(() {
         _sets++;
       });
     }
 
-    void decrementSets(){
+    void decrementSets() {
       setState(() {
         _sets--;
       });
     }
 
-    void incrementReps(){
+    void incrementReps() {
       setState(() {
         _reps++;
       });
     }
 
-    void decrementReps(){
+    void decrementReps() {
       setState(() {
         _reps--;
       });
     }
 
-    void toggleFavorite(bool b){
+    void toggleFavorite(bool b) {
       setState(() {
         _favorite = b;
       });
     }
 
     Future<void> saveExercise() async {
-
       // see if exercise library exists
       // if it doesn't create exercise library
       // if it does exist create a json blob
@@ -99,7 +95,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
       String exLibPath = "${dir.path}/exerciseLibrary.json";
 
       // if the file is not found
-      if(!File(exLibPath).existsSync()){
+      if (!File(exLibPath).existsSync()) {
         // create a new library
         Library lib = Library();
         // store the exercise in the library
@@ -112,7 +108,8 @@ class _ExerciseFormState extends State<ExerciseForm> {
         file.writeAsStringSync(libJson);
         if (kDebugMode) {
           print(libJson);
-        }}
+        }
+      }
 
       // if the file is found
       else {
@@ -149,15 +146,11 @@ class _ExerciseFormState extends State<ExerciseForm> {
       ),
     );
 
-    Widget addSet = ElevatedButton(
-        onPressed: incrementSets,
-        child: const Text("Add Set")
-    );
+    Widget addSet =
+        ElevatedButton(onPressed: incrementSets, child: const Text("Add Set"));
 
     Widget removeSet = ElevatedButton(
-        onPressed: decrementSets,
-        child: const Text("Remove Set")
-    );
+        onPressed: decrementSets, child: const Text("Remove Set"));
 
     Widget exerciseReps = Text(
       _reps.toString(),
@@ -166,33 +159,22 @@ class _ExerciseFormState extends State<ExerciseForm> {
       ),
     );
 
-    Widget addRep = ElevatedButton(
-        onPressed: incrementReps,
-        child: const Text("Add Rep")
-    );
+    Widget addRep =
+        ElevatedButton(onPressed: incrementReps, child: const Text("Add Rep"));
 
     Widget removeRep = ElevatedButton(
-        onPressed: decrementReps,
-        child: const Text("Remove Rep")
-    );
+        onPressed: decrementReps, child: const Text("Remove Rep"));
 
     Widget exerciseFavoriteText = const Text(
         style: TextStyle(
           fontSize: 20,
         ),
-        "Favorite"
-    );
+        "Favorite");
 
-    Widget favoriteToggle = Switch(
-        value: _favorite,
-        onChanged: toggleFavorite
-    );
+    Widget favoriteToggle = Switch(value: _favorite, onChanged: toggleFavorite);
 
-    Widget saveButton = ElevatedButton(
-        onPressed: saveExercise,
-        child: const Text("Save")
-    );
-
+    Widget saveButton =
+        ElevatedButton(onPressed: saveExercise, child: const Text("Save"));
 
     return Column(
       children: [
@@ -207,29 +189,14 @@ class _ExerciseFormState extends State<ExerciseForm> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            exerciseReps,
-            addRep,
-            removeRep
-          ],
+          children: [exerciseReps, addRep, removeRep],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            exerciseFavoriteText,
-            favoriteToggle
-          ],
+          children: [exerciseFavoriteText, favoriteToggle],
         ),
         saveButton,
       ],
     );
   }
 }
-
-
-
-
-
-
-
-
