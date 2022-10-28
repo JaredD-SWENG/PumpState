@@ -21,7 +21,7 @@ class Library {
             _workouts.add(w);
           }
           break;
-        case "activites":
+        case "activities":
           for (dynamic d in value) {
             Exercise e = Exercise.fromJson(d);
             _activities.add(e);
