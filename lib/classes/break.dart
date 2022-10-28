@@ -29,4 +29,9 @@ class Break extends Activity {
   String getId() {
     return _id;
   }
+
+  @override
+  String getName() {
+    return "";
+  }
 }

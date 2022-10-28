@@ -5,5 +5,7 @@ abstract class Activity {
 
   String getId();
 
+  String getName();
+
   Map<String, dynamic> toJson();
 }

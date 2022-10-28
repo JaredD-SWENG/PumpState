@@ -17,7 +17,8 @@ class Scheduler {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = new Map();
-    map['schedule'] = _scheduledWorkout.map((i) => i.toJson()).toList();
+    map['scheduledWorkouts'] =
+        _scheduledWorkout.map((i) => i.toJson()).toList();
     return map;
   }
 

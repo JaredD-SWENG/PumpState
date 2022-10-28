@@ -8,24 +8,27 @@ import 'dart:convert';
 import 'completedWorkout.dart';
 
 class Config {
-  late Library _library;
-  late Archive _archive;
+  late Library library;
+  late Archive archive;
+  late Scheduler scheduler;
 
-  late Scheduler _scheduler;
-
-  Config();
+  Config() {
+    library = Library();
+    archive = Archive();
+    scheduler = Scheduler();
+  }
 
   Config.fromJson(Map<String, dynamic> map) {
     map.forEach((key, value) {
       switch (key) {
         case "library":
-          _library = Library.fromJson(value);
+          library = Library.fromJson(value);
           break;
         case "archive":
-          _archive = Archive.fromJson(value);
+          archive = Archive.fromJson(value);
           break;
         case "scheduler":
-          _scheduler = Scheduler.fromJson(value);
+          scheduler = Scheduler.fromJson(value);
           break;
       }
     });
@@ -33,21 +36,21 @@ class Config {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = new Map();
-    map['library'] = _library.toJson();
-    map['archive'] = _archive.toJson();
-    map['scheduler'] = _scheduler.toJson();
+    map['library'] = library.toJson();
+    map['archive'] = archive.toJson();
+    map['scheduler'] = scheduler.toJson();
     return map;
   }
 
   void listLibrary() {
-    List<Workout> workouts = _library.getWorkouts();
+    List<Workout> workouts = library.getWorkouts();
     for (Workout w in workouts) {
       print(w.getName());
     }
   }
 
   void listArchive() {
-    List<CompletedWorkout> cw = _archive.getCompletedWorkouts();
+    List<CompletedWorkout> cw = archive.getCompletedWorkouts();
     print(cw.length);
     for (CompletedWorkout d in cw) {
       print(d.getPumpPoints());
@@ -55,6 +58,6 @@ class Config {
   }
 
   void callSchedulerPrint() {
-    _scheduler.printScheduledWorkouts();
+    scheduler.printScheduledWorkouts();
   }
 }
