@@ -10,4 +10,7 @@ class CompletedWorkout {
   int getPumpPoints() {
     return _pumpPoints;
   }
+
+  Map<String, dynamic> toJson() =>
+      {'date': _date.toString(), 'points': _pumpPoints};
 }

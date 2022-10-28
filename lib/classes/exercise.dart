@@ -16,6 +16,7 @@ class Exercise extends Activity {
     _favorite = favorite;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'id': _id,
         'name': _name,

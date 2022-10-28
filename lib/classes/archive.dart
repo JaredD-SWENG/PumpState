@@ -14,6 +14,13 @@ class Archive {
     }
   }
 
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = Map();
+    map['archive'] = _completedWorkouts.map((i) => i.toJson()).toList();
+
+    return map;
+  }
+
   void addCompletedWorkout(CompletedWorkout cw) {
     _completedWorkouts.add(cw);
   }

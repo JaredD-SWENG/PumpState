@@ -1,6 +1,6 @@
 import 'package:pump_state/classes/completedWorkout.dart';
 import 'package:pump_state/classes/workout.dart';
-
+import 'scheduler.dart';
 import 'library.dart';
 import 'archive.dart';
 import 'scheduler.dart';
@@ -10,8 +10,7 @@ import 'completedWorkout.dart';
 class Config {
   late Library _library;
   late Archive _archive;
-
-  late Archive archive;
+  late Scheduler _scheduler;
 
   // late Scheduler scheduler;
 
@@ -29,6 +28,7 @@ class Config {
           _archive = Archive.fromJson(value);
           break;
         case "scheduler":
+          _scheduler = Scheduler.fromJson(value);
           break;
       }
     });
@@ -36,6 +36,9 @@ class Config {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = new Map();
+    map['library'] = _library.toJson();
+    map['archive'] = _archive.toJson();
+    map['scheduler'] = _scheduler.toJson();
     return map;
   }
 
@@ -52,5 +55,9 @@ class Config {
     for (CompletedWorkout d in cw) {
       print(d.getPumpPoints());
     }
+  }
+
+  void callSchedulerPrint() {
+    _scheduler.printScheduledWorkouts();
   }
 }

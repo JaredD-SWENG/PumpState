@@ -71,4 +71,13 @@ class Workout {
       _favorite = false;
     }
   }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = Map();
+    map['activities'] = _activities.map((i) => i.toJson()).toList();
+    map['name'] = _name;
+    map['id'] = _id;
+    map['favorite'] = _favorite.toString();
+    return map;
+  }
 }
