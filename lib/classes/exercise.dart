@@ -20,9 +20,9 @@ class Exercise extends Activity {
   Map<String, dynamic> toJson() => {
         'id': _id,
         'name': _name,
-        'sets': _sets,
-        'reps': _reps,
-        'favorite': _favorite,
+        'sets': _sets.toString(),
+        'reps': _reps.toString(),
+        'favorite': _favorite.toString(),
       };
 
   Exercise.fromJson(dynamic json) {

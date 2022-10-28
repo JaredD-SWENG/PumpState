@@ -5,8 +5,8 @@ import 'workout.dart';
 import 'exercise.dart';
 
 class Library {
-  List<Activity> _activities = [];
-  List<Workout> _workouts = [];
+  List<Activity> _activities = []; //Exercises
+  List<Workout> _workouts = []; //Workouts
 
   Library();
 
@@ -14,8 +14,8 @@ class Library {
     map.forEach((key, value) {
       switch (key) {
         case "workouts":
-          //print('HI!');
-          //print(value);
+        //print('HI!');
+        //print(value);
           for (dynamic d in value) {
             Workout w = Workout.fromJSON(d);
             _workouts.add(w);
@@ -50,5 +50,17 @@ class Library {
 
   List<Workout> getWorkouts() {
     return _workouts;
+  }
+
+  void getActivities() {
+    print(_activities.length);
+    for (Activity a in _activities) {
+      Exercise e = a as Exercise;
+      print(e.getName());
+    }
+  }
+
+  List<Activity> getlistofactivities() {
+    return _activities;
   }
 }
