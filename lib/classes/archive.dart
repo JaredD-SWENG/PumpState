@@ -7,8 +7,8 @@ class Archive {
 
   Archive();
 
-  Archive.fromJson(List<dynamic> d) {
-    for (dynamic item in d) {
+  Archive.fromJson(Map<String, dynamic> map) {
+    for (dynamic item in map['completedWorkouts']) {
       CompletedWorkout cw = CompletedWorkout(item['date'], item['points']);
       _completedWorkouts.add(cw);
     }
@@ -16,7 +16,8 @@ class Archive {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = Map();
-    map['archive'] = _completedWorkouts.map((i) => i.toJson()).toList();
+    map['completedWorkouts'] =
+        _completedWorkouts.map((i) => i.toJson()).toList();
 
     return map;
   }

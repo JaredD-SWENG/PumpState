@@ -10,9 +10,8 @@ import 'completedWorkout.dart';
 class Config {
   late Library _library;
   late Archive _archive;
-  late Scheduler _scheduler;
 
-  // late Scheduler scheduler;
+  late Scheduler _scheduler;
 
   Config();
 
@@ -23,8 +22,6 @@ class Config {
           _library = Library.fromJson(value);
           break;
         case "archive":
-          print("this is the value");
-          print(value);
           _archive = Archive.fromJson(value);
           break;
         case "scheduler":
