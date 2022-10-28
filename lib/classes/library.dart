@@ -2,6 +2,7 @@ import 'package:pump_state/classes/exercise.dart';
 import 'dart:convert';
 import 'activity.dart';
 import 'workout.dart';
+import 'exercise.dart';
 
 class Library {
   List<Activity> _activities = [];
@@ -13,8 +14,8 @@ class Library {
     map.forEach((key, value) {
       switch (key) {
         case "workouts":
-          print('HI!');
-          print(value);
+          //print('HI!');
+          //print(value);
           for (dynamic d in value) {
             Workout w = Workout.fromJSON(d);
             _workouts.add(w);
@@ -30,11 +31,12 @@ class Library {
     });
   }
 
-  Map<String, List> toJson() {
-    Map<String, List> json = {
-      "\"activities\"": _activities.map((a) => jsonEncode(a)).toList()
-    };
-    return json;
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = Map();
+    map['workouts'] = _workouts.map((i) => i.toJson()).toList();
+    map['activities'] =
+        _activities.map((i) => (i as Exercise).toJson()).toList();
+    return map;
   }
 
   void addActivity(Activity activity) {

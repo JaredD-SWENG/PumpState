@@ -23,6 +23,9 @@ class Break extends Activity {
   }
 
   @override
+  Map<String, dynamic> toJson() => {'id': _id, 'duration': _duration.inSeconds};
+
+  @override
   String getId() {
     return _id;
   }
