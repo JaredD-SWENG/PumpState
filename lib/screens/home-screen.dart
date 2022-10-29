@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump_state/providers/config-provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,12 +11,19 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/library');
-            },
-            child: const Text('Library')),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/start');
+              },
+              child: const Text('Start')),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/library');
+              },
+              child: const Text('Library')),
+        ]),
       ),
     );
   }

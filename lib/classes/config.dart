@@ -1,11 +1,15 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump_state/classes/completedWorkout.dart';
 import 'package:pump_state/classes/workout.dart';
+import '../widgets/edit-exercise-form.dart';
+import 'activity.dart';
+import 'exercise.dart';
 import 'scheduler.dart';
 import 'library.dart';
 import 'archive.dart';
-import 'scheduler.dart';
-import 'dart:convert';
-import 'completedWorkout.dart';
+
+import 'package:flutter/material.dart';
+import 'package:pump_state/providers/editExercise-provider.dart';
 
 class Config {
   late Library library;
@@ -59,5 +63,32 @@ class Config {
 
   void callSchedulerPrint() {
     scheduler.printScheduledWorkouts();
+  }
+
+  List<Widget> getLibraryActivitiesAsButtons(context, WidgetRef ref) {
+    List<Widget> listOfButtons = [];
+    for (Activity a in library.getlistofactivities()) {
+      Exercise e = a as Exercise;
+      ElevatedButton eb = ElevatedButton(
+          onPressed: () {
+            ref.read(editExerciseProvider.state).state = e;
+            showModalBottomSheet(
+                context: context, builder: (context) => EditExerciseForm());
+          },
+          child: Text(e.getName()));
+      listOfButtons.add(eb);
+    }
+    return listOfButtons;
+  }
+
+  Activity findActivity(String s) {
+    Activity activity = Exercise();
+    for (Activity a in library.getlistofactivities()) {
+      if (s == a.getId()) {
+        activity = a as Exercise;
+        return activity;
+      }
+    }
+    return activity;
   }
 }
