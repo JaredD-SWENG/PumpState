@@ -6,14 +6,29 @@ class LibraryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go Back to Home!'),
-        ),
+      appBar: AppBar(
+        title: Text('Library'),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/new-exercise'),
+        child: Icon(Icons.add),
+      ),
+      body: Center(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/library/activities');
+            },
+            child: Text('Activities'),
+          ),
+          ElevatedButton(
+              onPressed: () =>
+                  Navigator.pushNamed(context, '/library/workouts'),
+              child: Text('Workouts'))
+        ],
+      )),
     );
   }
 }

@@ -8,12 +8,16 @@ class Exercise extends Activity {
   int _reps = 0;
   bool _favorite = false;
 
-  Exercise(String name, int sets, int reps, bool favorite) {
+  Exercise.setDefaults(String name, int sets, int reps, bool favorite) {
     _id = const Uuid().v4();
     _name = name;
     _sets = sets;
     _reps = reps;
     _favorite = favorite;
+  }
+
+  Exercise() {
+    _id = const Uuid().v4();
   }
 
   @override
