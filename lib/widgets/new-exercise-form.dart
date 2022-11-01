@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/foundation.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
@@ -32,6 +31,7 @@ class ExerciseFormState extends ConsumerState<ExerciseForm> {
 
     void decrementSets() {
       setState(() {
+        if(_sets == 0) return;
         _sets--;
       });
     }
@@ -44,6 +44,7 @@ class ExerciseFormState extends ConsumerState<ExerciseForm> {
 
     void decrementReps() {
       setState(() {
+        if(_reps == 0) return;
         _reps--;
       });
     }
@@ -57,9 +58,9 @@ class ExerciseFormState extends ConsumerState<ExerciseForm> {
     Future<void> saveExercise() async {
       // Get the current config
       Config c = ref.watch(configProvider);
-      Exercise e = Exercise.setDefaults(_name, _sets, _reps, _favorite);
+      Exercise e = Exercise.createNew(_name, _sets, _reps, _favorite);
       c.library.addActivity(e);
-      ref.read(configProvider.state).state = c;
+      ref.read(configProvider.notifier).state = c;
     }
 
     Widget exerciseName = TextFormField(

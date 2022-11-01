@@ -22,6 +22,18 @@ class Config {
     scheduler = Scheduler();
   }
 
+  /**
+   * newState() is a constructor designed for use when updating State Providers.
+   * You pass in the current instances of library, archive, and scheduler to a new instance of Config
+   * This is needed because otherwise, if we do not instantiate a new object of Config, out state provider
+   * will not know if/when the config is altered, or at the very least UI will not change.
+   */
+  Config.newState(Library lib, Archive arch, Scheduler sched){
+    library = lib;
+    archive = arch;
+    scheduler = sched;
+  }
+
   Config.fromJson(Map<String, dynamic> map) {
     map.forEach((key, value) {
       switch (key) {
@@ -71,7 +83,7 @@ class Config {
       Exercise e = a as Exercise;
       ElevatedButton eb = ElevatedButton(
           onPressed: () {
-            ref.read(editExerciseProvider.state).state = e;
+            ref.read(editExerciseProvider.notifier).state = e;
             showModalBottomSheet(
                 context: context, builder: (context) => EditExerciseForm());
           },
@@ -81,6 +93,13 @@ class Config {
     return listOfButtons;
   }
 
+  /**
+   * findActivity()
+   * This method takes in an ID parameter, which is used to find that specific instance of Exercise stored in the library,
+   * we then retur that instance of exercise to be altered/rewritten.
+   * Currently used in:
+   * edit-exercise-form.dart
+   */
   Activity findActivity(String s) {
     Activity activity = Exercise();
     for (Activity a in library.getlistofactivities()) {
@@ -90,5 +109,28 @@ class Config {
       }
     }
     return activity;
+  }
+
+  /**
+   * Return current instance library
+   * currently used for newState() Constructor.
+   */
+  getLibrary(){
+    return library;
+  }
+
+  /**
+   * Return current instance archive
+   * currently used for newState() Constructor.
+   */
+  getArchive(){
+    return archive;
+  }
+  /**
+   * Return current instance scheduler.
+   * currently used for newState() Constructor.
+   */
+  getScheduler(){
+    return scheduler;
   }
 }
