@@ -22,7 +22,7 @@ class EditExerciseForm extends ConsumerWidget {
     }
 
     void decrementSets() {
-      if(_sets == 0) return;
+      if (_sets == 0) return;
 
       Exercise e = Exercise.updateState(_id, _name, --_sets, _reps, _favorite);
       ref.read(editExerciseProvider.notifier).state = e;
@@ -34,7 +34,7 @@ class EditExerciseForm extends ConsumerWidget {
     }
 
     void decrementReps() {
-      if(_reps == 0) return;
+      if (_reps == 0) return;
 
       Exercise e = Exercise.updateState(_id, _name, _sets, --_reps, _favorite);
       ref.watch(editExerciseProvider.notifier).state = e;
@@ -49,14 +49,13 @@ class EditExerciseForm extends ConsumerWidget {
       _name = s;
       Exercise e = Exercise.updateState(_id, _name, _sets, _reps, _favorite);
       ref.watch(editExerciseProvider.notifier).state = e;
-
     }
 
-    Future<void> saveExercise() async {
-
-      Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
-                                     ref.read(configProvider.notifier).state.getArchive(),
-                                     ref.read(configProvider.notifier).state.getScheduler());
+    saveExercise() {
+      Config c = Config.newState(
+          ref.read(configProvider.notifier).state.getLibrary(),
+          ref.read(configProvider.notifier).state.getArchive(),
+          ref.read(configProvider.notifier).state.getScheduler());
       Exercise exercise =
           c.findActivity(ref.read(editExerciseProvider.notifier).state.getId())
               as Exercise;
@@ -114,7 +113,9 @@ class EditExerciseForm extends ConsumerWidget {
 
     Widget saveButton = ElevatedButton(
         onPressed: () {
-          saveExercise().then((result) => {Navigator.pop(context)});
+          saveExercise();
+
+          Navigator.pop(context);
         },
         child: const Text("Save"));
 
