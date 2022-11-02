@@ -24,7 +24,7 @@ class Exercise extends Activity {
    * updateState() Constructor is for when you need to update State Providers holding Exercises.
    * unlike with createNew(), You pass in the ID you wish to preserve for the new Exercise State.
    */
-  Exercise.updateState(String id, String name, int sets, int reps, bool favorite){
+  Exercise.updateState(String id, String name, int sets, int reps, bool favorite) {
     _id = id;
     _name = name;
     _sets = sets;
@@ -92,5 +92,13 @@ class Exercise extends Activity {
 
   setFavorite(bool favorite) {
     _favorite = favorite;
+  }
+
+  void toggleFavorite() {
+    if (_favorite) {
+      _favorite = false;
+    } else {
+      _favorite = true;
+    }
   }
 }

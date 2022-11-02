@@ -5,6 +5,7 @@ import 'package:pump_state/providers/config-provider.dart';
 import '../classes/activity.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
+import '../classes/file-io.dart';
 import '../classes/library.dart';
 import '../providers/editExercise-provider.dart';
 import '../widgets/edit-exercise-form.dart';
@@ -53,11 +54,22 @@ class LibraryActivitiesScreen extends ConsumerWidget {
           ref.read(editExerciseProvider.notifier).state = e;
           showModalBottomSheet(context: context, builder: (context) => const EditExerciseForm());
         },
-        child: Column(children: [
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          IconButton(
+            onPressed: () {
+              Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(), ref.read(configProvider.notifier).state.getArchive(),
+                  ref.read(configProvider.notifier).state.getScheduler());
+              Exercise exercise = c.findActivity(ref.read(editExerciseProvider.notifier).state.getId()) as Exercise;
+              e.toggleFavorite();
+              ref.read(configProvider.notifier).state = c;
+              ref.read(editExerciseProvider.notifier).state = exercise;
+              FileIO.writeConfig(ref.read(configProvider));
+            },
+            icon: fav,
+          ),
           Text(e.getName()),
           Text('Reps: ' + e.getReps().toString()),
           Text('Sets: ' + e.getSets().toString()),
-          fav,
         ]),
       );
       listOfButtons.add(Padding(padding: EdgeInsets.all(5), child: eb));
