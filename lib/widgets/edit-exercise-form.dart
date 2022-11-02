@@ -4,6 +4,7 @@ import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/providers/editExercise-provider.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
+import '../classes/file-io.dart';
 
 class EditExerciseForm extends ConsumerWidget {
   const EditExerciseForm({Key? key}) : super(key: key);
@@ -52,13 +53,9 @@ class EditExerciseForm extends ConsumerWidget {
     }
 
     saveExercise() {
-      Config c = Config.newState(
-          ref.read(configProvider.notifier).state.getLibrary(),
-          ref.read(configProvider.notifier).state.getArchive(),
+      Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(), ref.read(configProvider.notifier).state.getArchive(),
           ref.read(configProvider.notifier).state.getScheduler());
-      Exercise exercise =
-          c.findActivity(ref.read(editExerciseProvider.notifier).state.getId())
-              as Exercise;
+      Exercise exercise = c.findActivity(ref.read(editExerciseProvider.notifier).state.getId()) as Exercise;
       exercise.setName(_name);
       exercise.setSets(_sets);
       exercise.setReps(_reps);
@@ -66,13 +63,12 @@ class EditExerciseForm extends ConsumerWidget {
 
       ref.read(configProvider.notifier).state = c;
       ref.read(editExerciseProvider.notifier).state = exercise;
+      FileIO.writeConfig(ref.read(configProvider));
     }
 
-    Widget addRep =
-        ElevatedButton(onPressed: incrementReps, child: const Text("Add Rep"));
+    Widget addRep = ElevatedButton(onPressed: incrementReps, child: const Text("Add Rep"));
 
-    Widget removeRep = ElevatedButton(
-        onPressed: decrementReps, child: const Text("Remove Rep"));
+    Widget removeRep = ElevatedButton(onPressed: decrementReps, child: const Text("Remove Rep"));
 
     Widget exerciseName = TextFormField(
       decoration: const InputDecoration(
@@ -90,11 +86,9 @@ class EditExerciseForm extends ConsumerWidget {
       ),
     );
 
-    Widget addSet =
-        ElevatedButton(onPressed: incrementSets, child: const Text("Add Set"));
+    Widget addSet = ElevatedButton(onPressed: incrementSets, child: const Text("Add Set"));
 
-    Widget removeSet = ElevatedButton(
-        onPressed: decrementSets, child: const Text("Remove Set"));
+    Widget removeSet = ElevatedButton(onPressed: decrementSets, child: const Text("Remove Set"));
 
     Widget exerciseReps = Text(
       _reps.toString(),

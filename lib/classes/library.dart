@@ -5,7 +5,7 @@ import 'workout.dart';
 import 'exercise.dart';
 
 class Library {
-  List<Activity> _activities = []; //Exercises
+  List<Activity> activities = []; //Exercises
   List<Workout> _workouts = []; //Workouts
 
   Library();
@@ -14,8 +14,8 @@ class Library {
     map.forEach((key, value) {
       switch (key) {
         case "workouts":
-        //print('HI!');
-        //print(value);
+          //print('HI!');
+          //print(value);
           for (dynamic d in value) {
             Workout w = Workout.fromJSON(d);
             _workouts.add(w);
@@ -24,7 +24,7 @@ class Library {
         case "activities":
           for (dynamic d in value) {
             Exercise e = Exercise.fromJson(d);
-            _activities.add(e);
+            activities.add(e);
           }
           break;
       }
@@ -34,33 +34,15 @@ class Library {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = Map();
     map['workouts'] = _workouts.map((i) => i.toJson()).toList();
-    map['activities'] =
-        _activities.map((i) => (i as Exercise).toJson()).toList();
+    map['activities'] = activities.map((i) => (i as Exercise).toJson()).toList();
     return map;
   }
 
   void addActivity(Activity activity) {
-    _activities.add(activity);
-  }
-
-  String exercise1Id() {
-    var test = _activities.elementAt(0) as Exercise;
-    return test.getId();
+    activities.add(activity);
   }
 
   List<Workout> getWorkouts() {
     return _workouts;
-  }
-
-  void getActivities() {
-    print(_activities.length);
-    for (Activity a in _activities) {
-      Exercise e = a as Exercise;
-      print(e.getName());
-    }
-  }
-
-  List<Activity> getlistofactivities() {
-    return _activities;
   }
 }

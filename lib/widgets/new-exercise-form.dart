@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
+import '../classes/file-io.dart';
 
 class ExerciseForm extends ConsumerStatefulWidget {
   @override
@@ -31,7 +32,7 @@ class ExerciseFormState extends ConsumerState<ExerciseForm> {
 
     void decrementSets() {
       setState(() {
-        if(_sets == 0) return;
+        if (_sets == 0) return;
         _sets--;
       });
     }
@@ -44,7 +45,7 @@ class ExerciseFormState extends ConsumerState<ExerciseForm> {
 
     void decrementReps() {
       setState(() {
-        if(_reps == 0) return;
+        if (_reps == 0) return;
         _reps--;
       });
     }
@@ -55,12 +56,12 @@ class ExerciseFormState extends ConsumerState<ExerciseForm> {
       });
     }
 
-    Future<void> saveExercise() async {
-      // Get the current config
-      Config c = ref.watch(configProvider);
+    void saveExercise() {
+      Config c = Config.newState(ref.read(configProvider).library, ref.read(configProvider).archive, ref.read(configProvider).scheduler);
       Exercise e = Exercise.createNew(_name, _sets, _reps, _favorite);
       c.library.addActivity(e);
       ref.read(configProvider.notifier).state = c;
+      FileIO.writeConfig(ref.read(configProvider));
     }
 
     Widget exerciseName = TextFormField(
@@ -78,11 +79,9 @@ class ExerciseFormState extends ConsumerState<ExerciseForm> {
       ),
     );
 
-    Widget addSet =
-        ElevatedButton(onPressed: incrementSets, child: const Text("Add Set"));
+    Widget addSet = ElevatedButton(onPressed: incrementSets, child: const Text("Add Set"));
 
-    Widget removeSet = ElevatedButton(
-        onPressed: decrementSets, child: const Text("Remove Set"));
+    Widget removeSet = ElevatedButton(onPressed: decrementSets, child: const Text("Remove Set"));
 
     Widget exerciseReps = Text(
       _reps.toString(),
@@ -91,11 +90,9 @@ class ExerciseFormState extends ConsumerState<ExerciseForm> {
       ),
     );
 
-    Widget addRep =
-        ElevatedButton(onPressed: incrementReps, child: const Text("Add Rep"));
+    Widget addRep = ElevatedButton(onPressed: incrementReps, child: const Text("Add Rep"));
 
-    Widget removeRep = ElevatedButton(
-        onPressed: decrementReps, child: const Text("Remove Rep"));
+    Widget removeRep = ElevatedButton(onPressed: decrementReps, child: const Text("Remove Rep"));
 
     Widget exerciseFavoriteText = const Text(
         style: TextStyle(
@@ -107,7 +104,8 @@ class ExerciseFormState extends ConsumerState<ExerciseForm> {
 
     Widget saveButton = ElevatedButton(
         onPressed: () {
-          saveExercise().then((result) => {Navigator.pop(context)});
+          saveExercise();
+          Navigator.pop(context);
         },
         child: const Text("Save"));
 

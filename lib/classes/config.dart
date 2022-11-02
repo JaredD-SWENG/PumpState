@@ -28,7 +28,7 @@ class Config {
    * This is needed because otherwise, if we do not instantiate a new object of Config, out state provider
    * will not know if/when the config is altered, or at the very least UI will not change.
    */
-  Config.newState(Library lib, Archive arch, Scheduler sched){
+  Config.newState(Library lib, Archive arch, Scheduler sched) {
     library = lib;
     archive = arch;
     scheduler = sched;
@@ -77,22 +77,6 @@ class Config {
     scheduler.printScheduledWorkouts();
   }
 
-  List<Widget> getLibraryActivitiesAsButtons(context, WidgetRef ref) {
-    List<Widget> listOfButtons = [];
-    for (Activity a in library.getlistofactivities()) {
-      Exercise e = a as Exercise;
-      ElevatedButton eb = ElevatedButton(
-          onPressed: () {
-            ref.read(editExerciseProvider.notifier).state = e;
-            showModalBottomSheet(
-                context: context, builder: (context) => EditExerciseForm());
-          },
-          child: Text(e.getName()));
-      listOfButtons.add(eb);
-    }
-    return listOfButtons;
-  }
-
   /**
    * findActivity()
    * This method takes in an ID parameter, which is used to find that specific instance of Exercise stored in the library,
@@ -102,7 +86,7 @@ class Config {
    */
   Activity findActivity(String s) {
     Activity activity = Exercise();
-    for (Activity a in library.getlistofactivities()) {
+    for (Activity a in library.activities) {
       if (s == a.getId()) {
         activity = a as Exercise;
         return activity;
@@ -115,7 +99,7 @@ class Config {
    * Return current instance library
    * currently used for newState() Constructor.
    */
-  getLibrary(){
+  getLibrary() {
     return library;
   }
 
@@ -123,14 +107,15 @@ class Config {
    * Return current instance archive
    * currently used for newState() Constructor.
    */
-  getArchive(){
+  getArchive() {
     return archive;
   }
+
   /**
    * Return current instance scheduler.
    * currently used for newState() Constructor.
    */
-  getScheduler(){
+  getScheduler() {
     return scheduler;
   }
 }
