@@ -8,8 +8,24 @@ class Exercise extends Activity {
   int _reps = 0;
   bool _favorite = false;
 
-  Exercise.setDefaults(String name, int sets, int reps, bool favorite) {
+  /**
+   * createNew() Constructor is for when you are creating a brand new Exercise.
+   * This Constructor provides a new ID for the exercise object.
+   */
+  Exercise.createNew(String name, int sets, int reps, bool favorite) {
     _id = const Uuid().v4();
+    _name = name;
+    _sets = sets;
+    _reps = reps;
+    _favorite = favorite;
+  }
+
+  /**
+   * updateState() Constructor is for when you need to update State Providers holding Exercises.
+   * unlike with createNew(), You pass in the ID you wish to preserve for the new Exercise State.
+   */
+  Exercise.updateState(String id, String name, int sets, int reps, bool favorite){
+    _id = id;
     _name = name;
     _sets = sets;
     _reps = reps;

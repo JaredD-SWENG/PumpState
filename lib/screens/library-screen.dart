@@ -9,10 +9,6 @@ class LibraryScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Library'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/new-exercise'),
-        child: Icon(Icons.add),
-      ),
       body: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -23,10 +19,7 @@ class LibraryScreen extends StatelessWidget {
             },
             child: Text('Activities'),
           ),
-          ElevatedButton(
-              onPressed: () =>
-                  Navigator.pushNamed(context, '/library/workouts'),
-              child: Text('Workouts'))
+          ElevatedButton(onPressed: () => Navigator.pushNamed(context, '/library/workouts'), child: Text('Workouts'))
         ],
       )),
     );

@@ -4,76 +4,77 @@ import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/providers/editExercise-provider.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
+import '../classes/file-io.dart';
 
 class EditExerciseForm extends ConsumerWidget {
   const EditExerciseForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String _textFieldBuffer = "";
+    String _id = ref.watch(editExerciseProvider).getId();
     String _name = ref.watch(editExerciseProvider).getName();
     int _sets = ref.watch(editExerciseProvider).getSets();
     int _reps = ref.watch(editExerciseProvider).getReps();
     bool _favorite = ref.watch(editExerciseProvider).getFavorite();
 
     void incrementSets() {
-      Exercise e = Exercise.setDefaults(_name, ++_sets, _reps, _favorite);
-      ref.read(editExerciseProvider.state).state = e;
+      Exercise e = Exercise.updateState(_id, _name, ++_sets, _reps, _favorite);
+      ref.read(editExerciseProvider.notifier).state = e;
     }
 
     void decrementSets() {
-      Exercise e = Exercise.setDefaults(_name, _sets--, _reps, _favorite);
-      ref.read(editExerciseProvider.state).state = e;
+      if (_sets == 0) return;
+
+      Exercise e = Exercise.updateState(_id, _name, --_sets, _reps, _favorite);
+      ref.read(editExerciseProvider.notifier).state = e;
     }
 
     void incrementReps() {
-      Exercise e = Exercise.setDefaults(_name, _sets, ++_reps, _favorite);
-      ref.read(editExerciseProvider.state).state = e;
+      Exercise e = Exercise.updateState(_id, _name, _sets, ++_reps, _favorite);
+      ref.read(editExerciseProvider.notifier).state = e;
     }
 
     void decrementReps() {
-      Exercise e = Exercise.setDefaults(_name, _sets, --_reps, _favorite);
-      ref.watch(editExerciseProvider.state).state = e;
+      if (_reps == 0) return;
+
+      Exercise e = Exercise.updateState(_id, _name, _sets, --_reps, _favorite);
+      ref.watch(editExerciseProvider.notifier).state = e;
     }
 
     void toggleFavorite(bool b) {
-      Exercise e = Exercise.setDefaults(_name, _sets, _reps, b);
-      ref.watch(editExerciseProvider.state).state = e;
+      Exercise e = Exercise.updateState(_id, _name, _sets, _reps, b);
+      ref.watch(editExerciseProvider.notifier).state = e;
     }
 
     void setName(String s) {
-      _textFieldBuffer = s;
+      _name = s;
+      Exercise e = Exercise.updateState(_id, _name, _sets, _reps, _favorite);
+      ref.watch(editExerciseProvider.notifier).state = e;
     }
 
-    Future<void> saveExercise() async {
-      // Exercise e = Exercise.setDefaults(
-      //     _textFieldBuffer,
-      //     ref.watch(editExerciseProvider.state).state.getSets(),
-      //     _reps,
-      //     _favorite);
-      // ref.read(editExerciseProvider.state).state = e;
-      Config c = ref.read(configProvider);
-      Exercise exercise =
-          c.findActivity(ref.read(editExerciseProvider.state).state.getId())
-              as Exercise;
-      exercise.setName(_textFieldBuffer);
+    saveExercise() {
+      Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(), ref.read(configProvider.notifier).state.getArchive(),
+          ref.read(configProvider.notifier).state.getScheduler());
+      Exercise exercise = c.findActivity(ref.read(editExerciseProvider.notifier).state.getId()) as Exercise;
+      exercise.setName(_name);
       exercise.setSets(_sets);
       exercise.setReps(_reps);
       exercise.setFavorite(_favorite);
 
-      ref.read(configProvider.state).state = c;
+      ref.read(configProvider.notifier).state = c;
+      ref.read(editExerciseProvider.notifier).state = exercise;
+      FileIO.writeConfig(ref.read(configProvider));
     }
 
-    Widget addRep =
-        ElevatedButton(onPressed: incrementReps, child: const Text("Add Rep"));
+    Widget addRep = ElevatedButton(onPressed: incrementReps, child: const Text("Add Rep"));
 
-    Widget removeRep = ElevatedButton(
-        onPressed: decrementReps, child: const Text("Remove Rep"));
+    Widget removeRep = ElevatedButton(onPressed: decrementReps, child: const Text("Remove Rep"));
 
     Widget exerciseName = TextFormField(
       decoration: const InputDecoration(
         hintText: "Exercise name",
       ),
+      enabled: true,
       onChanged: setName,
       initialValue: _name,
     );
@@ -85,11 +86,9 @@ class EditExerciseForm extends ConsumerWidget {
       ),
     );
 
-    Widget addSet =
-        ElevatedButton(onPressed: incrementSets, child: const Text("Add Set"));
+    Widget addSet = ElevatedButton(onPressed: incrementSets, child: const Text("Add Set"));
 
-    Widget removeSet = ElevatedButton(
-        onPressed: decrementSets, child: const Text("Remove Set"));
+    Widget removeSet = ElevatedButton(onPressed: decrementSets, child: const Text("Remove Set"));
 
     Widget exerciseReps = Text(
       _reps.toString(),
@@ -108,7 +107,9 @@ class EditExerciseForm extends ConsumerWidget {
 
     Widget saveButton = ElevatedButton(
         onPressed: () {
-          saveExercise().then((result) => {Navigator.pop(context)});
+          saveExercise();
+
+          Navigator.pop(context);
         },
         child: const Text("Save"));
 
