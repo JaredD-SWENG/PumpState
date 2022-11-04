@@ -9,6 +9,12 @@ class LibraryWorkoutScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Library/Workouts'),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/new-workout');
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
