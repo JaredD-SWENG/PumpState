@@ -13,6 +13,13 @@ class Workout {
     _id = const Uuid().v4();
   }
 
+  Workout.createNew(String id, String name, List<Activity> activities, bool favorite){
+    _id = id;
+    _name = name;
+    _activities = activities;
+    _favorite = favorite;
+  }
+
   getID() {
     return _id;
   }
@@ -29,6 +36,12 @@ class Workout {
     return _activities[i];
   }
 
+  swapActivities(int oldIndex, int newIndex) {
+    Activity temp = _activities[newIndex];
+    _activities[newIndex] = _activities[oldIndex];
+    _activities[oldIndex] = temp;
+  }
+
   getActivityList() {
     return _activities;
   }
@@ -43,6 +56,10 @@ class Workout {
         _activities.remove(a);
       }
     }
+  }
+
+  getFavorite() {
+    return _favorite;
   }
 
   toggleFavorite() {

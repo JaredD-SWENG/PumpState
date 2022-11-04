@@ -7,6 +7,7 @@ import 'package:pump_state/screens/library-activities-screen.dart';
 import 'package:pump_state/screens/library-screen.dart';
 import 'package:pump_state/screens/library-workouts-screen.dart';
 import 'package:pump_state/screens/new-exercise-screen.dart';
+import 'package:pump_state/screens/new-workout-screen.dart';
 import 'package:pump_state/screens/start-workout-screen.dart';
 import 'package:pump_state/widgets/edit-exercise-form.dart';
 import 'classes/file-io.dart';
@@ -37,6 +38,7 @@ class MyApp extends ConsumerWidget {
       '/new-exercise': (context) => NewExerciseScreen(),
       '/library/workouts': (context) => LibraryWorkoutScreen(),
       '/edit-exericse': (context) => EditExerciseScreen(),
+      '/new-workout': (context) => NewWorkoutScreen(),
     });
   }
 }
