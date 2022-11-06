@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pump_state/widgets/break-buttons.dart';
 import 'package:pump_state/widgets/exercise-dropdown.dart';
 import 'package:pump_state/widgets/new-workout-activity-list.dart';
 
@@ -12,7 +13,7 @@ class NewWorkoutScreen extends StatelessWidget {
           title: Text('New Workout'),
         ),
         body: Column(
-          children: [ExerciseDropdown(), NewWorkoutActivityList()],
+          children: [ExerciseDropdown(), BreakButtons(), NewWorkoutActivityList()],
         ));
   }
 }

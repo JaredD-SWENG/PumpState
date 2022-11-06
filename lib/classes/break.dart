@@ -8,17 +8,12 @@ class Break extends Activity {
   late Duration _duration;
 
   Break(Duration d) {
+    _id = Uuid().v4();
     _duration = d; // int!
   }
 
   Break.fromJson(dynamic d) {
-    _duration = Duration(
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: int.parse(d['duration']),
-        milliseconds: 0,
-        microseconds: 0);
+    _duration = Duration(days: 0, hours: 0, minutes: 0, seconds: int.parse(d['duration']), milliseconds: 0, microseconds: 0);
     _id = d['id'];
   }
 
@@ -32,6 +27,6 @@ class Break extends Activity {
 
   @override
   String getName() {
-    return "";
+    return '${_duration.inSeconds} seconds';
   }
 }
