@@ -12,21 +12,22 @@ class NewWorkoutActivityList extends ConsumerWidget {
     Workout w = ref.watch(newWorkoutProvider);
     List<Widget> listTiles = [];
     for (Activity a in w.getActivityList()) {
-      print(a.getName());
-      ListTile lt = ListTile(key: Key(a.getId()), title: Text('${a.getName()}'));
+      ListTile lt = ListTile(tileColor: Colors.green, key: Key(a.getId()), title: Row(children: [Icon(Icons.drag_indicator), Text(a.getName())]));
       listTiles.add(lt);
     }
-    return SizedBox(
-      height: 500,
-      child: ReorderableListView(
-          onReorder: (int oldIndex, int newIndex) {
-            if (newIndex > w.getActivityList().length) newIndex = w.getActivityList().length;
-            if (oldIndex < newIndex) newIndex--;
-            Workout workout = Workout.createNew(w.getID(), w.getName(), w.getActivityList(), w.getFavorite());
-            workout.reorderActivities(oldIndex, newIndex);
-            ref.read(newWorkoutProvider.notifier).state = workout;
-          },
-          children: listTiles),
-    );
+    return Theme(
+        data: ThemeData(canvasColor: Colors.green),
+        child: SizedBox(
+            height: 500,
+            child: ReorderableListView(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                onReorder: (int oldIndex, int newIndex) {
+                  if (newIndex > w.getActivityList().length) newIndex = w.getActivityList().length;
+                  if (oldIndex < newIndex) newIndex--;
+                  Workout workout = Workout.createNew(w.getID(), w.getName(), w.getActivityList(), w.getFavorite());
+                  workout.reorderActivities(oldIndex, newIndex);
+                  ref.read(newWorkoutProvider.notifier).state = workout;
+                },
+                children: listTiles)));
   }
 }

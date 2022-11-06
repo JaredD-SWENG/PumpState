@@ -68,8 +68,8 @@ class LibraryActivitiesScreen extends ConsumerWidget {
             icon: fav,
           ),
           Text(e.getName()),
-          Text('Reps: ' + e.getReps().toString()),
-          Text('Sets: ' + e.getSets().toString()),
+          Text('Reps: ${e.getReps()}'),
+          Text('Sets: ${e.getSets()}'),
         ]),
       );
       listOfButtons.add(Padding(padding: EdgeInsets.all(5), child: eb));
