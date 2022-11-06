@@ -5,12 +5,12 @@ import '../classes/config.dart';
 import '../classes/exercise.dart';
 import '../classes/file-io.dart';
 
-class ExerciseForm extends ConsumerStatefulWidget {
+class NewExerciseForm extends ConsumerStatefulWidget {
   @override
   ExerciseFormState createState() => ExerciseFormState();
 }
 
-class ExerciseFormState extends ConsumerState<ExerciseForm> {
+class ExerciseFormState extends ConsumerState<NewExerciseForm> {
   String _name = "";
   int _sets = 0;
   int _reps = 0;

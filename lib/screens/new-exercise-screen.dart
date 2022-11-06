@@ -11,6 +11,6 @@ class NewExerciseScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('New Exercise'),
         ),
-        body: ExerciseForm());
+        body: NewExerciseForm());
   }
 }
