@@ -23,7 +23,7 @@ class NewWorkoutActivityList extends ConsumerWidget {
             if (newIndex > w.getActivityList().length) newIndex = w.getActivityList().length;
             if (oldIndex < newIndex) newIndex--;
             Workout workout = Workout.createNew(w.getID(), w.getName(), w.getActivityList(), w.getFavorite());
-            workout.swapActivities(oldIndex, newIndex);
+            workout.reorderActivities(oldIndex, newIndex);
             ref.read(newWorkoutProvider.notifier).state = workout;
           },
           children: listTiles),
