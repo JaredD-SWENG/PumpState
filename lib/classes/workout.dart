@@ -44,6 +44,13 @@ class Workout {
     return _activities;
   }
 
+  getActivityID(int n){
+    return _activities[n].getId();
+  }
+  getActivityName(int n){
+    return _activities[n].getName();
+  }
+
   addActivity(Activity a) {
     _activities.add(a);
   }
