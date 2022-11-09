@@ -6,7 +6,7 @@ import 'exercise.dart';
 
 class Library {
   List<Activity> activities = []; //Exercises
-  List<Workout> _workouts = []; //Workouts
+  List<Workout> workouts = []; //Workouts
 
   Library();
 
@@ -18,7 +18,7 @@ class Library {
         //print(value);
           for (dynamic d in value) {
             Workout w = Workout.fromJSON(d);
-            _workouts.add(w);
+            workouts.add(w);
           }
           break;
         case "activities":
@@ -33,7 +33,7 @@ class Library {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = Map();
-    map['workouts'] = _workouts.map((i) => i.toJson()).toList();
+    map['workouts'] = workouts.map((i) => i.toJson()).toList();
     map['activities'] = activities.map((i) => (i as Exercise).toJson()).toList();
     return map;
   }
@@ -43,7 +43,7 @@ class Library {
   }
 
   List<Workout> getWorkouts() {
-    return _workouts;
+    return workouts;
   }
 
   List<Exercise> getActivitiesAsExercises() {
@@ -53,5 +53,9 @@ class Library {
       exercises.add(e);
     }
     return exercises;
+  }
+
+  addWorkout(Workout w) {
+    workouts.add(w);
   }
 }
