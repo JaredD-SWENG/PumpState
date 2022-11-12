@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump_state/providers/config-provider.dart';
+import 'package:pump_state/styles/styles.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
 import '../classes/file-io.dart';
@@ -65,6 +67,9 @@ class ExerciseFormState extends ConsumerState<NewExerciseForm> {
     }
 
     Widget exerciseName = TextFormField(
+      inputFormatters: [
+        new LengthLimitingTextInputFormatter(12),
+      ],
       decoration: const InputDecoration(
         hintText: "Exercise name",
       ),
@@ -109,29 +114,33 @@ class ExerciseFormState extends ConsumerState<NewExerciseForm> {
         },
         child: const Text("Save"));
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        exerciseName,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            exerciseSets,
-            addSet,
-            removeSet,
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [exerciseReps, addRep, removeRep],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [exerciseFavoriteText, favoriteToggle],
-        ),
-        saveButton,
-      ],
+    return Container(
+
+      decoration: linearGradient(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          exerciseName,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              exerciseSets,
+              addSet,
+              removeSet,
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [exerciseReps, addRep, removeRep],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [exerciseFavoriteText, favoriteToggle],
+          ),
+          saveButton,
+        ],
+      ),
     );
   }
 }

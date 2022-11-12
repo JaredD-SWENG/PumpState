@@ -32,6 +32,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  table_calendar: ^3.0.8
   flutter_riverpod: ^2.1.0
 
 

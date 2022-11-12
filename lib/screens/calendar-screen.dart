@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pump_state/screens/SchedulerScreen.dart';
 import 'package:pump_state/styles/styles.dart';
 
 class CalendarScreen extends StatelessWidget {
@@ -9,7 +10,7 @@ class CalendarScreen extends StatelessWidget {
     return Container(
       decoration: linearGradient(),
       child: Center(
-        child: Text('Placeholder for CalendarScreen'),
+        child: SchedulerScreen(),
       ),
     );
   }

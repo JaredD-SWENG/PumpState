@@ -40,6 +40,7 @@ class _ExerciseDropdownState extends ConsumerState<ExerciseDropdown> {
         Padding(
           padding: EdgeInsets.all(10),
           child: ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
               onPressed: () {
                 Workout w = Workout.createNew(ref.read(newWorkoutProvider).getID(), ref.read(newWorkoutProvider).getName(),
                     ref.read(newWorkoutProvider).getActivityList(), ref.read(newWorkoutProvider).getFavorite());
@@ -48,7 +49,7 @@ class _ExerciseDropdownState extends ConsumerState<ExerciseDropdown> {
                 w.addActivity(newExercise);
                 ref.read(newWorkoutProvider.notifier).state = w;
               },
-              child: Icon(Icons.add)),
+              child: Icon(Icons.add, color: Colors.black,)),
         )
       ],
     );

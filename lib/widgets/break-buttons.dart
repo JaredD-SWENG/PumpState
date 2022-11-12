@@ -14,10 +14,11 @@ class BreakButtons extends ConsumerWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Text('30'),
+            Text('30', style: TextStyle( color: Colors.white),),
             Transform.scale(
               scale: 1.25,
               child: IconButton(
+                color: Colors.white,
                   onPressed: () {
                     Workout w = Workout.createNew(ref.read(newWorkoutProvider).getID(), ref.read(newWorkoutProvider).getName(),
                         ref.read(newWorkoutProvider).getActivityList(), ref.read(newWorkoutProvider).getFavorite());
@@ -31,10 +32,11 @@ class BreakButtons extends ConsumerWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Text('60'),
+            Text('60', style: TextStyle( color: Colors.white),),
             Transform.scale(
               scale: 1.25,
               child: IconButton(
+                color: Colors.white,
                   onPressed: () {
                     Workout w = Workout.createNew(ref.read(newWorkoutProvider).getID(), ref.read(newWorkoutProvider).getName(),
                         ref.read(newWorkoutProvider).getActivityList(), ref.read(newWorkoutProvider).getFavorite());
@@ -48,10 +50,11 @@ class BreakButtons extends ConsumerWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Text('90'),
+            Text('90', style: TextStyle( color: Colors.white),),
             Transform.scale(
               scale: 1.25,
               child: IconButton(
+                color: Colors.white,
                   onPressed: () {
                     Workout w = Workout.createNew(ref.read(newWorkoutProvider).getID(), ref.read(newWorkoutProvider).getName(),
                         ref.read(newWorkoutProvider).getActivityList(), ref.read(newWorkoutProvider).getFavorite());

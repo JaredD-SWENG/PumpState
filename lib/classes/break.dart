@@ -13,7 +13,7 @@ class Break extends Activity {
   }
 
   Break.fromJson(dynamic d) {
-    _duration = Duration(days: 0, hours: 0, minutes: 0, seconds: int.parse(d['duration']), milliseconds: 0, microseconds: 0);
+    _duration = Duration(days: 0, hours: 0, minutes: 0, seconds:(d['duration']), milliseconds: 0, microseconds: 0);
     _id = d['id'];
   }
 

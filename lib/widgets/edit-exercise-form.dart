@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:pump_state/providers/config-provider.dart';
@@ -60,7 +61,6 @@ class EditExerciseForm extends ConsumerWidget {
       exercise.setSets(_sets);
       exercise.setReps(_reps);
       exercise.setFavorite(_favorite);
-
       ref.read(configProvider.notifier).state = c;
       ref.read(editExerciseProvider.notifier).state = exercise;
       FileIO.writeConfig(ref.read(configProvider));
@@ -71,6 +71,9 @@ class EditExerciseForm extends ConsumerWidget {
     Widget removeRep = ElevatedButton(onPressed: decrementReps, child: const Text("Remove Rep"));
 
     Widget exerciseName = TextFormField(
+      inputFormatters: [
+        new LengthLimitingTextInputFormatter(12),
+      ],
       decoration: const InputDecoration(
         hintText: "Exercise name",
       ),

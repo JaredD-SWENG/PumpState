@@ -95,6 +95,17 @@ class Config {
     return activity;
   }
 
+  Workout findWorkout(String s){
+    Workout workout = Workout();
+    for(Workout w in library.workouts){
+      if(s == w.getID()){
+        workout = w;
+        return workout;
+      }
+    }
+    return workout;
+  }
+
   /**
    * Return current instance library
    * currently used for newState() Constructor.
