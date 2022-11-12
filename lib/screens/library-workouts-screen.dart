@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump_state/styles/styles.dart';
 
 import '../classes/config.dart';
 import '../classes/workout.dart';
@@ -11,21 +12,20 @@ class LibraryWorkoutScreen extends ConsumerWidget {
     final List<Workout> workouts = ref.watch(configProvider).library.workouts;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Library/Workouts'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/new-workout');
-        },
-        child: const Icon(Icons.add),
-      ),
-      body: Center(
-        child: Column(
-          children: generateButtons(workouts, context, ref),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/new-workout');
+          },
+          child: const Icon(Icons.add),
         ),
-      ),
-    );
+        body: Container(
+          decoration: linearGradient(),
+          child: Center(
+            child: Column(
+              children: generateButtons(workouts, context, ref),
+            ),
+          ),
+        ));
   }
 
   List<Widget> generateButtons(List<Workout> workouts, BuildContext context, WidgetRef ref) {
@@ -38,9 +38,9 @@ class LibraryWorkoutScreen extends ConsumerWidget {
       }
     });
     for (Workout w in workouts) {
-      Icon fav = Icon(Icons.favorite_outline);
+      Icon fav = Icon(Icons.star_border_outlined);
       if (w.getFavorite()) {
-        fav = Icon(Icons.favorite);
+        fav = Icon(Icons.star);
       }
       ElevatedButton eb = ElevatedButton(
           onPressed: () {},
