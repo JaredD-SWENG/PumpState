@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/styles/styles.dart';
@@ -67,9 +66,6 @@ class ExerciseFormState extends ConsumerState<NewExerciseForm> {
     }
 
     Widget exerciseName = TextFormField(
-      inputFormatters: [
-        new LengthLimitingTextInputFormatter(12),
-      ],
       decoration: const InputDecoration(
         hintText: "Exercise name",
       ),

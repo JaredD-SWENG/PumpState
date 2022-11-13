@@ -12,3 +12,7 @@ BoxDecoration linearGradient() {
     ),
   );
 }
+
+Color pumpstateblue() {
+  return Color.fromRGBO(0, 156, 222, 1);
+}
