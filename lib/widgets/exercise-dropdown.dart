@@ -23,6 +23,7 @@ class _ExerciseDropdownState extends ConsumerState<ExerciseDropdown> {
 
   @override
   Widget build(BuildContext context) {
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

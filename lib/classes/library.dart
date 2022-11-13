@@ -58,4 +58,9 @@ class Library {
   addWorkout(Workout w) {
     workouts.add(w);
   }
+
+  bool activitiesIsEmpty(){
+
+    return activities.isEmpty;
+  }
 }

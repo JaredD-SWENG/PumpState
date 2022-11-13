@@ -106,6 +106,10 @@ class Config {
     return workout;
   }
 
+  bool activitiesIsEmpty(){
+    return library.activitiesIsEmpty();
+  }
+
   /**
    * Return current instance library
    * currently used for newState() Constructor.
