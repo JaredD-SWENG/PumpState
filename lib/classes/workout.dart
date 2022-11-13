@@ -62,6 +62,9 @@ class Workout {
       }
     }
   }
+  removeActivityAt(int n){
+    _activities.removeAt(n);
+  }
 
   getFavorite() {
     return _favorite;

@@ -115,7 +115,6 @@ class ExerciseFormState extends ConsumerState<NewExerciseForm> {
         child: const Text("Save"));
 
     return Container(
-
       decoration: linearGradient(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
