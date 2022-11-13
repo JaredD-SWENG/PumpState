@@ -43,27 +43,17 @@ class LibraryWorkoutScreen extends ConsumerWidget {
       if (w.getFavorite()) {
         fav = Icon(Icons.star);
       }
-      /*ElevatedButton eb = ElevatedButton(
-          onPressed: () {},
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            IconButton(
-              onPressed: () {},
-              icon: fav,
-            ),
-            Text(w.getName()),
-          ]));*/
 
       ListTile lt = ListTile(
         iconColor: Colors.white,
         textColor: Colors.white,
-
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
               onPressed: () {
-                Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
-                    ref.read(configProvider.notifier).state.getArchive(), ref.read(configProvider.notifier).state.getScheduler());
+                Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(), ref.read(configProvider.notifier).state.getArchive(),
+                    ref.read(configProvider.notifier).state.getScheduler());
                 Workout workout = c.findWorkout(w.getID());
                 workout.toggleFavorite();
                 ref.read(configProvider.notifier).state = c;
@@ -71,7 +61,11 @@ class LibraryWorkoutScreen extends ConsumerWidget {
               },
               icon: fav,
             ),
-            IconButton(onPressed: (){ return;}, icon: Icon(Icons.edit, color: Colors.white)), //Placeholder for when we implement edit workout
+            IconButton(
+                onPressed: () {
+                  return;
+                },
+                icon: Icon(Icons.edit, color: Colors.white)), //Placeholder for when we implement edit workout
             Text(w.getName()),
           ],
         ),

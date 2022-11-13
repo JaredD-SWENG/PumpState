@@ -11,7 +11,6 @@ class NewWorkoutActivityList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     Workout w = ref.watch(newWorkoutProvider);
     List<Widget> listTiles = [];
-    int i = 0;
     for (Activity a in w.getActivityList()) {
       ListTile lt =
           ListTile(tileColor: Colors.transparent, key: Key(a.getId()), title: Row(children: [Icon(Icons.drag_indicator), Text(a.getName())]));

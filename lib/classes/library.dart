@@ -14,8 +14,8 @@ class Library {
     map.forEach((key, value) {
       switch (key) {
         case "workouts":
-        //print('HI!');
-        //print(value);
+          //print('HI!');
+          //print(value);
           for (dynamic d in value) {
             Workout w = Workout.fromJSON(d);
             workouts.add(w);
