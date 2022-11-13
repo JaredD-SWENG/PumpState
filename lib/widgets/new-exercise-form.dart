@@ -111,30 +111,31 @@ class ExerciseFormState extends ConsumerState<NewExerciseForm> {
         child: const Text("Save"));
 
     return Container(
-        decoration: linearGradient(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            exerciseName,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                exerciseSets,
-                addSet,
-                removeSet,
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [exerciseReps, addRep, removeRep],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [exerciseFavoriteText, favoriteToggle],
-            ),
-            saveButton,
-          ],
-        ));
+      decoration: linearGradient(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          exerciseName,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              exerciseSets,
+              addSet,
+              removeSet,
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [exerciseReps, addRep, removeRep],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [exerciseFavoriteText, favoriteToggle],
+          ),
+          saveButton,
+        ],
+      ),
+    );
   }
 }

@@ -31,12 +31,24 @@ class NewWorkoutActivityList extends ConsumerWidget {
               },
               children: <Widget>[
                 for (int i = 0; i < listTiles.length; i++)
-                  Card(
-                    color: Colors.blueGrey,
-                    key: ValueKey(listTiles.elementAt(i)),
-                    elevation: 2,
-                    child: listTiles.elementAt(i),
-                  ),
+                  Dismissible(
+                    background: Container(
+                      color: Colors.transparent,
+                    ),
+                      key: ValueKey(listTiles.elementAt(i)),
+                      onDismissed: (DismissDirection horizontal){
+                         listTiles.removeAt(i);
+                         Workout workout = Workout.createNew(ref.read(newWorkoutProvider).getID(), ref.read(newWorkoutProvider).getName(),
+                             ref.read(newWorkoutProvider).getActivityList(), ref.read(newWorkoutProvider).getFavorite());
+                         workout.removeActivityAt(i);
+                         ref.read(newWorkoutProvider.notifier).state = workout;
+                      },
+                      child: Card(
+                        color: Colors.blueGrey,
+                        key: ValueKey(listTiles.elementAt(i)),
+                        elevation: 2,
+                        child: listTiles.elementAt(i),
+                      )),
               ]),
         ));
   }
