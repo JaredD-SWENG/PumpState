@@ -80,7 +80,22 @@ class LibraryActivitiesScreen extends ConsumerWidget {
               Text('Sets: ${e.getSets()}'),
             ],
           ));
-      listOfButtons.add(Padding(padding: EdgeInsets.all(5), child: eb));
+      listOfButtons.add(Dismissible(
+        background: Container(
+          color: Color.fromRGBO(48, 47, 47, 1.0),
+        ),
+          onDismissed: (DismissDirection horizontal){
+            listOfButtons.remove(eb);
+            Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
+                ref.read(configProvider.notifier).state.getArchive(), ref.read(configProvider.notifier).state.getScheduler());
+            c.library.removeActivity(e.getId());
+            ref.read(configProvider.notifier).state = c;
+            FileIO.writeConfig(ref.read(configProvider));
+
+          },
+          key: ValueKey(eb),
+          child: Padding(padding: EdgeInsets.all(5), child: eb))
+      );
     }
     return listOfButtons;
   }

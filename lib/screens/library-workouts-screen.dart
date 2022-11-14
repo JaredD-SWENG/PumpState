@@ -70,7 +70,20 @@ class LibraryWorkoutScreen extends ConsumerWidget {
           ],
         ),
       );
-      listOfButtons.add(Padding(padding: EdgeInsets.all(5), child: lt));
+      listOfButtons.add(Dismissible(
+        background: Container(
+          color: Color.fromRGBO(48, 47, 47, 1.0),
+        ),
+          key: ValueKey(w),
+          onDismissed: (DismissDirection horizontal){
+            listOfButtons.remove(w);
+            Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
+                ref.read(configProvider.notifier).state.getArchive(), ref.read(configProvider.notifier).state.getScheduler());
+            c.library.removeWorkout(w.getID());
+            ref.read(configProvider.notifier).state = c;
+            FileIO.writeConfig(ref.read(configProvider));
+          },
+          child: Padding(padding: EdgeInsets.all(5), child: lt)));
     }
     return listOfButtons;
   }
