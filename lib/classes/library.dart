@@ -63,4 +63,20 @@ class Library {
 
     return activities.isEmpty;
   }
+
+  removeActivity(String s){
+    for(int i = 0; i < activities.length; i++){
+      if(s == activities[i].getId()){
+        activities.removeAt(i);
+      }
+    }
+  }
+
+  removeWorkout(String s){
+    for(int i = 0; i < workouts.length; i++){
+      if(s == workouts[i].getID()){
+        workouts.removeAt(i);
+      }
+    }
+  }
 }
