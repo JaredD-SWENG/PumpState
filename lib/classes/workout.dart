@@ -44,10 +44,15 @@ class Workout {
     return _activities;
   }
 
-  getActivityID(int n){
+  getSizeOfActivityList() {
+    return _activities.length;
+  }
+
+  getActivityID(int n) {
     return _activities[n].getId();
   }
-  getActivityName(int n){
+
+  getActivityName(int n) {
     return _activities[n].getName();
   }
 
@@ -62,7 +67,8 @@ class Workout {
       }
     }
   }
-  removeActivityAt(int n){
+
+  removeActivityAt(int n) {
     _activities.removeAt(n);
   }
 

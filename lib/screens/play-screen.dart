@@ -4,6 +4,8 @@ import 'package:pump_state/styles/styles.dart';
 import 'package:pump_state/widgets/begin-workout-button.dart';
 import 'package:pump_state/widgets/workouts-list.dart';
 
+import '../providers/config-provider.dart';
+
 class PlayScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
