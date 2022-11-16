@@ -23,25 +23,39 @@ class _WorkoutsListState extends ConsumerState<WorkoutsList> {
     // TODO: implement initState
     super.initState();
     Config c = ref.read(configProvider);
-    selectedWorkout = c.library.workouts[0];
+    if (c.library.workouts.isNotEmpty) {
+      selectedWorkout = c.library.workouts[0];
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     Config c = ref.read(configProvider);
-    return Container(
-        child: Column(children: <Widget>[
-      for (Workout w in c.library.workouts)
-        RadioListTile(
-            title: Text(w.getName()),
-            value: w,
-            groupValue: selectedWorkout,
-            onChanged: (value) {
-              setState(() {
-                selectedWorkout = value!;
-                ref.read(playWorkoutProvider.notifier).state = selectedWorkout;
-              });
-            })
-    ]));
+    if (ref.read(configProvider).library.workouts.isEmpty) {
+      return const Center(
+          child: Text(
+        'To play a workout, please create one in the workout Library.',
+        style: TextStyle(
+          color: Colors.red,
+          backgroundColor: Color.fromRGBO(48, 47, 47, 1.0),
+        ),
+      ));
+    } else {
+      return Container(
+          child: Column(children: <Widget>[
+        for (Workout w in c.library.workouts)
+          RadioListTile(
+              title: Text(w.getName()),
+              value: w,
+              groupValue: selectedWorkout,
+              onChanged: (value) {
+                setState(() {
+                  selectedWorkout = value!;
+                  ref.read(playWorkoutProvider.notifier).state = selectedWorkout;
+                  print(ref.read(playWorkoutProvider).getName());
+                });
+              })
+      ]));
+    }
   }
 }
