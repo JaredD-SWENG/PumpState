@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/providers/play-workout-provider.dart';
+import 'package:pump_state/styles/styles.dart';
 import '../classes/activity.dart';
 import '../classes/break.dart';
 import '../classes/exercise.dart';
@@ -130,18 +131,23 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
         title: Text('Activity Index: ${currentActivityIndex} ${currentActivity.getName()}'),
         automaticallyImplyLeading: false,
       ),
-      body: Center(
+      body: Container(
+          decoration: linearGradient(),
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          screens[screenIndex],
-          IconButton(
-              onPressed: () {
-                handleContinue();
-              },
-              icon: const Icon(Icons.arrow_circle_right))
-        ],
-      )),
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: screens[screenIndex],
+              ),
+              Expanded(
+                  flex: 1,
+                  child: IconButton(
+                      onPressed: () {
+                        handleContinue();
+                      },
+                      icon: const Icon(Icons.arrow_circle_right)))
+            ],
+          )),
     );
   }
 }

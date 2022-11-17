@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import '../classes/activity.dart';
 import '../classes/break.dart';
@@ -14,36 +15,38 @@ class PlayPause extends StatefulWidget {
 }
 
 class _PlayPauseState extends State<PlayPause> {
-  final Duration defaultBreak = const Duration(seconds: 1);
-  late Timer timer;
-  late int counter;
+  late final int pauseTime;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('init state called');
     Break b = widget.a as Break;
-    counter = b.getDuration().inSeconds;
-    timer = Timer.periodic(defaultBreak, (timer) {
-      if (counter > 0) {
-        handleTimer();
-      } else {
-        timer.cancel();
-        widget.changeScreen();
-      }
-    });
+    pauseTime = b
+        .getDuration()
+        .inSeconds;
   }
 
-  handleTimer() {
-    setState(() {
-      counter--;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    print('rebuilt $counter');
-    return Text(counter.toString());
+    return Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularCountDownTimer(
+              width: 50,
+              height: 50,
+              duration: pauseTime,
+              initialDuration: 1,
+              fillColor: Colors.black,
+              ringColor: Colors.white,
+              isReverse: false,
+              onComplete: () {
+                widget.changeScreen();
+              },
+            )
+          ],
+        ));
   }
 }
