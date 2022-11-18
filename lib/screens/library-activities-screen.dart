@@ -72,30 +72,32 @@ class LibraryActivitiesScreen extends ConsumerWidget {
               IconButton(
                   onPressed: () {
                     ref.read(editExerciseProvider.notifier).state = e;
-                    showModalBottomSheet(context: context, builder: (context) => const EditExerciseForm());
+                    showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) => const EditExerciseForm(),
+                    );
                   },
-                  icon: Icon(Icons.edit, color: Colors.white)),
+                  icon: Icon(Icons.edit, color: whiteOut())),
               Text(e.getName()),
               Text('Reps: ${e.getReps()}'),
               Text('Sets: ${e.getSets()}'),
             ],
           ));
       listOfButtons.add(Dismissible(
-        background: Container(
-          color: Color.fromRGBO(48, 47, 47, 1.0),
-        ),
-          onDismissed: (DismissDirection horizontal){
+          background: Container(
+            color: Color.fromRGBO(48, 47, 47, 1.0),
+          ),
+          onDismissed: (DismissDirection horizontal) {
             listOfButtons.remove(eb);
-            Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
-                ref.read(configProvider.notifier).state.getArchive(), ref.read(configProvider.notifier).state.getScheduler());
+            Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(), ref.read(configProvider.notifier).state.getArchive(),
+                ref.read(configProvider.notifier).state.getScheduler());
             c.library.removeActivity(e.getId());
             ref.read(configProvider.notifier).state = c;
             FileIO.writeConfig(ref.read(configProvider));
-
           },
           key: ValueKey(eb),
-          child: Padding(padding: EdgeInsets.all(5), child: eb))
-      );
+          child: Padding(padding: EdgeInsets.all(5), child: eb)));
     }
     return listOfButtons;
   }
