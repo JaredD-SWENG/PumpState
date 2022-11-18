@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/providers/editExercise-provider.dart';
+import 'package:pump_state/styles/styles.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
 import '../classes/file-io.dart';
@@ -66,11 +67,25 @@ class EditExerciseForm extends ConsumerWidget {
       FileIO.writeConfig(ref.read(configProvider));
     }
 
-    Widget addRep = ElevatedButton(onPressed: incrementReps, child: const Text("Add Rep"));
+    Widget addRep = IconButton(
+      onPressed: incrementReps,
+      icon: Icon(
+        Icons.add_circle,
+        color: whiteOut(),
+      ),
+    );
 
-    Widget removeRep = ElevatedButton(onPressed: decrementReps, child: const Text("Remove Rep"));
+    Widget removeRep = IconButton(
+      onPressed: decrementReps,
+      icon: Icon(
+        Icons.remove_circle,
+        color: whiteOut(),
+      ),
+    );
 
     Widget exerciseName = TextFormField(
+      textAlign: TextAlign.center,
+      style: TextStyle(color: whiteOut()),
       inputFormatters: [
         new LengthLimitingTextInputFormatter(12),
       ],
@@ -82,31 +97,34 @@ class EditExerciseForm extends ConsumerWidget {
       initialValue: _name,
     );
 
-    Widget SetDisplay = Text(
+    Widget setDisplay = Text(
       _sets.toString(),
-      style: const TextStyle(
-        fontSize: 20,
+      style: TextStyle(fontSize: 20, color: whiteOut()),
+    );
+
+    Widget addSet = IconButton(
+      onPressed: incrementSets,
+      icon: Icon(
+        Icons.add_circle,
+        color: whiteOut(),
       ),
     );
 
-    Widget addSet = ElevatedButton(onPressed: incrementSets, child: const Text("Add Set"));
-
-    Widget removeSet = ElevatedButton(onPressed: decrementSets, child: const Text("Remove Set"));
-
-    Widget exerciseReps = Text(
-      _reps.toString(),
-      style: const TextStyle(
-        fontSize: 20,
+    Widget removeSet = IconButton(
+      onPressed: decrementSets,
+      icon: Icon(
+        Icons.remove_circle,
+        color: whiteOut(),
+        shadows: [Shadow(color: Colors.black, blurRadius: 1)],
       ),
+    );
+
+    Widget repsDisplay = Text(
+      _reps.toString(),
+      style: TextStyle(fontSize: 20, color: whiteOut()),
     );
 
     Widget favoriteToggle = Switch(value: _favorite, onChanged: toggleFavorite);
-
-    Widget exerciseFavoriteText = const Text(
-        style: TextStyle(
-          fontSize: 20,
-        ),
-        "Favorite");
 
     Widget saveButton = ElevatedButton(
         onPressed: () {
@@ -116,31 +134,97 @@ class EditExerciseForm extends ConsumerWidget {
         },
         child: const Text("Save"));
 
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          exerciseName,
+    return Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: limestone()),
+        height: MediaQuery.of(context).size.height * 0.33,
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Row(children: [
+            Container(
+                width: MediaQuery.of(context).size.width * .5,
+                decoration: const BoxDecoration(boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  )
+                ]),
+                child: Card(
+                    color: pumpStateDarkBlue(),
+                    child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                      Text('Name', style: Theme.of(context).textTheme.headline5),
+                      exerciseName,
+                    ]))),
+            Container(
+                width: MediaQuery.of(context).size.width * .5,
+                decoration: const BoxDecoration(boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  )
+                ]),
+                child: Card(
+                    color: pumpStateDarkBlue(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [Text('Favorite', style: Theme.of(context).textTheme.headline5), favoriteToggle],
+                    ))),
+          ]),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SetDisplay,
-              addSet,
-              removeSet,
+              Container(
+                  width: MediaQuery.of(context).size.width * .5,
+                  decoration: const BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    )
+                  ]),
+                  child: Card(
+                      color: pumpStateDarkBlue(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text('Sets', style: Theme.of(context).textTheme.headline5),
+                          setDisplay,
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [addSet, removeSet],
+                          )
+                        ],
+                      ))),
+              Container(
+                  width: MediaQuery.of(context).size.width * .5,
+                  decoration: const BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    )
+                  ]),
+                  child: Card(
+                      color: pumpStateDarkBlue(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text('Reps', style: Theme.of(context).textTheme.headline5),
+                          repsDisplay,
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [addRep, removeRep],
+                          )
+                        ],
+                      ))),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [exerciseReps, addRep, removeRep],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [exerciseFavoriteText, favoriteToggle],
-          ),
           saveButton,
-        ],
-      ),
-    );
+        ]));
   }
 }
