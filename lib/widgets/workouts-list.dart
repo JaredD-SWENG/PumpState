@@ -16,16 +16,11 @@ class WorkoutsList extends ConsumerStatefulWidget {
 
 class _WorkoutsListState extends ConsumerState<WorkoutsList> {
   List<RadioListTile> radioListTiles = [];
-  late Workout selectedWorkout;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Config c = ref.read(configProvider);
-    if (c.library.workouts.isNotEmpty) {
-      selectedWorkout = c.library.workouts[0];
-    }
   }
 
   @override
@@ -41,21 +36,19 @@ class _WorkoutsListState extends ConsumerState<WorkoutsList> {
         ),
       ));
     } else {
-      return Container(
-          child: Column(children: <Widget>[
+      return Column(children: <Widget>[
         for (Workout w in c.library.workouts)
           RadioListTile(
               title: Text(w.getName()),
               value: w,
-              groupValue: selectedWorkout,
+              groupValue: ref.watch(playWorkoutProvider),
               onChanged: (value) {
                 setState(() {
-                  selectedWorkout = value!;
-                  ref.read(playWorkoutProvider.notifier).state = selectedWorkout;
+                  ref.read(playWorkoutProvider.notifier).state = value!;
                   print(ref.read(playWorkoutProvider).getName());
                 });
               })
-      ]));
+      ]);
     }
   }
 }
