@@ -128,11 +128,11 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Activity Index: ${currentActivityIndex} ${currentActivity.getName()}'),
+        title: Text(currentActivity.getName()),
         automaticallyImplyLeading: false,
       ),
       body: Container(
-          decoration: linearGradient(),
+          decoration: BoxDecoration(gradient: backgroundGradient()),
           child: Column(
             children: [
               Align(

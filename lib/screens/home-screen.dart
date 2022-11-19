@@ -7,7 +7,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: linearGradient(),
+        decoration: BoxDecoration(gradient: backgroundGradient()),
         child: const Center(
           child: Text('This is filler for home'),
         ));

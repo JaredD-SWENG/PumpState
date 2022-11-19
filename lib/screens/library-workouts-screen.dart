@@ -20,11 +20,12 @@ class LibraryWorkoutScreen extends ConsumerWidget {
           child: const Icon(Icons.add),
         ),
         body: Container(
-          decoration: linearGradient(),
+          decoration: BoxDecoration(gradient: backgroundGradient()),
           child: Center(
-            child: Column(
+            child: Scrollbar(
+                child: ListView(
               children: generateButtons(workouts, context, ref),
-            ),
+            )),
           ),
         ));
   }
@@ -41,49 +42,93 @@ class LibraryWorkoutScreen extends ConsumerWidget {
     for (Workout w in workouts) {
       Icon fav = Icon(Icons.star_border_outlined);
       if (w.getFavorite()) {
-        fav = Icon(Icons.star);
+        fav = Icon(
+          Icons.star,
+          color: creek(),
+        );
       }
 
       ListTile lt = ListTile(
         iconColor: Colors.white,
         textColor: Colors.white,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              onPressed: () {
-                Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(), ref.read(configProvider.notifier).state.getArchive(),
-                    ref.read(configProvider.notifier).state.getScheduler());
-                Workout workout = c.findWorkout(w.getID());
-                workout.toggleFavorite();
-                ref.read(configProvider.notifier).state = c;
-                FileIO.writeConfig(ref.read(configProvider));
-              },
-              icon: fav,
+            Expanded(
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
+                          ref.read(configProvider.notifier).state.getArchive(), ref.read(configProvider.notifier).state.getScheduler());
+                      Workout workout = c.findWorkout(w.getID());
+                      workout.toggleFavorite();
+                      ref.read(configProvider.notifier).state = c;
+                      FileIO.writeConfig(ref.read(configProvider));
+                    },
+                    icon: fav,
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        return;
+                      },
+                      icon: Icon(Icons.edit, color: creek())),
+                ],
+              ),
             ),
-            IconButton(
-                onPressed: () {
-                  return;
-                },
-                icon: Icon(Icons.edit, color: Colors.white)), //Placeholder for when we implement edit workout
-            Text(w.getName()),
+            Expanded(
+              child: Text(
+                w.getName(),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text('Activities '),
+                    Text(
+                      w.getSizeOfActivityList().toString(),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                Text.rich(
+                  TextSpan(
+                    text: 'Pause Time ',
+                    children: [
+                      TextSpan(
+                        text: w.getSumOfBreaks().toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        children: const [
+                          TextSpan(text: ' min', style: TextStyle(fontWeight: FontWeight.normal)),
+                        ],
+                      )
+                    ],
+                  ),
+                  softWrap: false,
+                )
+              ],
+            ))
           ],
         ),
       );
       listOfButtons.add(Dismissible(
-        background: Container(
-          color: Color.fromRGBO(48, 47, 47, 1.0),
-        ),
+          background: Container(
+            color: Color.fromRGBO(48, 47, 47, 1.0),
+          ),
           key: ValueKey(w),
-          onDismissed: (DismissDirection horizontal){
+          onDismissed: (DismissDirection horizontal) {
             listOfButtons.remove(w);
-            Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
-                ref.read(configProvider.notifier).state.getArchive(), ref.read(configProvider.notifier).state.getScheduler());
+            Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(), ref.read(configProvider.notifier).state.getArchive(),
+                ref.read(configProvider.notifier).state.getScheduler());
             c.library.removeWorkout(w.getID());
             ref.read(configProvider.notifier).state = c;
             FileIO.writeConfig(ref.read(configProvider));
           },
-          child: Padding(padding: EdgeInsets.all(5), child: lt)));
+          child: lt));
     }
     return listOfButtons;
   }

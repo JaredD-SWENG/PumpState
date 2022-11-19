@@ -39,7 +39,11 @@ class _WorkoutsListState extends ConsumerState<WorkoutsList> {
       return Column(children: <Widget>[
         for (Workout w in c.library.workouts)
           RadioListTile(
-              title: Text(w.getName()),
+              title: Text(
+                w.getName(),
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              activeColor: creek(),
               value: w,
               groupValue: ref.watch(playWorkoutProvider),
               onChanged: (value) {

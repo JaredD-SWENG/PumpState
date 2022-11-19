@@ -8,7 +8,9 @@ class CalendarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: linearGradient(),
+      decoration: BoxDecoration(
+        gradient: backgroundGradient(),
+      ),
       child: Center(
         child: SchedulerScreen(),
       ),

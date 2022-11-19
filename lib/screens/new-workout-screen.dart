@@ -29,12 +29,11 @@ class NewWorkoutScreen extends ConsumerWidget {
     }
 
     return Container(
-      decoration: linearGradient(),
+      decoration: BoxDecoration(gradient: backgroundGradient()),
       child: Scaffold(
           backgroundColor: Colors.transparent,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            backgroundColor: Color.fromRGBO(48, 47, 47, 1.0),
             title: Text('New Workout'),
           ),
           body: Column(
@@ -44,11 +43,8 @@ class NewWorkoutScreen extends ConsumerWidget {
                   new LengthLimitingTextInputFormatter(12),
                 ],
                 onChanged: (s) {
-                  Workout w = Workout.createNew(
-                      ref.read(newWorkoutProvider).getID(),
-                      ref.read(newWorkoutProvider).getName(),
-                      ref.read(newWorkoutProvider).getActivityList(),
-                      ref.read(newWorkoutProvider).getFavorite());
+                  Workout w = Workout.createNew(ref.read(newWorkoutProvider).getID(), ref.read(newWorkoutProvider).getName(),
+                      ref.read(newWorkoutProvider).getActivityList(), ref.read(newWorkoutProvider).getFavorite());
                   w.setName(s);
                   ref.read(newWorkoutProvider.notifier).state = w;
                 },

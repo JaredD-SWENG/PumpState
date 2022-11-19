@@ -56,6 +56,17 @@ class Workout {
     return _activities[n].getName();
   }
 
+  getSumOfBreaks() {
+    int result = 0;
+    for (Activity a in _activities) {
+      if (a is Break) {
+        Break b = a;
+        result += b.getDuration().inMinutes;
+      }
+    }
+    return result;
+  }
+
   addActivity(Activity a) {
     _activities.add(a);
   }
