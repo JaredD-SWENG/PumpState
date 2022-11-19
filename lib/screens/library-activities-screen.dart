@@ -7,7 +7,6 @@ import '../classes/activity.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
 import '../classes/file-io.dart';
-import '../classes/library.dart';
 import '../providers/editExercise-provider.dart';
 import '../widgets/edit-exercise-form.dart';
 
@@ -23,12 +22,12 @@ class LibraryActivitiesScreen extends ConsumerWidget {
           child: const Icon(Icons.add),
         ),
         body: Container(
-            decoration: linearGradient(),
+            decoration: BoxDecoration(gradient: backgroundGradient()),
             child: Center(
-              child: Column(
-                children: generateButtons(activities, context, ref),
-              ),
-            )));
+                child: Scrollbar(
+                    child: ListView(
+              children: generateButtons(activities, context, ref),
+            )))));
   }
 
   List<Widget> generateButtons(List<Activity> activities, BuildContext context, WidgetRef ref) {
@@ -43,50 +42,79 @@ class LibraryActivitiesScreen extends ConsumerWidget {
     });
     for (Activity a in activities) {
       Exercise e = a as Exercise;
-      Icon fav = Icon(
+      Icon fav = const Icon(
         Icons.star_border_outlined,
       );
       if (e.getFavorite()) {
         fav = Icon(
           Icons.star,
+          color: creek(),
         );
       }
       ListTile eb = ListTile(
           iconColor: Colors.white,
           textColor: Colors.white,
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                onPressed: () {
-                  Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
-                      ref.read(configProvider.notifier).state.getArchive(), ref.read(configProvider.notifier).state.getScheduler());
-                  Exercise exercise = c.findActivity(ref.read(editExerciseProvider.notifier).state.getId()) as Exercise;
-                  e.toggleFavorite();
-                  ref.read(configProvider.notifier).state = c;
-                  ref.read(editExerciseProvider.notifier).state = exercise;
-                  FileIO.writeConfig(ref.read(configProvider));
-                },
-                icon: fav,
+              Expanded(
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
+                            ref.read(configProvider.notifier).state.getArchive(), ref.read(configProvider.notifier).state.getScheduler());
+                        Exercise exercise = c.findActivity(ref.read(editExerciseProvider.notifier).state.getId()) as Exercise;
+                        e.toggleFavorite();
+                        ref.read(configProvider.notifier).state = c;
+                        ref.read(editExerciseProvider.notifier).state = exercise;
+                        FileIO.writeConfig(ref.read(configProvider));
+                      },
+                      icon: fav,
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          ref.read(editExerciseProvider.notifier).state = e;
+                          showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) => const EditExerciseForm(),
+                          );
+                        },
+                        icon: Icon(Icons.edit, color: creek())),
+                  ],
+                ),
               ),
-              IconButton(
-                  onPressed: () {
-                    ref.read(editExerciseProvider.notifier).state = e;
-                    showModalBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      builder: (context) => const EditExerciseForm(),
-                    );
-                  },
-                  icon: Icon(Icons.edit, color: whiteOut())),
-              Text(e.getName()),
-              Text('Reps: ${e.getReps()}'),
-              Text('Sets: ${e.getSets()}'),
+              Expanded(
+                child: Text(
+                  e.getName(),
+                  softWrap: false,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text('Sets'),
+                  Text(
+                    e.getSets().toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text('Reps'),
+                  Text(
+                    e.getReps().toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )),
             ],
           ));
       listOfButtons.add(Dismissible(
           background: Container(
-            color: Color.fromRGBO(48, 47, 47, 1.0),
+            color: const Color.fromRGBO(48, 47, 47, 1.0),
           ),
           onDismissed: (DismissDirection horizontal) {
             listOfButtons.remove(eb);
@@ -97,7 +125,7 @@ class LibraryActivitiesScreen extends ConsumerWidget {
             FileIO.writeConfig(ref.read(configProvider));
           },
           key: ValueKey(eb),
-          child: Padding(padding: EdgeInsets.all(5), child: eb)));
+          child: eb));
     }
     return listOfButtons;
   }

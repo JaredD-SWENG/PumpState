@@ -5,6 +5,7 @@ import 'package:pump_state/screens/home-screen.dart';
 import 'package:pump_state/screens/library-activities-screen.dart';
 import 'package:pump_state/screens/library-workouts-screen.dart';
 import 'package:pump_state/screens/play-screen.dart';
+import 'package:pump_state/styles/styles.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -28,13 +29,13 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(48, 47, 47, 1.0),
+        backgroundColor: slate(),
         title: Text(titles[currentIndex]),
       ),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromRGBO(48, 47, 47, 1.0),
+        backgroundColor: slate(),
         unselectedItemColor: Colors.white,
         currentIndex: currentIndex,
         onTap: (selectedIndex) {

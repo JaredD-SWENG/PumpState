@@ -9,6 +9,12 @@ import '../providers/config-provider.dart';
 class PlayScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(decoration: linearGradient(), child: Column(children: [WorkoutsList(), BeginWorkoutButton()]));
+    return Container(
+        decoration: BoxDecoration(gradient: backgroundGradient()),
+        child: Scrollbar(
+            child: ListView(children: [
+          WorkoutsList(),
+          BeginWorkoutButton(),
+        ])));
   }
 }

@@ -135,7 +135,7 @@ class EditExerciseForm extends ConsumerWidget {
         child: const Text("Save"));
 
     return Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: limestone()),
+        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: slate()),
         height: MediaQuery.of(context).size.height * 0.33,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
           Row(children: [
@@ -150,7 +150,7 @@ class EditExerciseForm extends ConsumerWidget {
                   )
                 ]),
                 child: Card(
-                    color: pumpStateDarkBlue(),
+                    color: beaverBlue(),
                     child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                       Text('Name', style: Theme.of(context).textTheme.headline5),
                       exerciseName,
@@ -166,7 +166,7 @@ class EditExerciseForm extends ConsumerWidget {
                   )
                 ]),
                 child: Card(
-                    color: pumpStateDarkBlue(),
+                    color: beaverBlue(),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [Text('Favorite', style: Theme.of(context).textTheme.headline5), favoriteToggle],
@@ -185,7 +185,7 @@ class EditExerciseForm extends ConsumerWidget {
                     )
                   ]),
                   child: Card(
-                      color: pumpStateDarkBlue(),
+                      color: beaverBlue(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -209,7 +209,7 @@ class EditExerciseForm extends ConsumerWidget {
                     )
                   ]),
                   child: Card(
-                      color: pumpStateDarkBlue(),
+                      color: beaverBlue(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [

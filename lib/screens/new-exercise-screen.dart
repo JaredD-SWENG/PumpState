@@ -11,7 +11,6 @@ class NewExerciseScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(48, 47, 47, 1.0),
           title: Text('New Exercise'),
         ),
         body: NewExerciseForm());

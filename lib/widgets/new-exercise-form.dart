@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/styles/styles.dart';
@@ -69,6 +70,9 @@ class ExerciseFormState extends ConsumerState<NewExerciseForm> {
       decoration: const InputDecoration(
         hintText: "Exercise name",
       ),
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(12),
+      ],
       onChanged: setName,
       initialValue: _name,
     );
@@ -111,7 +115,7 @@ class ExerciseFormState extends ConsumerState<NewExerciseForm> {
         child: const Text("Save"));
 
     return Container(
-      decoration: linearGradient(),
+      decoration: BoxDecoration(gradient: backgroundGradient()),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
