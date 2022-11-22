@@ -4,6 +4,7 @@ import 'package:pump_state/providers/workout-provider.dart';
 
 import '../classes/break.dart';
 import '../classes/workout.dart';
+import '../styles/styles.dart';
 
 class BreakButtons extends ConsumerWidget {
   @override
@@ -14,14 +15,14 @@ class BreakButtons extends ConsumerWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Text(
+            const Text(
               '30',
               style: TextStyle(color: Colors.white),
             ),
             Transform.scale(
               scale: 1.25,
               child: IconButton(
-                  color: Colors.white,
+                  color: creek(),
                   onPressed: () {
                     Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
                         ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
@@ -37,12 +38,14 @@ class BreakButtons extends ConsumerWidget {
           children: [
             Text(
               '60',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                color: whiteOut(),
+              ),
             ),
             Transform.scale(
               scale: 1.25,
               child: IconButton(
-                  color: Colors.white,
+                  color: creek(),
                   onPressed: () {
                     Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
                         ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
@@ -58,12 +61,14 @@ class BreakButtons extends ConsumerWidget {
           children: [
             Text(
               '90',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                color: whiteOut(),
+              ),
             ),
             Transform.scale(
               scale: 1.25,
               child: IconButton(
-                  color: Colors.white,
+                  color: creek(),
                   onPressed: () {
                     Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
                         ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());

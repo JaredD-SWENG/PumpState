@@ -23,13 +23,12 @@ class UpdateWorkoutButton extends ConsumerWidget {
 
     return Center(
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
         onPressed: () {
           saveWorkout();
           Navigator.pop(context);
         },
         child: Text(
-          'Save Workout',
+          'Update Workout',
           style: TextStyle(color: Colors.black),
         ),
       ),
