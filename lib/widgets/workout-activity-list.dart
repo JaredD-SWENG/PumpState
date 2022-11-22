@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pump_state/providers/workout-provider.dart';
 
 import '../classes/activity.dart';
-import '../classes/exercise.dart';
 import '../classes/workout.dart';
 import '../styles/styles.dart';
 
@@ -13,8 +12,17 @@ class NewWorkoutActivityList extends ConsumerWidget {
     Workout w = ref.watch(workoutProvider);
     List<Widget> listTiles = [];
     for (Activity a in w.getActivityList()) {
-      ListTile lt =
-          ListTile(tileColor: Colors.transparent, key: Key(a.getId()), title: Row(children: [Icon(Icons.drag_indicator), Text(a.getName())]));
+      ListTile lt = ListTile(
+        tileColor: Colors.transparent,
+        key: Key(a.getId()),
+        title: Row(children: [
+          Icon(
+            Icons.drag_indicator,
+            color: creek(),
+          ),
+          Text(a.getName()),
+        ]),
+      );
       listTiles.add(lt);
     }
     return Theme(
@@ -25,7 +33,7 @@ class NewWorkoutActivityList extends ConsumerWidget {
           thumbVisibility: true,
           thickness: 1.25,
           mainAxisMargin: 5,
-          radius: Radius.circular(5),
+          radius: const Radius.circular(5),
           crossAxisMargin: 38,
           thumbColor: whiteOut(),
           child: ReorderableListView(

@@ -43,26 +43,36 @@ class _ExerciseDropdownState extends ConsumerState<ExerciseDropdown> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            DropdownButton(
-              value: selectedExercise,
-              items: ref.read(configProvider).library.getActivitiesAsExercises().map<DropdownMenuItem<Exercise>>((Exercise e) {
-                return DropdownMenuItem<Exercise>(
-                    value: e,
-                    child: Text(
-                      e.getName(),
-                      style: TextStyle(color: whiteOut()),
-                    ));
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedExercise = value!;
-                });
-              },
+            Theme(
+              data: Theme.of(context).copyWith(
+                canvasColor: creek(),
+              ),
+              child: DropdownButton(
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color: creek(),
+                ),
+                value: selectedExercise,
+                items: ref.read(configProvider).library.getActivitiesAsExercises().map<DropdownMenuItem<Exercise>>((Exercise e) {
+                  return DropdownMenuItem<Exercise>(
+                      value: e,
+                      child: Text(
+                        e.getName(),
+                        style: TextStyle(
+                          color: whiteOut(),
+                        ),
+                      ));
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedExercise = value!;
+                  });
+                },
+              ),
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
                   onPressed: () {
                     Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
                         ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
@@ -71,7 +81,7 @@ class _ExerciseDropdownState extends ConsumerState<ExerciseDropdown> {
                     w.addActivity(newExercise);
                     ref.read(workoutProvider.notifier).state = w;
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.add,
                     color: Colors.black,
                   )),
