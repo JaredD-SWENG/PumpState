@@ -4,6 +4,7 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 
 import '../classes/break.dart';
+import '../styles/styles.dart';
 
 class PlayBreak extends StatefulWidget {
   final Function changeScreen;
@@ -25,23 +26,22 @@ class _PlayBreakState extends State<PlayBreak> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        CircularCountDownTimer(
-          width: 50,
-          height: 50,
-          duration: defaultBreak,
-          initialDuration: 1,
-          fillColor: Colors.black,
-          ringColor: Colors.white,
-          isReverse: false,
-          onComplete: () {
-            widget.changeScreen();
-          },
-        )
-      ],
-    ));
+    return Container(
+      padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height * .33, 0, MediaQuery.of(context).size.height * .33),
+      child: CircularCountDownTimer(
+        width: MediaQuery.of(context).size.width * .33,
+        height: MediaQuery.of(context).size.width * .33,
+        textStyle: Theme.of(context).textTheme.headline5,
+        duration: defaultBreak,
+        initialDuration: 1,
+        fillColor: creek(),
+        ringColor: Colors.white,
+        strokeWidth: 10,
+        isReverse: false,
+        onComplete: () {
+          widget.changeScreen();
+        },
+      ),
+    );
   }
 }

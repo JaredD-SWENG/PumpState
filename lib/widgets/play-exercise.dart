@@ -7,8 +7,9 @@ import '../styles/styles.dart';
 class PlayExercise extends StatefulWidget {
   final Activity a;
   final int setNumber;
+  final int setCountInExercise;
 
-  const PlayExercise({Key? key, required this.a, required this.setNumber}) : super(key: key);
+  const PlayExercise({Key? key, required this.a, required this.setNumber, required this.setCountInExercise}) : super(key: key);
 
   @override
   State<PlayExercise> createState() => _PlayExerciseState();
@@ -59,11 +60,11 @@ class _PlayExerciseState extends State<PlayExercise> {
                             children: [
                               Text(
                                 'Set',
-                                style: Theme.of(context).textTheme.headline5,
+                                style: Theme.of(context).textTheme.headline6,
                               ),
                               Text(
-                                '${widget.setNumber}',
-                                style: Theme.of(context).textTheme.headline5,
+                                '${widget.setNumber} / ${widget.setCountInExercise}',
+                                style: Theme.of(context).textTheme.headline6,
                               ),
                             ],
                           ))),
@@ -75,11 +76,11 @@ class _PlayExerciseState extends State<PlayExercise> {
                             children: [
                               Text(
                                 'Reps',
-                                style: Theme.of(context).textTheme.headline5,
+                                style: Theme.of(context).textTheme.headline6,
                               ),
                               Text(
                                 '${reps}',
-                                style: Theme.of(context).textTheme.headline5,
+                                style: Theme.of(context).textTheme.headline6,
                               ),
                             ],
                           ))),

@@ -62,6 +62,7 @@ class Exercise extends Activity {
     return _id;
   }
 
+  @override
   getName() {
     return _name;
   }
