@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump_state/providers/config-provider.dart';
-import 'package:pump_state/providers/new-workout-provider.dart';
+import 'package:pump_state/providers/workout-provider.dart';
 import 'package:pump_state/styles/styles.dart';
 import 'package:pump_state/widgets/break-buttons.dart';
 import 'package:pump_state/widgets/exercise-dropdown.dart';
-import 'package:pump_state/widgets/new-workout-activity-list.dart';
+import 'package:pump_state/widgets/workout-activity-list.dart';
 import 'package:pump_state/widgets/save-workout-button.dart';
 
 import '../classes/workout.dart';
@@ -35,6 +35,13 @@ class NewWorkoutScreen extends ConsumerWidget {
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: Text('New Workout'),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                ref.read(workoutProvider.notifier).state = Workout();
+                Navigator.of(context).pop();
+              },
+            ),
           ),
           body: Column(
             children: <Widget>[
@@ -43,10 +50,10 @@ class NewWorkoutScreen extends ConsumerWidget {
                   new LengthLimitingTextInputFormatter(12),
                 ],
                 onChanged: (s) {
-                  Workout w = Workout.createNew(ref.read(newWorkoutProvider).getID(), ref.read(newWorkoutProvider).getName(),
-                      ref.read(newWorkoutProvider).getActivityList(), ref.read(newWorkoutProvider).getFavorite());
+                  Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
+                      ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
                   w.setName(s);
-                  ref.read(newWorkoutProvider.notifier).state = w;
+                  ref.read(workoutProvider.notifier).state = w;
                 },
               ),
               Expanded(flex: 2, child: initDropDown),

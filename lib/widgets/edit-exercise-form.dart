@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:pump_state/providers/config-provider.dart';
-import 'package:pump_state/providers/editExercise-provider.dart';
+import 'package:pump_state/providers/exercise-provider.dart';
 import 'package:pump_state/styles/styles.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
@@ -13,57 +13,57 @@ class EditExerciseForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String _id = ref.watch(editExerciseProvider).getId();
-    String _name = ref.watch(editExerciseProvider).getName();
-    int _sets = ref.watch(editExerciseProvider).getSets();
-    int _reps = ref.watch(editExerciseProvider).getReps();
-    bool _favorite = ref.watch(editExerciseProvider).getFavorite();
+    String _id = ref.watch(exerciseProvider).getId();
+    String _name = ref.watch(exerciseProvider).getName();
+    int _sets = ref.watch(exerciseProvider).getSets();
+    int _reps = ref.watch(exerciseProvider).getReps();
+    bool _favorite = ref.watch(exerciseProvider).getFavorite();
 
     void incrementSets() {
       Exercise e = Exercise.updateState(_id, _name, ++_sets, _reps, _favorite);
-      ref.read(editExerciseProvider.notifier).state = e;
+      ref.read(exerciseProvider.notifier).state = e;
     }
 
     void decrementSets() {
       if (_sets == 0) return;
 
       Exercise e = Exercise.updateState(_id, _name, --_sets, _reps, _favorite);
-      ref.read(editExerciseProvider.notifier).state = e;
+      ref.read(exerciseProvider.notifier).state = e;
     }
 
     void incrementReps() {
       Exercise e = Exercise.updateState(_id, _name, _sets, ++_reps, _favorite);
-      ref.read(editExerciseProvider.notifier).state = e;
+      ref.read(exerciseProvider.notifier).state = e;
     }
 
     void decrementReps() {
       if (_reps == 0) return;
 
       Exercise e = Exercise.updateState(_id, _name, _sets, --_reps, _favorite);
-      ref.watch(editExerciseProvider.notifier).state = e;
+      ref.watch(exerciseProvider.notifier).state = e;
     }
 
     void toggleFavorite(bool b) {
       Exercise e = Exercise.updateState(_id, _name, _sets, _reps, b);
-      ref.watch(editExerciseProvider.notifier).state = e;
+      ref.watch(exerciseProvider.notifier).state = e;
     }
 
     void setName(String s) {
       _name = s;
       Exercise e = Exercise.updateState(_id, _name, _sets, _reps, _favorite);
-      ref.watch(editExerciseProvider.notifier).state = e;
+      ref.watch(exerciseProvider.notifier).state = e;
     }
 
     saveExercise() {
       Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(), ref.read(configProvider.notifier).state.getArchive(),
           ref.read(configProvider.notifier).state.getScheduler());
-      Exercise exercise = c.findActivity(ref.read(editExerciseProvider.notifier).state.getId()) as Exercise;
+      Exercise exercise = c.findActivity(ref.read(exerciseProvider.notifier).state.getId()) as Exercise;
       exercise.setName(_name);
       exercise.setSets(_sets);
       exercise.setReps(_reps);
       exercise.setFavorite(_favorite);
       ref.read(configProvider.notifier).state = c;
-      ref.read(editExerciseProvider.notifier).state = exercise;
+      ref.read(exerciseProvider.notifier).state = exercise;
       FileIO.writeConfig(ref.read(configProvider));
     }
 
@@ -141,14 +141,16 @@ class EditExerciseForm extends ConsumerWidget {
           Row(children: [
             Container(
                 width: MediaQuery.of(context).size.width * .5,
-                decoration: const BoxDecoration(boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  )
-                ]),
+                decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    )
+                  ],
+                ),
                 child: Card(
                     color: beaverBlue(),
                     child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
