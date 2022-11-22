@@ -19,12 +19,14 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
   late final activityCount;
   late Activity currentActivity;
   late int currentSetCount;
+  int setsInExercise = 0;
   int currentActivityIndex = 0;
   int screenIndex = 0;
   late List<Widget> screens = <Widget>[
     PlayExercise(
       a: currentActivity,
       setNumber: currentSetCount,
+      setCountInExercise: setsInExercise,
     ),
     PlayBreak(
       changeScreen: changeScreenFromBreak,
@@ -43,6 +45,8 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
     currentActivity = ref.read(playWorkoutProvider).getActivityList()[0];
     currentSetCount = 1;
     if (currentActivity is Exercise) {
+      Exercise e = currentActivity as Exercise;
+      setsInExercise = e.getSets();
       screenIndex = 0;
     } else {
       screenIndex = 2;
@@ -63,6 +67,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
         screens[0] = PlayExercise(
           a: currentActivity,
           setNumber: currentSetCount,
+          setCountInExercise: setsInExercise,
         );
         screenIndex = 1;
       } else {
@@ -77,6 +82,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
             screens[0] = PlayExercise(
               a: currentActivity,
               setNumber: currentSetCount,
+              setCountInExercise: e.getSets(),
             );
             screenIndex = 0;
           }
@@ -111,6 +117,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
           screens[0] = PlayExercise(
             a: currentActivity,
             setNumber: currentSetCount,
+            setCountInExercise: setsInExercise,
           );
           screenIndex = 0;
         }

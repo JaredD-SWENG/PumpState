@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pump_state/providers/workout-provider.dart';
 
 import '../classes/activity.dart';
+import '../classes/exercise.dart';
 import '../classes/workout.dart';
 import '../styles/styles.dart';
 
@@ -20,7 +21,23 @@ class NewWorkoutActivityList extends ConsumerWidget {
             Icons.drag_indicator,
             color: creek(),
           ),
-          Text(a.getName()),
+          Container(
+            padding: EdgeInsets.all(5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  a.getName(),
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                if (a is Exercise)
+                  Text(
+                    'Sets: ${a.getSets().toString()} Reps: ${a.getReps().toString()}',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+              ],
+            ),
+          )
         ]),
       );
       listTiles.add(lt);
