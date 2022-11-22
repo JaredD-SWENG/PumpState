@@ -56,12 +56,18 @@ class Workout {
     return _activities[n].getName();
   }
 
+  setActivities(List<Activity> la) {
+    _activities = la;
+  }
+
   getSumOfBreaks() {
     int result = 0;
     for (Activity a in _activities) {
       if (a is Break) {
         Break b = a;
-        result += b.getDuration().inMinutes;
+        result += b
+            .getDuration()
+            .inMinutes;
       }
     }
     return result;
@@ -85,6 +91,10 @@ class Workout {
 
   getFavorite() {
     return _favorite;
+  }
+
+  setFavorite(bool b) {
+    _favorite = b;
   }
 
   toggleFavorite() {

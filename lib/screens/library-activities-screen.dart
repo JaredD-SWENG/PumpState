@@ -7,7 +7,7 @@ import '../classes/activity.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
 import '../classes/file-io.dart';
-import '../providers/editExercise-provider.dart';
+import '../providers/exercise-provider.dart';
 import '../widgets/edit-exercise-form.dart';
 
 class LibraryActivitiesScreen extends ConsumerWidget {
@@ -64,17 +64,17 @@ class LibraryActivitiesScreen extends ConsumerWidget {
                       onPressed: () {
                         Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
                             ref.read(configProvider.notifier).state.getArchive(), ref.read(configProvider.notifier).state.getScheduler());
-                        Exercise exercise = c.findActivity(ref.read(editExerciseProvider.notifier).state.getId()) as Exercise;
+                        Exercise exercise = c.findActivity(ref.read(exerciseProvider.notifier).state.getId()) as Exercise;
                         e.toggleFavorite();
                         ref.read(configProvider.notifier).state = c;
-                        ref.read(editExerciseProvider.notifier).state = exercise;
+                        ref.read(exerciseProvider.notifier).state = exercise;
                         FileIO.writeConfig(ref.read(configProvider));
                       },
                       icon: fav,
                     ),
                     IconButton(
                         onPressed: () {
-                          ref.read(editExerciseProvider.notifier).state = e;
+                          ref.read(exerciseProvider.notifier).state = e;
                           showModalBottomSheet(
                             backgroundColor: Colors.transparent,
                             context: context,

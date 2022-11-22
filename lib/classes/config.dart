@@ -9,7 +9,7 @@ import 'library.dart';
 import 'archive.dart';
 
 import 'package:flutter/material.dart';
-import 'package:pump_state/providers/editExercise-provider.dart';
+import 'package:pump_state/providers/exercise-provider.dart';
 
 class Config {
   late Library library;
@@ -95,10 +95,12 @@ class Config {
     return activity;
   }
 
-  Workout findWorkout(String s){
+  Workout findWorkout(String s) {
+    print("key: $s");
     Workout workout = Workout();
-    for(Workout w in library.workouts){
-      if(s == w.getID()){
+    for (Workout w in library.workouts) {
+      print("searchval: ${w.getID()}");
+      if (s == w.getID()) {
         workout = w;
         return workout;
       }
@@ -106,7 +108,7 @@ class Config {
     return workout;
   }
 
-  bool activitiesIsEmpty(){
+  bool activitiesIsEmpty() {
     return library.activitiesIsEmpty();
   }
 

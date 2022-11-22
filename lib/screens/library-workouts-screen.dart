@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump_state/providers/workout-provider.dart';
+import 'package:pump_state/screens/new-workout-screen.dart';
 import 'package:pump_state/styles/styles.dart';
+import 'package:pump_state/widgets/edit-workout-form.dart';
 
+import '../classes/activity.dart';
 import '../classes/config.dart';
 import '../classes/file-io.dart';
 import '../classes/workout.dart';
@@ -40,6 +44,7 @@ class LibraryWorkoutScreen extends ConsumerWidget {
       }
     });
     for (Workout w in workouts) {
+      print(w.getSizeOfActivityList());
       Icon fav = Icon(Icons.star_border_outlined);
       if (w.getFavorite()) {
         fav = Icon(
@@ -70,7 +75,17 @@ class LibraryWorkoutScreen extends ConsumerWidget {
                   ),
                   IconButton(
                       onPressed: () {
-                        return;
+                        ref.read(workoutProvider.notifier).state =
+                            Workout.createNew(w.getID(), w.getName(), w.getActivityList().toList(), w.getFavorite());
+                        showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) {
+                            return const EditWorkoutForm();
+                          },
+                        ).whenComplete(() {
+                          ref.read(workoutProvider.notifier).state = Workout();
+                        });
                       },
                       icon: Icon(Icons.edit, color: creek())),
                 ],
@@ -97,7 +112,7 @@ class LibraryWorkoutScreen extends ConsumerWidget {
                 ),
                 Text.rich(
                   TextSpan(
-                    text: 'Pause Time ',
+                    text: 'Pauses ',
                     children: [
                       TextSpan(
                         text: w.getSumOfBreaks().toString(),
@@ -108,7 +123,6 @@ class LibraryWorkoutScreen extends ConsumerWidget {
                       )
                     ],
                   ),
-                  softWrap: false,
                 )
               ],
             ))

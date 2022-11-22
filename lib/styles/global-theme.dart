@@ -24,5 +24,6 @@ ThemeData globalTheme() {
       appBarTheme: AppBarTheme(color: slate()),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: creek(),
-      ));
+      ),
+      cardTheme: CardTheme(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))));
 }

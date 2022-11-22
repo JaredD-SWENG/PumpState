@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pump_state/providers/new-workout-provider.dart';
+import 'package:pump_state/providers/workout-provider.dart';
 
 import '../classes/break.dart';
 import '../classes/workout.dart';
@@ -14,16 +14,19 @@ class BreakButtons extends ConsumerWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Text('30', style: TextStyle( color: Colors.white),),
+            Text(
+              '30',
+              style: TextStyle(color: Colors.white),
+            ),
             Transform.scale(
               scale: 1.25,
               child: IconButton(
-                color: Colors.white,
+                  color: Colors.white,
                   onPressed: () {
-                    Workout w = Workout.createNew(ref.read(newWorkoutProvider).getID(), ref.read(newWorkoutProvider).getName(),
-                        ref.read(newWorkoutProvider).getActivityList(), ref.read(newWorkoutProvider).getFavorite());
+                    Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
+                        ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
                     w.addActivity(Break(const Duration(seconds: 30)));
-                    ref.read(newWorkoutProvider.notifier).state = w;
+                    ref.read(workoutProvider.notifier).state = w;
                   },
                   icon: const Icon(Icons.circle_outlined)),
             )
@@ -32,16 +35,19 @@ class BreakButtons extends ConsumerWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Text('60', style: TextStyle( color: Colors.white),),
+            Text(
+              '60',
+              style: TextStyle(color: Colors.white),
+            ),
             Transform.scale(
               scale: 1.25,
               child: IconButton(
-                color: Colors.white,
+                  color: Colors.white,
                   onPressed: () {
-                    Workout w = Workout.createNew(ref.read(newWorkoutProvider).getID(), ref.read(newWorkoutProvider).getName(),
-                        ref.read(newWorkoutProvider).getActivityList(), ref.read(newWorkoutProvider).getFavorite());
+                    Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
+                        ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
                     w.addActivity(Break(const Duration(seconds: 60)));
-                    ref.read(newWorkoutProvider.notifier).state = w;
+                    ref.read(workoutProvider.notifier).state = w;
                   },
                   icon: const Icon(Icons.circle_outlined)),
             )
@@ -50,16 +56,19 @@ class BreakButtons extends ConsumerWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Text('90', style: TextStyle( color: Colors.white),),
+            Text(
+              '90',
+              style: TextStyle(color: Colors.white),
+            ),
             Transform.scale(
               scale: 1.25,
               child: IconButton(
-                color: Colors.white,
+                  color: Colors.white,
                   onPressed: () {
-                    Workout w = Workout.createNew(ref.read(newWorkoutProvider).getID(), ref.read(newWorkoutProvider).getName(),
-                        ref.read(newWorkoutProvider).getActivityList(), ref.read(newWorkoutProvider).getFavorite());
+                    Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
+                        ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
                     w.addActivity(Break(const Duration(seconds: 90)));
-                    ref.read(newWorkoutProvider.notifier).state = w;
+                    ref.read(workoutProvider.notifier).state = w;
                   },
                   icon: const Icon(Icons.circle_outlined)),
             )
