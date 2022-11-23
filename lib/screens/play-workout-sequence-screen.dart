@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump_state/classes/completedWorkout.dart';
+import 'package:pump_state/classes/file-io.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/providers/play-workout-provider.dart';
+import 'package:pump_state/screens/workout-complete-screen.dart';
 import 'package:pump_state/styles/styles.dart';
 import '../classes/activity.dart';
 import '../classes/break.dart';
+import '../classes/config.dart';
 import '../classes/exercise.dart';
 import '../widgets/play-break.dart';
 import '../widgets/play-exercise.dart';
@@ -22,11 +26,14 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
   int setsInExercise = 0;
   int currentActivityIndex = 0;
   int screenIndex = 0;
+  double pumpPoints = 0;
+  int actualReps = 0;
   late List<Widget> screens = <Widget>[
     PlayExercise(
       a: currentActivity,
       setNumber: currentSetCount,
       setCountInExercise: setsInExercise,
+      setReps: setReps,
     ),
     PlayBreak(
       changeScreen: changeScreenFromBreak,
@@ -35,6 +42,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
       a: currentActivity,
       changeScreen: changeScreenFromPause,
     ),
+    WorkoutCompleteScreen(pumpPoints: pumpPoints),
   ];
 
   @override
@@ -53,6 +61,18 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
     }
   }
 
+  void setReps(int i) {
+    actualReps = i;
+  }
+
+  void archiveWorkout() {
+    CompletedWorkout cw = CompletedWorkout(DateTime.now().toString(), pumpPoints.toStringAsFixed(0));
+    Config c = ref.read(configProvider);
+    c.archive.addCompletedWorkout(cw);
+    ref.read(configProvider.notifier).state = c;
+    FileIO.writeConfig(ref.read(configProvider));
+  }
+
   handleContinue() {
     setState(() {
       /*
@@ -63,11 +83,13 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
       if (currentSetCount < e.getSets()) {
         // If hitting continue and there are more sets to complete
         currentSetCount++;
+        // Calculate Pump Points
         // Rebuild state of play exercise
         screens[0] = PlayExercise(
           a: currentActivity,
           setNumber: currentSetCount,
           setCountInExercise: setsInExercise,
+          setReps: setReps,
         );
         screenIndex = 1;
       } else {
@@ -83,6 +105,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
               a: currentActivity,
               setNumber: currentSetCount,
               setCountInExercise: e.getSets(),
+              setReps: setReps,
             );
             screenIndex = 0;
           }
@@ -93,6 +116,10 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
             screens[2] = PlayPause(a: nextActivity, changeScreen: changeScreenFromPause);
             screenIndex = 2;
           }
+        } else {
+          archiveWorkout();
+          screens[3] = WorkoutCompleteScreen(pumpPoints: pumpPoints);
+          screenIndex = 3;
         }
       }
     });
@@ -106,9 +133,6 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
 
   changeScreenFromPause() {
     setState(() {
-      print("currentActivityIndex = $currentActivityIndex");
-      print("activityCount = $activityCount");
-
       if (currentActivityIndex < activityCount) {
         Activity nextActivity = ref.read(playWorkoutProvider).getActivity(currentActivityIndex + 1);
         if (nextActivity is Exercise) {
@@ -118,17 +142,37 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
             a: currentActivity,
             setNumber: currentSetCount,
             setCountInExercise: setsInExercise,
+            setReps: setReps,
           );
           screenIndex = 0;
         }
         if (nextActivity is Break) {
           currentActivityIndex++;
           currentActivity = nextActivity;
-          screens[2] = new PlayPause(key: UniqueKey(), a: nextActivity, changeScreen: changeScreenFromPause);
+          screens[2] = PlayPause(
+            key: UniqueKey(),
+            a: nextActivity,
+            changeScreen: changeScreenFromPause,
+          );
           screenIndex = 2;
         }
+      } else {
+        archiveWorkout();
+        screens[3] = WorkoutCompleteScreen(pumpPoints: pumpPoints);
+        screenIndex = 3;
       }
     });
+  }
+
+  void addPumpPoints() {
+    Exercise e = currentActivity as Exercise;
+    if (actualReps > e.getReps()) {
+      pumpPoints += (actualReps * 1.25) * 1000;
+    } else if (actualReps == e.getReps()) {
+      pumpPoints += (actualReps * 1000);
+    } else {
+      pumpPoints += (actualReps * 0.75) * 1000;
+    }
   }
 
   @override
@@ -146,13 +190,18 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
                 alignment: Alignment.center,
                 child: screens[screenIndex],
               ),
-              Expanded(
-                  flex: 1,
-                  child: IconButton(
-                      onPressed: () {
-                        handleContinue();
-                      },
-                      icon: const Icon(Icons.arrow_circle_right)))
+              if (screenIndex == 0)
+                Expanded(
+                    flex: 1,
+                    child: IconButton(
+                        onPressed: () {
+                          addPumpPoints();
+                          handleContinue();
+                          if (currentActivityIndex < activityCount) {
+                            actualReps = 0;
+                          }
+                        },
+                        icon: const Icon(Icons.arrow_circle_right)))
             ],
           )),
     );

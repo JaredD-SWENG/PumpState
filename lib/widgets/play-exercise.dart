@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pump_state/providers/pump-points-provider.dart';
 
 import '../classes/activity.dart';
 import '../classes/exercise.dart';
@@ -8,8 +9,15 @@ class PlayExercise extends StatefulWidget {
   final Activity a;
   final int setNumber;
   final int setCountInExercise;
+  final Function setReps;
 
-  const PlayExercise({Key? key, required this.a, required this.setNumber, required this.setCountInExercise}) : super(key: key);
+  const PlayExercise({
+    Key? key,
+    required this.a,
+    required this.setNumber,
+    required this.setCountInExercise,
+    required this.setReps,
+  }) : super(key: key);
 
   @override
   State<PlayExercise> createState() => _PlayExerciseState();
@@ -27,11 +35,13 @@ class _PlayExerciseState extends State<PlayExercise> {
     e = widget.a as Exercise;
     reps = e.getReps();
     sets = widget.setNumber;
+    widget.setReps(reps);
   }
 
   void incrementReps() {
     setState(() {
       reps++;
+      widget.setReps(reps);
     });
   }
 
@@ -39,11 +49,13 @@ class _PlayExerciseState extends State<PlayExercise> {
     setState(() {
       if (reps == 0) return;
       reps--;
+      widget.setReps(reps);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    print('Reps: $reps');
     return Column(children: [
       Padding(
           padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * .4, 10, MediaQuery.of(context).size.width * .4, 10),
@@ -55,7 +67,7 @@ class _PlayExerciseState extends State<PlayExercise> {
                   Align(
                       alignment: Alignment.center,
                       child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Column(
                             children: [
                               Text(
@@ -71,7 +83,7 @@ class _PlayExerciseState extends State<PlayExercise> {
                   Align(
                       alignment: Alignment.center,
                       child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                           child: Column(
                             children: [
                               Text(
@@ -79,7 +91,7 @@ class _PlayExerciseState extends State<PlayExercise> {
                                 style: Theme.of(context).textTheme.headline6,
                               ),
                               Text(
-                                '${reps}',
+                                '${e.getReps()}',
                                 style: Theme.of(context).textTheme.headline6,
                               ),
                             ],

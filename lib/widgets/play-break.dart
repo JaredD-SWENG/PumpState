@@ -16,7 +16,7 @@ class PlayBreak extends StatefulWidget {
 }
 
 class _PlayBreakState extends State<PlayBreak> with TickerProviderStateMixin {
-  final int defaultBreak = 15;
+  final int defaultBreak = 2;
 
   @override
   void initState() {

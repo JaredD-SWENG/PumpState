@@ -16,7 +16,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
-  final titles = ['Home', 'Calendar', 'Play', 'Exercise Library', 'Workout Library'];
+  final titles = ['Home', 'Calendar', 'Play Workout', 'Exercise Library', 'Workout Library'];
   final screens = [HomeScreen(), CalendarScreen(), PlayScreen(), LibraryActivitiesScreen(), LibraryWorkoutScreen()];
 
   void changeScreen(int selectedIndex) {

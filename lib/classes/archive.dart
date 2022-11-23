@@ -16,8 +16,7 @@ class Archive {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = Map();
-    map['completedWorkouts'] =
-        _completedWorkouts.map((i) => i.toJson()).toList();
+    map['completedWorkouts'] = _completedWorkouts.map((i) => i.toJson()).toList();
 
     return map;
   }
@@ -28,5 +27,15 @@ class Archive {
 
   List<CompletedWorkout> getCompletedWorkouts() {
     return _completedWorkouts;
+  }
+
+  List<CompletedWorkout> thisWeeksCompletedWorkouts() {
+    List<CompletedWorkout> completedWorkouts = [];
+    for (CompletedWorkout cw in _completedWorkouts) {
+      if (cw.isThisWeek()) {
+        completedWorkouts.add(cw);
+      }
+    }
+    return completedWorkouts;
   }
 }
