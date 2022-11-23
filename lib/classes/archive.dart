@@ -38,4 +38,30 @@ class Archive {
     }
     return completedWorkouts;
   }
+
+  int getPumpPointsThisWeek() {
+    int result = 0;
+    for (CompletedWorkout cw in thisWeeksCompletedWorkouts()) {
+      result += cw.getPumpPoints();
+    }
+    return result;
+  }
+
+  List<int> getPumpPointsThisWeekArr() {
+    List<int> result = [0, 0, 0, 0, 0, 0, 0];
+    for (int i = 1; i < 8; i++) {
+      for (CompletedWorkout cw in thisWeeksCompletedWorkouts()) {
+        if (cw
+            .getDate()
+            .weekday == i) {
+          if (i == 7) {
+            result[0] += cw.getPumpPoints();
+          } else {
+            result[i] += cw.getPumpPoints();
+          }
+        }
+      }
+    }
+    return result;
+  }
 }
