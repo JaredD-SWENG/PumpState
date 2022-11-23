@@ -43,6 +43,7 @@ dependencies:
   uuid: ^3.0.6
   path_provider: ^2.0.11
   circular_countdown_timer: ^0.2.2
+  fl_chart: ^0.55.2
 
 dev_dependencies:
   flutter_test:
