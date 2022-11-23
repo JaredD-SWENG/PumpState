@@ -24,5 +24,9 @@ class CompletedWorkout {
     }
   }
 
+  DateTime getDate() {
+    return _date;
+  }
+
   Map<String, dynamic> toJson() => {'date': _date.toString(), 'points': _pumpPoints.toString()};
 }

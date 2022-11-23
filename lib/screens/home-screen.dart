@@ -1,7 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pump_state/styles/styles.dart';
-import 'package:pump_state/widgets/seven-day-pump-points-widget.dart';
+import 'package:pump_state/widgets/this-week-pump-points-chart.dart';
+import 'package:pump_state/widgets/this-week-workouts-completed.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,11 +13,18 @@ class HomeScreen extends StatelessWidget {
       decoration: BoxDecoration(gradient: backgroundGradient()),
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Row(
-              children: [
-                SevenDayPumpPoints(),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                ThisWeekWorkoutsCompleted(),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                ThisWeekPumpPointsChart(),
               ],
             ),
           ],
