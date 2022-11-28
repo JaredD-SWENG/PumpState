@@ -4,6 +4,8 @@ class CompletedWorkout {
   DateTime _date = DateTime.now();
   int _pumpPoints = 0;
 
+  CompletedWorkout.createNew(this._date, this._pumpPoints);
+
   CompletedWorkout(String s, String pumpPoints) {
     _date = DateTime.parse(s);
     _pumpPoints = int.parse(pumpPoints);
@@ -16,8 +18,8 @@ class CompletedWorkout {
   bool isThisWeek() {
     DateTime now = DateUtils.dateOnly(DateTime.now());
     // Get monday of this week
-    DateTime mondayThisWeek = now.subtract(Duration(days: now.weekday - 1));
-    if (DateUtils.dateOnly(_date).isAfter(mondayThisWeek)) {
+    DateTime mondayThisWeek = now.subtract(Duration(days: now.weekday));
+    if (DateUtils.dateOnly(_date).isAfter(mondayThisWeek) || DateUtils.isSameDay(mondayThisWeek, _date)) {
       return true;
     } else {
       return false;

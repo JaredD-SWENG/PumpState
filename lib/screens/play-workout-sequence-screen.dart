@@ -66,7 +66,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
   }
 
   void archiveWorkout() {
-    CompletedWorkout cw = CompletedWorkout(DateTime.now().toString(), pumpPoints.toStringAsFixed(0));
+    CompletedWorkout cw = CompletedWorkout.createNew(DateTime.now(), pumpPoints.toInt());
     Config c = ref.read(configProvider);
     c.archive.addCompletedWorkout(cw);
     ref.read(configProvider.notifier).state = c;
