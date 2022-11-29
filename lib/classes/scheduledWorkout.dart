@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:pump_state/classes/workout.dart';
 import 'package:uuid/uuid.dart';
 
@@ -10,6 +11,11 @@ class ScheduledWorkout {
     scheduledWorkout = w;
   }
 
+  ScheduledWorkout.fromCalendar(DateTime d, Workout w) {
+    scheduledDate = d;
+    scheduledWorkout = w;
+  }
+
   getDate() {
     return scheduledDate;
   }
@@ -18,8 +24,17 @@ class ScheduledWorkout {
     return ScheduledWorkout;
   }
 
-  Map<String, dynamic> toJson() => {
-        'scheduledDate': scheduledDate.toString(),
-        'scheduledWorkout': scheduledWorkout.toJson()
-      };
+  bool isScheduledWorkoutOnDate(DateTime d) {
+    if (DateUtils.isSameDay(d, scheduledDate)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getName() {
+    return scheduledWorkout.getName();
+  }
+
+  Map<String, dynamic> toJson() => {'scheduledDate': scheduledDate.toString(), 'scheduledWorkout': scheduledWorkout.toJson()};
 }

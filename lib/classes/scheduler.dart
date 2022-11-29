@@ -1,24 +1,22 @@
+import 'package:flutter/material.dart';
 import 'package:pump_state/classes/scheduledWorkout.dart';
 import 'workout.dart';
 
 class Scheduler {
-  List<ScheduledWorkout> _scheduledWorkout =
-      []; //Object to store Date / Workout to be stored.
+  List<ScheduledWorkout> _scheduledWorkout = []; //Object to store Date / Workout to be stored.
 
   Scheduler();
 
   Scheduler.fromJson(Map<String, dynamic> map) {
     for (dynamic item in map['scheduledWorkouts']) {
-      ScheduledWorkout sw = ScheduledWorkout(
-          item['scheduledDate'], Workout.fromJSON(item['scheduledWorkout']));
+      ScheduledWorkout sw = ScheduledWorkout(item['scheduledDate'], Workout.fromJSON(item['scheduledWorkout']));
       _scheduledWorkout.add(sw);
     }
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = new Map();
-    map['scheduledWorkouts'] =
-        _scheduledWorkout.map((i) => i.toJson()).toList();
+    map['scheduledWorkouts'] = _scheduledWorkout.map((i) => i.toJson()).toList();
     return map;
   }
 
@@ -52,5 +50,34 @@ class Scheduler {
     for (ScheduledWorkout s in _scheduledWorkout) {
       print(s.scheduledWorkout.getName());
     }
+  }
+
+  void scheduleWorkout(ScheduledWorkout sw) {
+    _scheduledWorkout.add(sw);
+  }
+
+  List<ScheduledWorkout> getSchedule() {
+    return _scheduledWorkout;
+  }
+
+  ScheduledWorkout nextScheduledWorkout() {
+    ScheduledWorkout nextScheduledWorkout = _scheduledWorkout[0];
+
+    for (ScheduledWorkout s in _scheduledWorkout) {
+      if (s.scheduledDate.isBefore(nextScheduledWorkout.getDate())) {
+        nextScheduledWorkout = s;
+      }
+    }
+    return nextScheduledWorkout;
+  }
+
+  List<ScheduledWorkout> getSW(DateTime d) {
+    List<ScheduledWorkout> lsw = [];
+    for (ScheduledWorkout sw in _scheduledWorkout) {
+      if (DateUtils.isSameDay(d, sw.getDate())) {
+        lsw.add(sw);
+      }
+    }
+    return lsw;
   }
 }
