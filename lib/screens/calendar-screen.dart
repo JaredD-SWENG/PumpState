@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pump_state/screens/SchedulerScreen.dart';
+import 'package:pump_state/screens/scheduler-screen.dart';
 import 'package:pump_state/styles/styles.dart';
 
 class CalendarScreen extends StatelessWidget {
