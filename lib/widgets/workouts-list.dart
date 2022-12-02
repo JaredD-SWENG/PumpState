@@ -28,13 +28,17 @@ class _WorkoutsListState extends ConsumerState<WorkoutsList> {
     Config c = ref.read(configProvider);
     if (ref.read(configProvider).library.workouts.isEmpty) {
       return const Center(
-          child: Text(
-        'To play a workout, please create one in the workout Library.',
-        style: TextStyle(
-          color: Colors.red,
-          backgroundColor: Color.fromRGBO(48, 47, 47, 1.0),
-        ),
-      ));
+          child: Card(
+            color: Color.fromRGBO(48, 47, 47, 1.0),
+            child: Text(
+              'To start a Workout, please create one in the Workout Library.',
+              style: TextStyle(
+
+                fontSize: 18.00,
+                color: Colors.red,
+              ),
+            ),
+          ));
     } else {
       return Column(children: <Widget>[
         for (Workout w in c.library.workouts)
