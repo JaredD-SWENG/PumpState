@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pump_state/screens/scheduler-screen.dart';
 import 'package:pump_state/styles/styles.dart';
+
+import '../widgets/table-calendar.dart';
 
 class CalendarScreen extends StatelessWidget {
   const CalendarScreen({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class CalendarScreen extends StatelessWidget {
         gradient: backgroundGradient(),
       ),
       child: Center(
-        child: SchedulerScreen(),
+        child: Calendar(),
       ),
     );
   }
