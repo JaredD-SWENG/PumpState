@@ -19,7 +19,23 @@ class LibraryWorkoutScreen extends ConsumerWidget {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/new-workout');
+            if(ref.read(configProvider).library.activities.isEmpty){
+              showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text('Alert Dialog Title'),
+                    backgroundColor: Color.fromRGBO(48, 47, 47, 1.0),
+                    content: const Text('Before creating your custom workout, please go to the Exercises menu in order to create some Exercises.', style: TextStyle(color: Colors.red, fontSize: 20.00)),
+                    actions: <Widget>[
+                      TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: const Text('OK', style: TextStyle(color: Colors.white),))
+                    ],
+                  ));
+            }
+            else {
+              Navigator.pushNamed(context, '/new-workout');
+            }
           },
           child: const Icon(Icons.add),
         ),

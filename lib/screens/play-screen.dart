@@ -9,6 +9,15 @@ import '../providers/config-provider.dart';
 class PlayScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    if(ref.read(configProvider).library.workouts.isEmpty){
+      return Container(
+        decoration: BoxDecoration(gradient: backgroundGradient()),
+        child: WorkoutsList(),
+      );
+    }
+
+    else{
     return Container(
         decoration: BoxDecoration(gradient: backgroundGradient()),
         child: Scrollbar(
@@ -16,5 +25,5 @@ class PlayScreen extends ConsumerWidget {
           WorkoutsList(),
           BeginWorkoutButton(),
         ])));
-  }
+  }}
 }
