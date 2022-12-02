@@ -12,8 +12,9 @@ import '../classes/workout.dart';
 
 class ScheduleWorkoutForm extends ConsumerStatefulWidget {
   final DateTime selectedDate;
+  final Function setDateToToday;
 
-  const ScheduleWorkoutForm({Key? key, required this.selectedDate}) : super(key: key);
+  const ScheduleWorkoutForm({Key? key, required this.selectedDate, required this.setDateToToday}) : super(key: key);
 
   @override
   ConsumerState<ScheduleWorkoutForm> createState() => _SchedulerWorkoutFormState();
@@ -69,12 +70,14 @@ class _SchedulerWorkoutFormState extends ConsumerState<ScheduleWorkoutForm> {
     });
   }
 
-  void saveScheduledWorkout() {
+  void saveScheduledWorkout(BuildContext context) {
     ScheduledWorkout sw = ScheduledWorkout.fromCalendar(selectedTime, selectedWorkout);
     Config c = Config.newState(ref.read(configProvider).library, ref.read(configProvider).archive, ref.read(configProvider).scheduler);
     c.scheduler.scheduleWorkout(sw);
     ref.read(configProvider.notifier).state = c;
     FileIO.writeConfig(c);
+    widget.setDateToToday();
+    Navigator.pop(context);
   }
 
   @override
@@ -113,7 +116,7 @@ class _SchedulerWorkoutFormState extends ConsumerState<ScheduleWorkoutForm> {
           ),
           ElevatedButton(
               onPressed: () {
-                saveScheduledWorkout();
+                saveScheduledWorkout(context);
               },
               child: const Text(
                 'Schedule Workout',
