@@ -138,6 +138,7 @@ class _SchedulerWorkoutFormState extends ConsumerState<ScheduleWorkoutForm> {
                       c.scheduler.getSchedule().remove(sw);
                       ref.read(configProvider.notifier).state = c;
                       FileIO.writeConfig(c);
+                      widget.setDateToToday();
                     },
                   ),
               ],
