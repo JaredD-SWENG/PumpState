@@ -17,7 +17,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   final titles = ['Home', 'Calendar', 'Play Workout', 'Exercise Library', 'Workout Library'];
-  final screens = [HomeScreen(), CalendarScreen(), PlayScreen(), LibraryActivitiesScreen(), LibraryWorkoutScreen()];
+  late List<Widget> screens;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    screens = [HomeScreen(), CalendarScreen(changeScreen: changeScreen), PlayScreen(), LibraryActivitiesScreen(), LibraryWorkoutScreen()];
+  }
 
   void changeScreen(int selectedIndex) {
     setState(() {
