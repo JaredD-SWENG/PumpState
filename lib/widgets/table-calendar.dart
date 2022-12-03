@@ -91,6 +91,7 @@ class _CalendarState extends ConsumerState<Calendar> {
           });
           showModalBottomSheet(
               enableDrag: false,
+              backgroundColor: Colors.transparent,
               context: context,
               builder: (context) {
                 return ScheduleWorkoutForm(
