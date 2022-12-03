@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/providers/play-workout-provider.dart';
 import 'package:pump_state/styles/styles.dart';
+import 'package:pump_state/widgets/error-card.dart';
 
 import '../classes/config.dart';
 import '../classes/workout.dart';
 
 class WorkoutsList extends ConsumerStatefulWidget {
-  const WorkoutsList({Key? key}) : super(key: key);
+  final Function changeScreen;
+
+  const WorkoutsList({Key? key, required this.changeScreen}) : super(key: key);
 
   @override
   ConsumerState<WorkoutsList> createState() => _WorkoutsListState();
@@ -27,18 +30,14 @@ class _WorkoutsListState extends ConsumerState<WorkoutsList> {
   Widget build(BuildContext context) {
     Config c = ref.read(configProvider);
     if (ref.read(configProvider).library.workouts.isEmpty) {
-      return const Center(
-          child: Card(
-            color: Color.fromRGBO(48, 47, 47, 1.0),
-            child: Text(
-              'To start a Workout, please create one in the Workout Library.',
-              style: TextStyle(
-
-                fontSize: 18.00,
-                color: Colors.red,
-              ),
-            ),
-          ));
+      return ErrorCard(
+        changeScreen: widget.changeScreen,
+        title: 'No workouts available',
+        body: 'Please create a workout before playing one',
+        screenNumber: 4,
+        buttonText: 'Create Workout',
+        closeOnButtonPress: false,
+      );
     } else {
       return Column(children: <Widget>[
         for (Workout w in c.library.workouts)

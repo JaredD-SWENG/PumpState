@@ -10,8 +10,13 @@ import '../classes/config.dart';
 import '../classes/file-io.dart';
 import '../classes/workout.dart';
 import '../providers/config-provider.dart';
+import '../widgets/error-card.dart';
 
 class LibraryWorkoutScreen extends ConsumerWidget {
+  final Function changeScreen;
+
+  const LibraryWorkoutScreen({Key? key, required this.changeScreen}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Workout> workouts = ref.watch(configProvider).library.workouts;
@@ -19,21 +24,20 @@ class LibraryWorkoutScreen extends ConsumerWidget {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if(ref.read(configProvider).library.activities.isEmpty){
-              showDialog<String>(
+            if (ref.read(configProvider).library.activities.isEmpty) {
+              showDialog(
                   context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text('Alert Dialog Title'),
-                    backgroundColor: Color.fromRGBO(48, 47, 47, 1.0),
-                    content: const Text('Before creating your custom workout, please go to the Exercises menu in order to create some Exercises.', style: TextStyle(color: Colors.red, fontSize: 20.00)),
-                    actions: <Widget>[
-                      TextButton(
-                          onPressed: () => Navigator.pop(context, 'OK'),
-                          child: const Text('OK', style: TextStyle(color: Colors.white),))
-                    ],
-                  ));
-            }
-            else {
+                  builder: (BuildContext context) {
+                    return ErrorCard(
+                      changeScreen: changeScreen,
+                      title: 'No exercises available',
+                      body: 'Please create an exercise before configuring a workout',
+                      screenNumber: 3,
+                      buttonText: 'Create Exercise',
+                      closeOnButtonPress: true,
+                    );
+                  });
+            } else {
               Navigator.pushNamed(context, '/new-workout');
             }
           },

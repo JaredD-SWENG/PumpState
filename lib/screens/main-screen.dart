@@ -23,7 +23,17 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    screens = [HomeScreen(), CalendarScreen(changeScreen: changeScreen), PlayScreen(), LibraryActivitiesScreen(), LibraryWorkoutScreen()];
+    screens = [
+      HomeScreen(),
+      CalendarScreen(changeScreen: changeScreen),
+      PlayScreen(
+        changeScreen: changeScreen,
+      ),
+      LibraryActivitiesScreen(),
+      LibraryWorkoutScreen(
+        changeScreen: changeScreen,
+      )
+    ];
   }
 
   void changeScreen(int selectedIndex) {

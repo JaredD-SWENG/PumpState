@@ -15,7 +15,14 @@ class CalendarScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     Widget checkForWorkouts() {
       if (ref.read(configProvider).library.workouts.isEmpty) {
-        return ErrorCard(changeScreen: changeScreen);
+        return ErrorCard(
+          changeScreen: changeScreen,
+          title: 'No workouts available',
+          body: 'Please create a workout before scheduling one',
+          screenNumber: 4,
+          buttonText: 'Create Workout',
+          closeOnButtonPress: false,
+        );
       } else {
         return Calendar();
       }
