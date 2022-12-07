@@ -6,6 +6,7 @@ import '../classes/exercise.dart';
 import '../providers/workout-provider.dart';
 import '../widgets/new-exercise-form.dart';
 
+///NewExerciseScreen is a View Widget, used o host the NewExerciseForm view model Widget.
 class NewExerciseScreen extends ConsumerWidget {
   const NewExerciseScreen({Key? key}) : super(key: key);
 

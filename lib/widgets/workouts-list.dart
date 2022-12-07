@@ -8,6 +8,7 @@ import 'package:pump_state/widgets/error-card.dart';
 import '../classes/config.dart';
 import '../classes/workout.dart';
 
+/// Generates a lit of workouts in the form of radio tiles for PlayScreen
 class WorkoutsList extends ConsumerStatefulWidget {
   final Function changeScreen;
 
@@ -28,8 +29,10 @@ class _WorkoutsListState extends ConsumerState<WorkoutsList> {
 
   @override
   Widget build(BuildContext context) {
-    Config c = ref.read(configProvider);
+    Config c = ref.read(configProvider); // Read the config provider
+    // If the config provider is empty
     if (ref.read(configProvider).library.workouts.isEmpty) {
+      // Return the an error message
       return ErrorCard(
         changeScreen: widget.changeScreen,
         title: 'No workouts available',
@@ -39,23 +42,25 @@ class _WorkoutsListState extends ConsumerState<WorkoutsList> {
         closeOnButtonPress: false,
       );
     } else {
-      return Column(children: <Widget>[
-        for (Workout w in c.library.workouts)
-          RadioListTile(
-              title: Text(
-                w.getName(),
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              activeColor: creek(),
-              value: w,
-              groupValue: ref.watch(playWorkoutProvider),
-              onChanged: (value) {
-                setState(() {
-                  ref.read(playWorkoutProvider.notifier).state = value!;
-                  print(ref.read(playWorkoutProvider).getName());
-                });
-              })
-      ]);
+      // Return a list of workouts
+      return Column(
+        children: <Widget>[
+          for (Workout w in c.library.workouts)
+            RadioListTile(
+                title: Text(
+                  w.getName(),
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                activeColor: creek(),
+                value: w,
+                groupValue: ref.watch(playWorkoutProvider),
+                onChanged: (value) {
+                  setState(() {
+                    ref.read(playWorkoutProvider.notifier).state = value!;
+                  });
+                })
+        ],
+      );
     }
   }
 }

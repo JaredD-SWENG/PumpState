@@ -12,22 +12,27 @@ import '../classes/workout.dart';
 import '../styles/styles.dart';
 import 'break-buttons.dart';
 
+///EditWorkoutForm is the view model Widget used to implement the logic behind editing a workout by the user.
 class EditWorkoutForm extends ConsumerWidget {
   const EditWorkoutForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ///parameters are set to all information stored in the workoutProvider.
     String _id = ref.watch(workoutProvider).getID();
     String _name = ref.watch(workoutProvider).getName();
     bool _favorite = ref.watch(workoutProvider).getFavorite();
     List<Activity> _activities = ref.watch(workoutProvider).getActivityList();
 
+    ///toggleFavorite is a function that swaps the favorite bool from true to false, or from false to true.
+    ///then updates the workoutProvider.
     void toggleFavorite(bool b) {
       Workout w = Workout.createNew(_id, _name, _activities, _favorite);
       w.toggleFavorite();
       ref.read(workoutProvider.notifier).state = w;
     }
 
+    ///favoriteToggle is a Switch Widget that, when pressed, calls the toggleFavorite function.
     Widget favoriteToggle = Switch(value: _favorite, onChanged: toggleFavorite);
 
     return Container(
@@ -60,6 +65,7 @@ class EditWorkoutForm extends ConsumerWidget {
                         style: Theme.of(context).textTheme.headline5,
                       ),
                       TextFormField(
+                        ///TextFormField Widget is used to allow user to alter the name of the workout.
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(12),
                         ],
@@ -73,6 +79,7 @@ class EditWorkoutForm extends ConsumerWidget {
                         initialValue: _name,
                         style: TextStyle(color: whiteOut()),
                         onChanged: (s) {
+                          ///When the user alters the textformfield, it changes the workout name, and updates the provider.
                           Workout w = Workout.createNew(_id, _name, _activities, _favorite);
                           w.setName(s);
                           ref.read(workoutProvider.notifier).state = w;
@@ -105,16 +112,24 @@ class EditWorkoutForm extends ConsumerWidget {
           ),
           Expanded(
             child: ExerciseDropdown(),
+
+            ///Calls for the ExerciseDropDown Widget.
           ),
           Expanded(
             child: BreakButtons(),
+
+            ///Calls for the BreakButtons Widget.
           ),
           Expanded(
             flex: 3,
             child: NewWorkoutActivityList(),
+
+            ///Calls for the NewWorkoutActivityList Widget.
           ),
           Expanded(
             child: UpdateWorkoutButton(),
+
+            ///Calls for the UpdateWorkoutButton Widget.
           )
         ],
       ),

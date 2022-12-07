@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+///styles.dart implements many custom color choices, these color choices are called throughout PumpState.
+
 Color pennsylvaniaSky() {
   return const Color.fromRGBO(0, 156, 222, 1);
 }
@@ -28,6 +30,7 @@ Color creek() {
   return const Color.fromRGBO(62, 163, 158, 1);
 }
 
+///backgroundGradient is a function that returns the gradient background used in many main screens throughout the PumpState App.
 LinearGradient backgroundGradient() {
   return LinearGradient(
     begin: Alignment.topLeft,
@@ -39,6 +42,7 @@ LinearGradient backgroundGradient() {
   );
 }
 
+///cardBoxShadow is a function that returns the shadow color used by Card widgets throughout the PumpState App.
 BoxShadow cardBoxShadow() {
   return const BoxShadow(
     color: Colors.black26,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pump_state/providers/pump-points-provider.dart';
 
 import '../classes/activity.dart';
 import '../classes/exercise.dart';
 import '../styles/styles.dart';
 
+/// Plays a exercise sequence from PlayWorkoutSequenceScreen
 class PlayExercise extends StatefulWidget {
   final Activity a;
   final int setNumber;
@@ -33,11 +33,12 @@ class _PlayExerciseState extends State<PlayExercise> {
     // TODO: implement initState
     super.initState();
     e = widget.a as Exercise;
-    reps = e.getReps();
-    sets = widget.setNumber;
-    widget.setReps(reps);
+    reps = e.getReps(); // Set the expected reps for the workout
+    sets = widget.setNumber; // Set the sets for the workout
+    widget.setReps(reps); // Set the actual reps for the workout
   }
 
+  /// Increments the actual reps completed
   void incrementReps() {
     setState(() {
       reps++;
@@ -45,6 +46,7 @@ class _PlayExerciseState extends State<PlayExercise> {
     });
   }
 
+  /// Decrements the actual reps completed
   void decrementReps() {
     setState(() {
       if (reps == 0) return;
@@ -55,7 +57,6 @@ class _PlayExerciseState extends State<PlayExercise> {
 
   @override
   Widget build(BuildContext context) {
-    print('Reps: $reps');
     return Column(children: [
       Padding(
           padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * .4, 10, MediaQuery.of(context).size.width * .4, 10),

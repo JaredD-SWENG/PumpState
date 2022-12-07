@@ -1,21 +1,17 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pump_state/classes/completedWorkout.dart';
 import 'package:pump_state/classes/workout.dart';
-import '../widgets/edit-exercise-form.dart';
 import 'activity.dart';
 import 'exercise.dart';
 import 'scheduler.dart';
 import 'library.dart';
 import 'archive.dart';
 
-import 'package:flutter/material.dart';
-import 'package:pump_state/providers/exercise-provider.dart';
-
+/// Config holds all data within application
 class Config {
   late Library library;
   late Archive archive;
   late Scheduler scheduler;
 
+  /// Default constructor
   Config() {
     library = Library();
     archive = Archive();
@@ -34,6 +30,7 @@ class Config {
     scheduler = sched;
   }
 
+  /// Constructor to generate Object from JSON
   Config.fromJson(Map<String, dynamic> map) {
     map.forEach((key, value) {
       switch (key) {
@@ -50,6 +47,7 @@ class Config {
     });
   }
 
+  /// Generates a JSON string of Config
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = new Map();
     map['library'] = library.toJson();
@@ -58,32 +56,11 @@ class Config {
     return map;
   }
 
-  void listLibrary() {
-    List<Workout> workouts = library.getWorkouts();
-    for (Workout w in workouts) {
-      print(w.getName());
-    }
-  }
-
-  void listArchive() {
-    List<CompletedWorkout> cw = archive.getCompletedWorkouts();
-    print(cw.length);
-    for (CompletedWorkout d in cw) {
-      print(d.getPumpPoints());
-    }
-  }
-
-  void callSchedulerPrint() {
-    scheduler.printScheduledWorkouts();
-  }
-
-  /**
-   * findActivity()
-   * This method takes in an ID parameter, which is used to find that specific instance of Exercise stored in the library,
-   * we then retur that instance of exercise to be altered/rewritten.
-   * Currently used in:
-   * edit-exercise-form.dart
-   */
+  /// findActivity()
+  /// This method takes in an ID parameter, which is used to find that specific instance of Exercise stored in the library,
+  /// we then retur that instance of exercise to be altered/rewritten.
+  /// Currently used in:
+  /// library-activities-screen.dart
   Activity findActivity(String s) {
     Activity activity = Exercise();
     for (Activity a in library.activities) {
@@ -95,11 +72,13 @@ class Config {
     return activity;
   }
 
+  /// findWorkout()
+  /// This method takes in an ID parameter, which is used to find that specific instance
+  /// of Workout stored in the library, then return that instance of workout
+  /// to be altered/rewritten. Currently used in: library-workouts-screen.dart
   Workout findWorkout(String s) {
-    print("key: $s");
     Workout workout = Workout();
     for (Workout w in library.workouts) {
-      print("searchval: ${w.getID()}");
       if (s == w.getID()) {
         workout = w;
         return workout;
@@ -108,30 +87,25 @@ class Config {
     return workout;
   }
 
+  /// Returns true if Library is empty, false otherwise
   bool activitiesIsEmpty() {
     return library.activitiesIsEmpty();
   }
 
-  /**
-   * Return current instance library
-   * currently used for newState() Constructor.
-   */
+  /// Return current instance library
+  /// currently used for newState() Constructor.
   getLibrary() {
     return library;
   }
 
-  /**
-   * Return current instance archive
-   * currently used for newState() Constructor.
-   */
+  /// Return current instance archive
+  /// currently used for newState() Constructor.
   getArchive() {
     return archive;
   }
 
-  /**
-   * Return current instance scheduler.
-   * currently used for newState() Constructor.
-   */
+  /// Return current instance scheduler.
+  /// currently used for newState() Constructor.
   getScheduler() {
     return scheduler;
   }

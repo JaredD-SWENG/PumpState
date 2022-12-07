@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pump_state/styles/styles.dart';
 
+///globalTheme is a special widget designed to display a series of different customized UI elements, from texts, font sizes, and color.
+///This widget is used throughout PumpState to generate the UI style, keeping the styles uniform throughout the App.
 ThemeData globalTheme() {
   return ThemeData(
     cardColor: nittanyNavy(),

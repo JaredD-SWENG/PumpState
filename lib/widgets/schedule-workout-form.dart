@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
-import 'package:pump_state/classes/completedWorkout.dart';
 import 'package:pump_state/classes/scheduledWorkout.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/styles/styles.dart';
@@ -10,6 +9,9 @@ import '../classes/config.dart';
 import '../classes/file-io.dart';
 import '../classes/workout.dart';
 
+/// Bottom modal for scheduling a workout.
+/// Allows user to select time and workout
+/// Allows uer to remove (by dimissing) scheduled workouts
 class ScheduleWorkoutForm extends ConsumerStatefulWidget {
   final DateTime selectedDate;
   final Function setDateToToday;
@@ -20,37 +22,6 @@ class ScheduleWorkoutForm extends ConsumerStatefulWidget {
   ConsumerState<ScheduleWorkoutForm> createState() => _SchedulerWorkoutFormState();
 }
 
-String getMonth(int m) {
-  switch (m) {
-    case 1:
-      return 'January';
-    case 2:
-      return 'February';
-    case 3:
-      return 'March';
-    case 4:
-      return 'April';
-    case 5:
-      return 'May';
-    case 6:
-      return 'June';
-    case 7:
-      return 'July';
-    case 8:
-      return 'August';
-    case 9:
-      return 'September';
-    case 10:
-      return 'October';
-    case 11:
-      return 'November';
-    case 12:
-      return 'December';
-    default:
-      return 'Unknown';
-  }
-}
-
 class _SchedulerWorkoutFormState extends ConsumerState<ScheduleWorkoutForm> {
   late DateTime selectedTime;
   late Workout selectedWorkout;
@@ -59,25 +30,27 @@ class _SchedulerWorkoutFormState extends ConsumerState<ScheduleWorkoutForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedTime = widget.selectedDate;
+    selectedTime = widget.selectedDate; // Sets the state to the selected date from the TableCalendar
     selectedWorkout = ref.read(configProvider).library.workouts.first;
   }
 
+  /// Sets the selected time from the time picker wheel
   void setSelectedTime(DateTime d) {
     setState(() {
       selectedTime = DateTime(selectedTime.year, selectedTime.month, selectedTime.day, d.hour, d.minute, 0, 0, 0);
-      print(selectedTime.toString());
     });
   }
 
+  /// Saves the scheduled workout
   void saveScheduledWorkout(BuildContext context) {
-    ScheduledWorkout sw = ScheduledWorkout.fromCalendar(selectedTime, selectedWorkout);
-    Config c = Config.newState(ref.read(configProvider).library, ref.read(configProvider).archive, ref.read(configProvider).scheduler);
-    c.scheduler.scheduleWorkout(sw);
-    ref.read(configProvider.notifier).state = c;
-    FileIO.writeConfig(c);
-    widget.setDateToToday();
-    Navigator.pop(context);
+    ScheduledWorkout sw = ScheduledWorkout.fromCalendar(selectedTime, selectedWorkout); // Create scheduled workout
+    Config c = Config.newState(
+        ref.read(configProvider).library, ref.read(configProvider).archive, ref.read(configProvider).scheduler); // Create new config state
+    c.scheduler.scheduleWorkout(sw); // Add scheduled workout to scheduler
+    ref.read(configProvider.notifier).state = c; // Update app state
+    FileIO.writeConfig(c); // Update config
+    widget.setDateToToday(); // Reset the day to today
+    Navigator.pop(context); // Pop the bottom modal
   }
 
   @override

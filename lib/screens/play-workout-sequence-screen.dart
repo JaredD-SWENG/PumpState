@@ -14,20 +14,24 @@ import '../widgets/play-break.dart';
 import '../widgets/play-exercise.dart';
 import '../widgets/play-pause.dart';
 
+/// Plays in sequence the configured workout looping until the end
+/// and prompting user input where necessary
 class PlayWorkoutSequenceScreen extends ConsumerStatefulWidget {
+  const PlayWorkoutSequenceScreen({super.key});
+
   @override
   ConsumerState<PlayWorkoutSequenceScreen> createState() => _PlayWorkoutSequenceScreenState();
 }
 
 class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceScreen> {
-  late final activityCount;
-  late Activity currentActivity;
-  late int currentSetCount;
-  int setsInExercise = 0;
-  int currentActivityIndex = 0;
-  int screenIndex = 0;
-  double pumpPoints = 0;
-  int actualReps = 0;
+  late final activityCount; // Number of activities in workout
+  late Activity currentActivity; // Current activity being played
+  late int currentSetCount; // What set the user is currently on
+  int setsInExercise = 0; // Total number of sets in a the current exercise
+  int currentActivityIndex = 0; // Current activity index
+  int screenIndex = 0; // What screen is currently being displayed
+  double pumpPoints = 0; // Pump points calculated for a given set
+  int actualReps = 0; // Actual reps completed, used to compare against expected
   late List<Widget> screens = <Widget>[
     PlayExercise(
       a: currentActivity,
@@ -49,9 +53,10 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
   void initState() {
     // TODO: implement initState
     super.initState();
-    activityCount = ref.read(playWorkoutProvider).getSizeOfActivityList() - 1;
-    currentActivity = ref.read(playWorkoutProvider).getActivityList()[0];
-    currentSetCount = 1;
+    activityCount = ref.read(playWorkoutProvider).getSizeOfActivityList() - 1; // Sets the number of activities in the workout
+    currentActivity = ref.read(playWorkoutProvider).getActivityList()[0]; // Sets the current activity to the first in the list
+    currentSetCount = 1; // Initializes current set count to 1
+    // If the current activity is an exericse, move to the exercise screen, else move to the pause screen
     if (currentActivity is Exercise) {
       Exercise e = currentActivity as Exercise;
       setsInExercise = e.getSets();
@@ -61,16 +66,18 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
     }
   }
 
+  /// Sets the actual reps to integer i
   void setReps(int i) {
     actualReps = i;
   }
 
+  /// Archives the workout when completed
   void archiveWorkout() {
-    CompletedWorkout cw = CompletedWorkout.createNew(DateTime.now(), pumpPoints.toInt());
-    Config c = ref.read(configProvider);
-    c.archive.addCompletedWorkout(cw);
-    ref.read(configProvider.notifier).state = c;
-    FileIO.writeConfig(ref.read(configProvider));
+    CompletedWorkout cw = CompletedWorkout.createNew(DateTime.now(), pumpPoints.toInt()); // Creates a new completed workout
+    Config c = ref.read(configProvider); // Reads current state of config
+    c.archive.addCompletedWorkout(cw); // Adds completed workout to archive
+    ref.read(configProvider.notifier).state = c; // Sets the state with the completed workout added
+    FileIO.writeConfig(ref.read(configProvider)); // Overwrites the local store with new config file
   }
 
   handleContinue() {
@@ -125,16 +132,21 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
     });
   }
 
+  /// Function to be based to break screen to change the screen of parent widget
   changeScreenFromBreak() {
     setState(() {
       screenIndex = 0;
     });
   }
 
+  /// Function to be based to pause screen to change the screen of parent widget
   changeScreenFromPause() {
     setState(() {
+      // If there are more activities in the list
       if (currentActivityIndex < activityCount) {
+        // Get the next activity
         Activity nextActivity = ref.read(playWorkoutProvider).getActivity(currentActivityIndex + 1);
+        // If that activity is an Exercise
         if (nextActivity is Exercise) {
           currentActivityIndex++;
           currentActivity = nextActivity;
@@ -146,6 +158,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
           );
           screenIndex = 0;
         }
+        // If that activity is a Break
         if (nextActivity is Break) {
           currentActivityIndex++;
           currentActivity = nextActivity;
@@ -157,13 +170,14 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
           screenIndex = 2;
         }
       } else {
-        archiveWorkout();
-        screens[3] = WorkoutCompleteScreen(pumpPoints: pumpPoints);
-        screenIndex = 3;
+        archiveWorkout(); // Archive the workout if the final set
+        screens[3] = WorkoutCompleteScreen(pumpPoints: pumpPoints); // Create a completed screen with pump points
+        screenIndex = 3; // Change to completed workout screen
       }
     });
   }
 
+  /// Formula for calculating pump points
   void addPumpPoints() {
     Exercise e = currentActivity as Exercise;
     if (actualReps > e.getReps()) {

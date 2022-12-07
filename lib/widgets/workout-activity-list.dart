@@ -7,10 +7,12 @@ import '../classes/exercise.dart';
 import '../classes/workout.dart';
 import '../styles/styles.dart';
 
+/// Generates a list tile for every Activity added when building or editing a Workout
+/// Uses ephemeral state
 class NewWorkoutActivityList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Workout w = ref.watch(workoutProvider);
+    Workout w = ref.watch(workoutProvider); // Monitors changes to the configured workout
     List<Widget> listTiles = [];
     for (Activity a in w.getActivityList()) {
       ListTile lt = ListTile(
@@ -65,6 +67,7 @@ class NewWorkoutActivityList extends ConsumerWidget {
               ref.read(workoutProvider.notifier).state = workout;
             },
             children: <Widget>[
+              // Wraps the listTiles in a dismissable so they can be swiped to remove
               for (int i = 0; i < listTiles.length; i++)
                 Dismissible(
                   background: Container(

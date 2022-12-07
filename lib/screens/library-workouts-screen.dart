@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump_state/providers/workout-provider.dart';
-import 'package:pump_state/screens/new-workout-screen.dart';
 import 'package:pump_state/styles/styles.dart';
 import 'package:pump_state/widgets/edit-workout-form.dart';
 
-import '../classes/activity.dart';
 import '../classes/config.dart';
 import '../classes/file-io.dart';
 import '../classes/workout.dart';
 import '../providers/config-provider.dart';
 import '../widgets/error-card.dart';
 
+/// LibraryWorkoutScreen displays the Workouts that have been saved in Config>Library
+/// Uses ephemeral state
 class LibraryWorkoutScreen extends ConsumerWidget {
   final Function changeScreen;
 
@@ -54,8 +54,10 @@ class LibraryWorkoutScreen extends ConsumerWidget {
         ));
   }
 
+  /// Generates each saved workout as a card that is dismissible, editable and favoritable
   List<Widget> generateButtons(List<Workout> workouts, BuildContext context, WidgetRef ref) {
     List<Widget> listOfButtons = [];
+    // Places favorite at the top
     workouts.sort((a, b) {
       if (a.getFavorite()) {
         return -1;
@@ -64,8 +66,7 @@ class LibraryWorkoutScreen extends ConsumerWidget {
       }
     });
     for (Workout w in workouts) {
-      print(w.getSizeOfActivityList());
-      Icon fav = Icon(Icons.star_border_outlined);
+      Icon fav = const Icon(Icons.star_border_outlined);
       if (w.getFavorite()) {
         fav = Icon(
           Icons.star,
@@ -114,7 +115,7 @@ class LibraryWorkoutScreen extends ConsumerWidget {
             Expanded(
               child: Text(
                 w.getName(),
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             Expanded(
@@ -123,10 +124,10 @@ class LibraryWorkoutScreen extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    Text('Activities '),
+                    const Text('Activities '),
                     Text(
                       w.getSizeOfActivityList().toString(),
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
@@ -136,7 +137,7 @@ class LibraryWorkoutScreen extends ConsumerWidget {
                     children: [
                       TextSpan(
                         text: w.getSumOfBreaks().toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                         children: const [
                           TextSpan(text: ' min', style: TextStyle(fontWeight: FontWeight.normal)),
                         ],
@@ -155,12 +156,12 @@ class LibraryWorkoutScreen extends ConsumerWidget {
           ),
           key: ValueKey(w),
           onDismissed: (DismissDirection horizontal) {
-            listOfButtons.remove(w);
+            listOfButtons.remove(w); // Remove buttons
             Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(), ref.read(configProvider.notifier).state.getArchive(),
                 ref.read(configProvider.notifier).state.getScheduler());
-            c.library.removeWorkout(w.getID());
-            ref.read(configProvider.notifier).state = c;
-            FileIO.writeConfig(ref.read(configProvider));
+            c.library.removeWorkout(w.getID()); // Remove workout from state
+            ref.read(configProvider.notifier).state = c; // Reset state
+            FileIO.writeConfig(ref.read(configProvider)); // Update local store
           },
           child: lt));
     }

@@ -6,6 +6,8 @@ import '../classes/break.dart';
 import '../classes/workout.dart';
 import '../styles/styles.dart';
 
+///BreakButtons is a widget used when creating/editinga workout. This widget generates three buttons for the user,
+///when pressed, each add a 30, 60, 90 second break into your workout respectively.
 class BreakButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {

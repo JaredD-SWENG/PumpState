@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 
-import '../classes/break.dart';
 import '../styles/styles.dart';
 
+/// Plays a Break sequence from PlayWorkoutSequenceScreen
 class PlayBreak extends StatefulWidget {
   final Function changeScreen;
 
@@ -16,7 +14,7 @@ class PlayBreak extends StatefulWidget {
 }
 
 class _PlayBreakState extends State<PlayBreak> with TickerProviderStateMixin {
-  final int defaultBreak = 2;
+  final int defaultBreak = 15;
 
   @override
   void initState() {

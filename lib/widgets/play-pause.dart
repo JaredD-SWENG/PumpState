@@ -1,10 +1,10 @@
-import 'dart:async';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import '../classes/activity.dart';
 import '../classes/break.dart';
 import '../styles/styles.dart';
 
+/// Plays a pause sequence from PlayWorkoutSequenceScreen
 class PlayPause extends StatefulWidget {
   final Activity a;
   final Function changeScreen;
@@ -23,7 +23,7 @@ class _PlayPauseState extends State<PlayPause> {
     // TODO: implement initState
     super.initState();
     Break b = widget.a as Break;
-    pauseTime = b.getDuration().inSeconds;
+    pauseTime = b.getDuration().inSeconds; // Set the pause time on widget build
   }
 
   @override

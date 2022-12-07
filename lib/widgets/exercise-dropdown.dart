@@ -6,6 +6,7 @@ import 'package:pump_state/styles/styles.dart';
 import '../classes/exercise.dart';
 import '../classes/workout.dart';
 
+///ExerciseDropDown generates an interactable drop down menu for the User when editing/creating a workout.
 class ExerciseDropdown extends ConsumerStatefulWidget {
   const ExerciseDropdown({Key? key}) : super(key: key);
 
@@ -18,6 +19,7 @@ class _ExerciseDropdownState extends ConsumerState<ExerciseDropdown> {
 
   @override
   void initState() {
+    ///On start up, read the first instance stored in the List of activities in configProvider.
     // TODO: implement initState
     selectedExercise = ref.read(configProvider).library.getActivitiesAsExercises().first;
   }
@@ -74,6 +76,7 @@ class _ExerciseDropdownState extends ConsumerState<ExerciseDropdown> {
               padding: const EdgeInsets.all(10),
               child: ElevatedButton(
                   onPressed: () {
+                    ///Button when pressed, adds the exercise to the workout.
                     Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
                         ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
                     Exercise newExercise = Exercise.createNew(

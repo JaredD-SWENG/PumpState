@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+///WorkoutCompleteScreen is a screen called at the end of play-workout-sequence-screen, when the Workout has been exhausted.
+///This widget outputs to the user the number of PumpPoints earned in the completed workout.
 class WorkoutCompleteScreen extends StatelessWidget {
   final double pumpPoints;
 
@@ -7,6 +9,7 @@ class WorkoutCompleteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ///build function returns a widget to display to the user how many pump points have been earned from completing this workout.
     return Column(
       children: [
         Container(

@@ -10,26 +10,34 @@ import '../classes/file-io.dart';
 import '../providers/exercise-provider.dart';
 import '../widgets/edit-exercise-form.dart';
 
+/// LibraryActivitiesScreen displays the Exercises that have been saved in Config>Library
+/// Uses ephemeral state
 class LibraryActivitiesScreen extends ConsumerWidget {
   const LibraryActivitiesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    /// Monitors app state and watches for changes (additions/deletions) to activities
     final List<Activity> activities = ref.watch(configProvider).library.activities;
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.pushNamed(context, '/new-exercise'),
-          child: const Icon(Icons.add),
-        ),
-        body: Container(
-            decoration: BoxDecoration(gradient: backgroundGradient()),
-            child: Center(
-                child: Scrollbar(
-                    child: ListView(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/new-exercise'),
+        child: const Icon(Icons.add),
+      ),
+      body: Container(
+        decoration: BoxDecoration(gradient: backgroundGradient()),
+        child: Center(
+          child: Scrollbar(
+            child: ListView(
               children: generateButtons(activities, context, ref),
-            )))));
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
+  /// For every exercise in the library, generates a tile that is dismissible, has edit and favoriting functions
   List<Widget> generateButtons(List<Activity> activities, BuildContext context, WidgetRef ref) {
     List<Widget> listOfButtons = [];
     activities.sort((a, b) {
@@ -62,6 +70,7 @@ class LibraryActivitiesScreen extends ConsumerWidget {
                   children: [
                     IconButton(
                       onPressed: () {
+                        /// Create a
                         Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(),
                             ref.read(configProvider.notifier).state.getArchive(), ref.read(configProvider.notifier).state.getScheduler());
                         Exercise exercise = c.findActivity(ref.read(exerciseProvider.notifier).state.getId()) as Exercise;
