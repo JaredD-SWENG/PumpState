@@ -1,29 +1,17 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pump_state/classes/completedWorkout.dart';
 import 'package:pump_state/styles/styles.dart';
 
 import '../providers/config-provider.dart';
 
+/// Displays an analytics bar chart component of the workouts completed this week
 class ThisWeekPumpPointsChart extends ConsumerWidget {
   const ThisWeekPumpPointsChart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<int> pumpPointsArr = ref.read(configProvider).archive.getPumpPointsThisWeekArr();
-
-    // List<BarChartGroupData> chartData() {
-    //   return <BarChartGroupData>[
-    //     for (CompletedWorkout cw in ref.read(configProvider).archive.thisWeeksCompletedWorkouts())
-    //       BarChartGroupData(
-    //         x: 0,
-    //         barRods: [
-    //           BarChartRodData(toY: (cw.getPumpPoints().toDouble())),
-    //         ],
-    //       )
-    //   ];
-    // }
 
     return Container(
       width: MediaQuery.of(context).size.width * 0.50,
@@ -67,7 +55,7 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
               child: BarChart(
                 BarChartData(
                   backgroundColor: Colors.transparent,
@@ -83,7 +71,8 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
                       sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: (value, meta) {
-                          Widget text = Text('');
+                          Widget text = const Text(''); // Initialize the text to blank
+                          // Set the x-axis values
                           switch (value.toInt()) {
                             case 0:
                               text = Text(
@@ -128,7 +117,7 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
                               );
                               break;
                           }
-                          return SideTitleWidget(child: text, axisSide: meta.axisSide);
+                          return SideTitleWidget(axisSide: meta.axisSide, child: text);
                         },
                       ),
                     ),

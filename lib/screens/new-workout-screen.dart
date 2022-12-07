@@ -11,11 +11,14 @@ import 'package:pump_state/widgets/save-workout-button.dart';
 
 import '../classes/workout.dart';
 
+///NewWorkoutScreen is a View Model Widget used by the user when they are generating a New Workout.
 class NewWorkoutScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Widget initDropDown;
 
+    ///If the List of Activity is empty in configProvider, we output a Card to the User instructing them to create an Exercise before creating a workout,
+    ///Otherwise, the Widget Object initDropDown is set to the ExerciseDropDown Widget.
     if (ref.read(configProvider).activitiesIsEmpty()) {
       initDropDown = const Text(
         'To add new Exercises to this workout, please create them in the Exercise Library.',
@@ -25,7 +28,7 @@ class NewWorkoutScreen extends ConsumerWidget {
         ),
       );
     } else {
-      initDropDown = ExerciseDropdown();
+      initDropDown = const ExerciseDropdown();
     }
 
     return Container(
@@ -34,9 +37,9 @@ class NewWorkoutScreen extends ConsumerWidget {
           backgroundColor: Colors.transparent,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: Text('New Workout'),
+            title: const Text('New Workout'),
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new),
+              icon: const Icon(Icons.arrow_back_ios_new),
               onPressed: () {
                 ref.read(workoutProvider.notifier).state = Workout();
                 Navigator.of(context).pop();
@@ -46,8 +49,9 @@ class NewWorkoutScreen extends ConsumerWidget {
           body: Column(
             children: <Widget>[
               TextFormField(
+                ///Interactive Text Input Field, Updates the name of the Workout Object.
                 inputFormatters: [
-                  new LengthLimitingTextInputFormatter(12),
+                  LengthLimitingTextInputFormatter(12),
                 ],
                 onChanged: (s) {
                   Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),

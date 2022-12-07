@@ -7,6 +7,7 @@ import 'package:pump_state/screens/library-workouts-screen.dart';
 import 'package:pump_state/screens/play-screen.dart';
 import 'package:pump_state/styles/styles.dart';
 
+/// Screen that's contents change based on the screen index, used to navigate between bottom nav bar items
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -18,6 +19,7 @@ class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   final titles = ['Home', 'Calendar', 'Play Workout', 'Exercise Library', 'Workout Library'];
   late List<Widget> screens;
+
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _MainScreenState extends State<MainScreen> {
     ];
   }
 
+  /// Function to be based to child widgets to set the state of main's screen index
   void changeScreen(int selectedIndex) {
     setState(() {
       currentIndex = selectedIndex;
@@ -58,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
         onTap: (selectedIndex) {
           changeScreen(selectedIndex);
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: 'Calendar'),
           BottomNavigationBarItem(icon: Icon(Icons.play_circle), label: 'Play'),

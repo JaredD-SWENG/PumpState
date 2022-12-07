@@ -6,6 +6,8 @@ import 'package:pump_state/widgets/workouts-list.dart';
 
 import '../providers/config-provider.dart';
 
+/// Wrapper for the PlayWorkoutSequenceScreen widget,
+/// changes screen based on current activity in workout sequence
 class PlayScreen extends ConsumerWidget {
   final Function changeScreen;
 

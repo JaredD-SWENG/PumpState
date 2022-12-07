@@ -1,21 +1,20 @@
 import 'package:pump_state/classes/exercise.dart';
-import 'dart:convert';
 import 'activity.dart';
 import 'workout.dart';
-import 'exercise.dart';
 
+/// Library holds configuration for saved exercises and workouts
 class Library {
   List<Activity> activities = []; //Exercises
   List<Workout> workouts = []; //Workouts
 
+  /// Default constructor
   Library();
 
+  /// Constructor to generate object from JSON
   Library.fromJson(Map<String, dynamic> map) {
     map.forEach((key, value) {
       switch (key) {
         case "workouts":
-          //print('HI!');
-          //print(value);
           for (dynamic d in value) {
             Workout w = Workout.fromJSON(d);
             workouts.add(w);
@@ -31,6 +30,7 @@ class Library {
     });
   }
 
+  /// Generates a JSON string of Config
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = Map();
     map['workouts'] = workouts.map((i) => i.toJson()).toList();
@@ -38,14 +38,17 @@ class Library {
     return map;
   }
 
+  /// Adds Activity to list of activities
   void addActivity(Activity activity) {
     activities.add(activity);
   }
 
+  /// Returns a list of workouts
   List<Workout> getWorkouts() {
     return workouts;
   }
 
+  /// Returns the list of activities as exercises
   List<Exercise> getActivitiesAsExercises() {
     List<Exercise> exercises = [];
     for (Activity a in activities) {
@@ -55,26 +58,31 @@ class Library {
     return exercises;
   }
 
+  /// Adds a workout to the workouts list
   addWorkout(Workout w) {
     workouts.add(w);
   }
 
-  bool activitiesIsEmpty(){
-
+  /// Returns true if no activities in activity list, false otherwise
+  bool activitiesIsEmpty() {
     return activities.isEmpty;
   }
 
-  removeActivity(String s){
-    for(int i = 0; i < activities.length; i++){
-      if(s == activities[i].getId()){
+  /// Accepts a string s as parameter where s is the Id of the
+  /// activity to be removed from the list of activities
+  removeActivity(String s) {
+    for (int i = 0; i < activities.length; i++) {
+      if (s == activities[i].getId()) {
         activities.removeAt(i);
       }
     }
   }
 
-  removeWorkout(String s){
-    for(int i = 0; i < workouts.length; i++){
-      if(s == workouts[i].getID()){
+  /// Accepts a string s as parameter where s is the Id of the
+  /// workout to be removed from the list of workouts
+  removeWorkout(String s) {
+    for (int i = 0; i < workouts.length; i++) {
+      if (s == workouts[i].getID()) {
         workouts.removeAt(i);
       }
     }

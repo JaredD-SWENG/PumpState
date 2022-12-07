@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/styles/styles.dart';
 import 'package:pump_state/widgets/error-card.dart';
+import '../widgets/calendar.dart';
 
-import '../widgets/table-calendar.dart';
-
+/// CalendarScreen contains the TableCalendar widget and is used for the scheduling
+/// sequence within the application
+/// Uses ephemeral state
 class CalendarScreen extends ConsumerWidget {
   final Function changeScreen;
 
@@ -13,6 +15,7 @@ class CalendarScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    /// Returns either an ErrorCard if no workouts exist or the calendar
     Widget checkForWorkouts() {
       if (ref.read(configProvider).library.workouts.isEmpty) {
         return ErrorCard(

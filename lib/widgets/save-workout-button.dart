@@ -7,6 +7,7 @@ import '../classes/config.dart';
 import '../classes/file-io.dart';
 import '../classes/workout.dart';
 
+/// Saves the configuration of a workout on edit/new
 class SaveWorkoutButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -14,14 +15,15 @@ class SaveWorkoutButton extends ConsumerWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
         onPressed: () {
-          Config c = Config.newState(ref.read(configProvider).library, ref.read(configProvider).archive, ref.read(configProvider).scheduler);
-          c.library.addWorkout(ref.read(workoutProvider));
-          ref.read(configProvider.notifier).state = c;
-          FileIO.writeConfig(ref.read(configProvider));
-          ref.read(workoutProvider.notifier).state = Workout();
-          Navigator.pop(context);
+          Config c = Config.newState(
+              ref.read(configProvider).library, ref.read(configProvider).archive, ref.read(configProvider).scheduler); // Creates a new state
+          c.library.addWorkout(ref.read(workoutProvider)); // Add the workout
+          ref.read(configProvider.notifier).state = c; // Set config app state
+          FileIO.writeConfig(ref.read(configProvider)); // Update local store
+          ref.read(workoutProvider.notifier).state = Workout(); // Clear the workoutprovider
+          Navigator.pop(context); // Pop the modal modal
         },
-        child: Text(
+        child: const Text(
           'Save Workout',
           style: TextStyle(color: Colors.black),
         ),

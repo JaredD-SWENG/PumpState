@@ -1,8 +1,5 @@
-import 'dart:convert';
-
+/// Abstract class that is either a Exercise or Break
 abstract class Activity {
-  String _id = "";
-
   String getId();
 
   String getName();

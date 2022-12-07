@@ -5,6 +5,7 @@ import 'package:pump_state/providers/config-provider.dart';
 import '../classes/completedWorkout.dart';
 import '../styles/styles.dart';
 
+/// Displays a analytics component of the workouts completed this week
 class ThisWeekWorkoutsCompleted extends ConsumerWidget {
   const ThisWeekWorkoutsCompleted({Key? key}) : super(key: key);
 
