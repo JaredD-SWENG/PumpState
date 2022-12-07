@@ -48,17 +48,44 @@ class NewWorkoutScreen extends ConsumerWidget {
           ),
           body: Column(
             children: <Widget>[
-              TextFormField(
-                ///Interactive Text Input Field, Updates the name of the Workout Object.
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(12),
-                ],
-                onChanged: (s) {
-                  Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
-                      ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
-                  w.setName(s);
-                  ref.read(workoutProvider.notifier).state = w;
-                },
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                width: MediaQuery.of(context).size.width * .5,
+                decoration: BoxDecoration(
+                  color: beaverBlue(),
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    )
+                  ],
+                ),
+                child: TextFormField(
+                  ///Interactive Text Input Field, Updates the name of the Workout Object.
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(12),
+                  ],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: whiteOut()),
+                  cursorColor: creek(),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Workout Name',
+                    hintStyle: TextStyle(
+                      color: limestone(),
+                    ),
+                  ),
+                  onChanged: (s) {
+                    Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
+                        ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
+                    w.setName(s);
+                    ref.read(workoutProvider.notifier).state = w;
+                  },
+                ),
               ),
               Expanded(flex: 2, child: initDropDown),
               Expanded(flex: 1, child: BreakButtons()),

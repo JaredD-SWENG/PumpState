@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump_state/providers/play-workout-provider.dart';
+import 'package:pump_state/providers/workout-provider.dart';
 import 'package:pump_state/styles/styles.dart';
 import 'package:pump_state/widgets/begin-workout-button.dart';
 import 'package:pump_state/widgets/workouts-list.dart';
 
+import '../classes/workout.dart';
 import '../providers/config-provider.dart';
 
 /// Wrapper for the PlayWorkoutSequenceScreen widget,
@@ -24,14 +27,18 @@ class PlayScreen extends ConsumerWidget {
       );
     } else {
       return Container(
-          decoration: BoxDecoration(gradient: backgroundGradient()),
-          child: Scrollbar(
-              child: ListView(children: [
-            WorkoutsList(
-              changeScreen: changeScreen,
-            ),
-            BeginWorkoutButton(),
-          ])));
+        decoration: BoxDecoration(gradient: backgroundGradient()),
+        child: Scrollbar(
+          child: ListView(
+            children: [
+              WorkoutsList(
+                changeScreen: changeScreen,
+              ),
+              if (ref.watch(playWorkoutProvider).getSizeOfActivityList() != 0) BeginWorkoutButton(),
+            ],
+          ),
+        ),
+      );
     }
   }
 }

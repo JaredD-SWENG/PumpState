@@ -9,7 +9,7 @@ import 'package:pump_state/styles/global-theme.dart';
 import 'classes/file-io.dart';
 
 void main() {
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
@@ -17,14 +17,26 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    FileIO.initConfig(ref);
-
+    try {
+      FileIO.initConfig(ref);
+    } catch (e) {
+      return MaterialApp(
+        home: Scaffold(
+          body: Container(
+            child: AlertDialog(
+              title: Text("App failed to load"),
+              content: Text('Data is corrupted. Please uninstall and reinstall the application. Error: $e'),
+            ),
+          ),
+        ),
+      );
+    }
     return MaterialApp(
-        home: MainScreen(),
+        home: const MainScreen(),
         routes: {
-          '/new-exercise': (context) => NewExerciseScreen(),
+          '/new-exercise': (context) => const NewExerciseScreen(),
           '/new-workout': (context) => NewWorkoutScreen(),
-          '/play-workout': (context) => PlayWorkoutSequenceScreen(),
+          '/play-workout': (context) => const PlayWorkoutSequenceScreen(),
         },
         theme: globalTheme());
   }

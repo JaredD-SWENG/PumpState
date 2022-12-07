@@ -56,7 +56,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
     activityCount = ref.read(playWorkoutProvider).getSizeOfActivityList() - 1; // Sets the number of activities in the workout
     currentActivity = ref.read(playWorkoutProvider).getActivityList()[0]; // Sets the current activity to the first in the list
     currentSetCount = 1; // Initializes current set count to 1
-    // If the current activity is an exericse, move to the exercise screen, else move to the pause screen
+    // If the current activity is an exercise, move to the exercise screen, else move to the pause screen
     if (currentActivity is Exercise) {
       Exercise e = currentActivity as Exercise;
       setsInExercise = e.getSets();
