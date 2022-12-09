@@ -49,6 +49,7 @@ class NewWorkoutActivityList extends ConsumerWidget {
       child: SizedBox(
         height: 500,
         child: RawScrollbar(
+
           thumbVisibility: true,
           thickness: 1.25,
           mainAxisMargin: 5,

@@ -38,7 +38,7 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
               child: FittedBox(
                 fit: BoxFit.contain,
                 child:Text(
-                  "PumpPoints earned this week:",
+                  "This Week's PumpPoints",
                   style: Theme.of(context).textTheme.headline5,
                   textAlign: TextAlign.left,
                 )
