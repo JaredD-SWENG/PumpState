@@ -46,4 +46,14 @@ class ScheduledWorkout {
       return false;
     }
   }
+
+  String getFormattedDate() {
+    String temp = "";
+    temp += scheduledDate.month.toString();
+    temp += "/";
+    temp += scheduledDate.day.toString();
+    temp += "/";
+    temp += scheduledDate.year.toString();
+    return temp;
+  }
 }

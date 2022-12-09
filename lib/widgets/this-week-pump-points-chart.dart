@@ -31,29 +31,37 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
       ),
       child: Column(
         children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "PumpPoints",
-              style: Theme.of(context).textTheme.headline5,
-              textAlign: TextAlign.left,
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              ref.read(configProvider).archive.getPumpPointsThisWeek().toString(),
-              style: TextStyle(color: creek(), fontSize: 40),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "This Week",
-              style: Theme.of(context).textTheme.headline6,
+          Expanded(
+            flex: 1,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "PumpPoints",
+                style: Theme.of(context).textTheme.headline5,
+                textAlign: TextAlign.left,
+              ),
             ),
           ),
           Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  ref.read(configProvider).archive.getPumpPointsThisWeek().toString(),
+                  style: TextStyle(color: creek(), fontSize: 40),
+                ),
+              )),
+          Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "This Week",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              )),
+          Expanded(
+            flex: 2,
             child: Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
               child: BarChart(

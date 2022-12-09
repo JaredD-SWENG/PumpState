@@ -53,6 +53,17 @@ class Workout {
     return map;
   }
 
+  bool isFullOfBreaks() {
+    for (Activity a in _activities) {
+      if (a is Exercise) return false;
+    }
+    return true;
+  }
+
+  bool activityListIsEmpty() {
+    return _activities.isEmpty;
+  }
+
   /// Returns the Id of this workout
   getID() {
     return _id;

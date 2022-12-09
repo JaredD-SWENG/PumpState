@@ -34,6 +34,10 @@ class Scheduler {
     return _scheduledWorkout;
   }
 
+  getDateMDY() {
+    return _scheduledWorkout.first;
+  }
+
   /// Returns the next scheduled workout
   /// Operates as a min function
   ScheduledWorkout nextScheduledWorkout() {

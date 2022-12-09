@@ -41,7 +41,9 @@ class NewWorkoutScreen extends ConsumerWidget {
             leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios_new),
               onPressed: () {
-                ref.read(workoutProvider.notifier).state = Workout();
+                ref
+                    .read(workoutProvider.notifier)
+                    .state = Workout();
                 Navigator.of(context).pop();
               },
             ),
@@ -50,7 +52,10 @@ class NewWorkoutScreen extends ConsumerWidget {
             children: <Widget>[
               Container(
                 margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                width: MediaQuery.of(context).size.width * .5,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * .5,
                 decoration: BoxDecoration(
                   color: beaverBlue(),
                   shape: BoxShape.rectangle,
@@ -65,6 +70,7 @@ class NewWorkoutScreen extends ConsumerWidget {
                   ],
                 ),
                 child: TextFormField(
+
                   ///Interactive Text Input Field, Updates the name of the Workout Object.
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(12),
@@ -83,14 +89,22 @@ class NewWorkoutScreen extends ConsumerWidget {
                     Workout w = Workout.createNew(ref.read(workoutProvider).getID(), ref.read(workoutProvider).getName(),
                         ref.read(workoutProvider).getActivityList(), ref.read(workoutProvider).getFavorite());
                     w.setName(s);
-                    ref.read(workoutProvider.notifier).state = w;
+                    ref
+                        .read(workoutProvider.notifier)
+                        .state = w;
                   },
                 ),
               ),
               Expanded(flex: 2, child: initDropDown),
               Expanded(flex: 1, child: BreakButtons()),
               Expanded(flex: 12, child: NewWorkoutActivityList()),
-              Expanded(flex: 1, child: SaveWorkoutButton())
+              Expanded(
+                  flex: 1,
+                  child: SaveWorkoutButton(
+                    name: ref.watch(workoutProvider).getName(),
+                    activityCount: ref.watch(workoutProvider).getSizeOfActivityList(),
+                    fullOfBreaks: ref.watch(workoutProvider).isFullOfBreaks(),
+                  ))
             ],
           )),
     );

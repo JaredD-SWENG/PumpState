@@ -31,30 +31,36 @@ class ThisWeekWorkoutsCompleted extends ConsumerWidget {
       ),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Workouts Completed",
-              style: Theme.of(context).textTheme.headline5,
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              '${lcw.length}',
-              style: TextStyle(
-                color: creek(),
-                fontSize: 60,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "This Week",
-              style: Theme.of(context).textTheme.headline6,
-            ),
-          ),
+          Expanded(
+              flex: 2,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Workouts Completed",
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+              )),
+          Expanded(
+              flex: 2,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '${lcw.length}',
+                  style: TextStyle(
+                    color: creek(),
+                    fontSize: 60,
+                  ),
+                ),
+              )),
+          Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "This Week",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              )),
         ],
       ),
     );

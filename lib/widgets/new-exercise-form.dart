@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump_state/providers/config-provider.dart';
 import 'package:pump_state/styles/styles.dart';
+import 'package:pump_state/widgets/error-card.dart';
 import '../classes/config.dart';
 import '../classes/exercise.dart';
 import '../classes/file-io.dart';
@@ -72,11 +73,19 @@ class ExerciseFormState extends ConsumerState<NewExerciseForm> {
     ///saveExercise Adds a new Exercise to the configPRovider passing in the currently configured paramaters in, name, sets, reps, name, and favorite.
     ///After adding to configProvider, it calls the FileIO Object to write the new data to file.
     void saveExercise() {
-      Config c = Config.newState(ref.read(configProvider).library, ref.read(configProvider).archive, ref.read(configProvider).scheduler);
-      Exercise e = Exercise.createNew(_name, _sets, _reps, _favorite);
-      c.library.addActivity(e);
-      ref.read(configProvider.notifier).state = c;
-      FileIO.writeConfig(ref.read(configProvider));
+      if (_name.isEmpty) {
+        throw Exception('Name cannot be blank.');
+      } else if (_sets == 0) {
+        throw Exception('Sets must be a non-zero number.');
+      } else if (_reps == 0) {
+        throw Exception('Reps must be a non-zero number.');
+      } else {
+        Config c = Config.newState(ref.read(configProvider).library, ref.read(configProvider).archive, ref.read(configProvider).scheduler);
+        Exercise e = Exercise.createNew(_name, _sets, _reps, _favorite);
+        c.library.addActivity(e);
+        ref.read(configProvider.notifier).state = c;
+        FileIO.writeConfig(ref.read(configProvider));
+      }
     }
 
     ///exerciseName is a TextFormField Widget that alters the name parameter to match the string stored in the widget.
@@ -131,11 +140,32 @@ class ExerciseFormState extends ConsumerState<NewExerciseForm> {
     ///favoriteToggle is a Switch widget that, when pressed, calls the toggleFavorite function.
     Widget favoriteToggle = Switch(value: _favorite, onChanged: toggleFavorite);
 
-    ///saveButton is a button widgte that, when pressed, calls the saveExercise function.
+    void changeScreen(int i) {
+      if (i == 0) {
+        Navigator.pop(context);
+      }
+    }
+
+    ///saveButton is a button widget that, when pressed, calls the saveExercise function.
     Widget saveButton = ElevatedButton(
         onPressed: () {
-          saveExercise();
-          Navigator.pop(context);
+          try {
+            saveExercise();
+            Navigator.pop(context);
+          } catch (e) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorCard(
+                    changeScreen: changeScreen,
+                    title: 'Warning',
+                    body: e.toString(),
+                    screenNumber: 0,
+                    buttonText: 'Go Back',
+                    closeOnButtonPress: false);
+              },
+            );
+          }
         },
         child: const Text("Save"));
 

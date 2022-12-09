@@ -24,9 +24,7 @@ class EditExerciseForm extends ConsumerWidget {
     ///incrementSets increments the total sets, then updates the exerciseProvider.
     void incrementSets() {
       Exercise e = Exercise.updateState(_id, _name, ++_sets, _reps, _favorite);
-      ref
-          .read(exerciseProvider.notifier)
-          .state = e;
+      ref.read(exerciseProvider.notifier).state = e;
     }
 
     ///decrementSets decrements the total sets, then updates the exerciseProvider.
@@ -36,17 +34,13 @@ class EditExerciseForm extends ConsumerWidget {
       ///if sets is 0, return.
 
       Exercise e = Exercise.updateState(_id, _name, --_sets, _reps, _favorite);
-      ref
-          .read(exerciseProvider.notifier)
-          .state = e;
+      ref.read(exerciseProvider.notifier).state = e;
     }
 
     ///incrementReps increments the total reps, then updates the exerciseProvider.
     void incrementReps() {
       Exercise e = Exercise.updateState(_id, _name, _sets, ++_reps, _favorite);
-      ref
-          .read(exerciseProvider.notifier)
-          .state = e;
+      ref.read(exerciseProvider.notifier).state = e;
     }
 
     ///decrementReps decrements the total reps, then updates the exerciseProvider.
@@ -56,57 +50,43 @@ class EditExerciseForm extends ConsumerWidget {
       ///if reps is 0, return.
 
       Exercise e = Exercise.updateState(_id, _name, _sets, --_reps, _favorite);
-      ref
-          .watch(exerciseProvider.notifier)
-          .state = e;
+      ref.watch(exerciseProvider.notifier).state = e;
     }
 
     ///toggleFavorite switches the favorite parameter from true to false, or from false to true, then updates the exerciseProvider.
     void toggleFavorite(bool b) {
       Exercise e = Exercise.updateState(_id, _name, _sets, _reps, b);
-      ref
-          .watch(exerciseProvider.notifier)
-          .state = e;
+      ref.watch(exerciseProvider.notifier).state = e;
     }
 
     ///setName function sets the name of the exercise, then updates the exerciseProvider.
     void setName(String s) {
       _name = s;
       Exercise e = Exercise.updateState(_id, _name, _sets, _reps, _favorite);
-      ref
-          .watch(exerciseProvider.notifier)
-          .state = e;
+      ref.watch(exerciseProvider.notifier).state = e;
     }
 
     ///saveExercise, saves the exercise, by updating the configProvider to contain the newly configured exercise.
     ///Then, it writes the new data to file using the FileIO object.
     saveExercise() {
-      Config c = Config.newState(ref
-          .read(configProvider.notifier)
-          .state
-          .getLibrary(), ref
-          .read(configProvider.notifier)
-          .state
-          .getArchive(),
-          ref
-              .read(configProvider.notifier)
-              .state
-              .getScheduler());
-      Exercise exercise = c.findActivity(ref
-          .read(exerciseProvider.notifier)
-          .state
-          .getId()) as Exercise;
-      exercise.setName(_name);
-      exercise.setSets(_sets);
-      exercise.setReps(_reps);
-      exercise.setFavorite(_favorite);
-      ref
-          .read(configProvider.notifier)
-          .state = c;
-      ref
-          .read(exerciseProvider.notifier)
-          .state = exercise;
-      FileIO.writeConfig(ref.read(configProvider));
+      if (_name.isEmpty) {
+        throw Exception('Name cannot be blank.');
+      } else if (_sets == 0) {
+        throw Exception('Sets must be a non-zero number.');
+      } else if (_reps == 0) {
+        throw Exception('Reps must be a non-zero number.');
+      } else {
+        Config c = Config.newState(ref.read(configProvider.notifier).state.getLibrary(), ref.read(configProvider.notifier).state.getArchive(),
+            ref.read(configProvider.notifier).state.getScheduler());
+        Exercise exercise = c.findActivity(ref.read(exerciseProvider.notifier).state.getId()) as Exercise;
+        exercise.setName(_name);
+        exercise.setSets(_sets);
+        exercise.setReps(_reps);
+        exercise.setFavorite(_favorite);
+        ref.read(configProvider.notifier).state = c;
+        ref.read(exerciseProvider.notifier).state = exercise;
+        FileIO.writeConfig(ref.read(configProvider));
+      }
     }
 
     ///addRep is a Button Widget, that when pressed calls the incrementReps function.
@@ -188,17 +168,11 @@ class EditExerciseForm extends ConsumerWidget {
     ///The Container returned here is a culmination of all thw widget's custom made in this file put together.
     return Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: slate()),
-        height: MediaQuery
-            .of(context)
-            .size
-            .height * 0.33,
+        height: MediaQuery.of(context).size.height * 0.33,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
           Row(children: [
             Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * .5,
+                width: MediaQuery.of(context).size.width * .5,
                 decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -212,17 +186,11 @@ class EditExerciseForm extends ConsumerWidget {
                 child: Card(
                     color: beaverBlue(),
                     child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                      Text('Name', style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline5),
+                      Text('Name', style: Theme.of(context).textTheme.headline5),
                       exerciseName,
                     ]))),
             Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * .5,
+                width: MediaQuery.of(context).size.width * .5,
                 decoration: const BoxDecoration(boxShadow: [
                   BoxShadow(
                     color: Colors.black26,
@@ -235,19 +203,13 @@ class EditExerciseForm extends ConsumerWidget {
                     color: beaverBlue(),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [Text('Favorite', style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline5), favoriteToggle],
+                      children: [Text('Favorite', style: Theme.of(context).textTheme.headline5), favoriteToggle],
                     ))),
           ]),
           Row(
             children: [
               Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * .5,
+                  width: MediaQuery.of(context).size.width * .5,
                   decoration: const BoxDecoration(boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
@@ -261,10 +223,7 @@ class EditExerciseForm extends ConsumerWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text('Sets', style: Theme
-                              .of(context)
-                              .textTheme
-                              .headline5),
+                          Text('Sets', style: Theme.of(context).textTheme.headline5),
                           setDisplay,
                           Row(
                             mainAxisSize: MainAxisSize.min,
@@ -274,10 +233,7 @@ class EditExerciseForm extends ConsumerWidget {
                         ],
                       ))),
               Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * .5,
+                  width: MediaQuery.of(context).size.width * .5,
                   decoration: const BoxDecoration(boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
@@ -291,10 +247,7 @@ class EditExerciseForm extends ConsumerWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text('Reps', style: Theme
-                              .of(context)
-                              .textTheme
-                              .headline5),
+                          Text('Reps', style: Theme.of(context).textTheme.headline5),
                           repsDisplay,
                           Row(
                             mainAxisSize: MainAxisSize.min,
