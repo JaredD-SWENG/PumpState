@@ -48,7 +48,7 @@ class ThisWeekWorkoutsCompleted extends ConsumerWidget {
                   '${lcw.length}',
                   style: TextStyle(
                     color: creek(),
-                    fontSize: 60,
+                    fontSize: 50,
                   ),
                 ),
               )),

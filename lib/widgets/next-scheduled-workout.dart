@@ -34,7 +34,7 @@ class NextScheduledWorkout extends ConsumerWidget {
                   fit: BoxFit.contain,
                   child: Text(
                     'None',
-                    style: TextStyle(color: creek()),
+                    style: TextStyle(color: creek(), fontSize: 60),
                   ),
                 ),
               ),
