@@ -181,17 +181,23 @@ class _SchedulerWorkoutFormState extends ConsumerState<ScheduleWorkoutForm> {
                                 height: MediaQuery.of(context).size.height * .085,
                                 child: Card(
                                   color: limestone(),
-                                  child: ListTile(
-                                    title: Text(
-                                      '${sw.scheduledWorkout.getName()}',
-                                      style: Theme.of(context).textTheme.headline6,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    subtitle: Text(
-                                      '${sw.scheduledDate.hour % 12}:${sw.scheduledDate.minute}',
-                                      style: TextStyle(color: whiteOut()),
-                                      textAlign: TextAlign.center,
-                                    ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                          child: Text(
+                                        '${sw.scheduledDate.hour % 12}:${sw.scheduledDate.minute}',
+                                        style: Theme.of(context).textTheme.headline6,
+                                        textAlign: TextAlign.center,
+                                      )),
+                                      Expanded(
+                                        flex: 2,
+                                          child: Text(
+                                            '${sw.scheduledWorkout.getName()}',
+                                            style: Theme.of(context).textTheme.headline6,
+                                            textAlign: TextAlign.center,
+                                          ))
+                                    ],
                                   ),
                                 ),
                               ),

@@ -121,7 +121,7 @@ class EditWorkoutForm extends ConsumerWidget {
             ///Calls for the BreakButtons Widget.
           ),
           Expanded(
-            flex: 3,
+            flex: 2,
             child: NewWorkoutActivityList(),
 
             ///Calls for the NewWorkoutActivityList Widget.

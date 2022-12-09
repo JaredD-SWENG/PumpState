@@ -90,6 +90,7 @@ class ExerciseFormState extends ConsumerState<NewExerciseForm> {
 
     ///exerciseName is a TextFormField Widget that alters the name parameter to match the string stored in the widget.
     Widget exerciseName = TextFormField(
+
       decoration: const InputDecoration(
         hintText: "Exercise name",
       ),

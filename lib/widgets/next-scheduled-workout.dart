@@ -21,9 +21,12 @@ class NextScheduledWorkout extends ConsumerWidget {
               flex: 2,
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
                   "Next Scheduled Workout",
                   style: Theme.of(context).textTheme.headline5,
+                )
                 ),
               ),
             ),
