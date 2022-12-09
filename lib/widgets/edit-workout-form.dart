@@ -80,7 +80,8 @@ class EditWorkoutForm extends ConsumerWidget {
                         style: TextStyle(color: whiteOut()),
                         onChanged: (s) {
                           ///When the user alters the textformfield, it changes the workout name, and updates the provider.
-                          Workout w = Workout.createNew(_id, _name, _activities, _favorite);
+                          Workout w = Workout.createNew(
+                              _id, _name, _activities, _favorite);
                           w.setName(s);
                           ref.read(workoutProvider.notifier).state = w;
                         },
@@ -105,7 +106,11 @@ class EditWorkoutForm extends ConsumerWidget {
                     color: beaverBlue(),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [Text('Favorite', style: Theme.of(context).textTheme.headline5), favoriteToggle],
+                      children: [
+                        Text('Favorite',
+                            style: Theme.of(context).textTheme.headline5),
+                        favoriteToggle
+                      ],
                     )),
               ),
             ],
