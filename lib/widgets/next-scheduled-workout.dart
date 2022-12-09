@@ -18,14 +18,15 @@ class NextScheduledWorkout extends ConsumerWidget {
         return Column(
           children: [
             Expanded(
-                flex: 2,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Next Scheduled Workout",
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                )),
+              flex: 2,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Next Scheduled Workout",
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+              ),
+            ),
             Expanded(
               flex: 2,
               child: Align(
@@ -50,9 +51,12 @@ class NextScheduledWorkout extends ConsumerWidget {
                 flex: 2,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Next Scheduled Workout",
-                    style: Theme.of(context).textTheme.headline5,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      "Next Scheduled Workout",
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
                   ),
                 )),
             Expanded(

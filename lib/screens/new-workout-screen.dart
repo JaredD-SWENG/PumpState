@@ -96,7 +96,7 @@ class NewWorkoutScreen extends ConsumerWidget {
                 ),
               ),
               Expanded(flex: 2, child: initDropDown),
-              Expanded(flex: 1, child: BreakButtons()),
+              Expanded(flex: 2, child: BreakButtons()),
               Expanded(flex: 12, child: NewWorkoutActivityList()),
               Expanded(
                   flex: 1,
