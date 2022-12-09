@@ -32,13 +32,15 @@ class ThisWeekWorkoutsCompleted extends ConsumerWidget {
       child: Column(
         children: [
           Expanded(
-              flex: 2,
+              flex: 1,
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Text(
                   "Workouts Completed",
                   style: Theme.of(context).textTheme.headline5,
-                ),
+                ),),
               )),
           Expanded(
               flex: 2,

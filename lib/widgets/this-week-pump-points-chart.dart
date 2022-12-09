@@ -43,7 +43,7 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
             ),
           ),
           Expanded(
-              flex: 1,
+              flex: 2,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -61,7 +61,7 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
                 ),
               )),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
               child: BarChart(

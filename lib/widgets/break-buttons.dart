@@ -17,10 +17,10 @@ class BreakButtons extends ConsumerWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            const Text(
-              '30',
-              style: TextStyle(color: Colors.white),
-            ),
+             const  Text(
+               '30',
+               style: TextStyle(color: Colors.white),
+             ),
             Transform.scale(
               scale: 1.25,
               child: IconButton(
