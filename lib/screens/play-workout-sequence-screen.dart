@@ -95,7 +95,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
         screens[0] = PlayExercise(
           a: currentActivity,
           setNumber: currentSetCount,
-          setCountInExercise: setsInExercise,
+          setCountInExercise: e.getSets(),
           setReps: setReps,
         );
         screenIndex = 1;
@@ -111,7 +111,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
             screens[0] = PlayExercise(
               a: currentActivity,
               setNumber: currentSetCount,
-              setCountInExercise: e.getSets(),
+              setCountInExercise: nextActivity.getSets(),
               setReps: setReps,
             );
             screenIndex = 0;
@@ -153,7 +153,7 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
           screens[0] = PlayExercise(
             a: currentActivity,
             setNumber: currentSetCount,
-            setCountInExercise: setsInExercise,
+            setCountInExercise: nextActivity.getSets(),
             setReps: setReps,
           );
           screenIndex = 0;
@@ -197,27 +197,30 @@ class _PlayWorkoutSequenceScreenState extends ConsumerState<PlayWorkoutSequenceS
         automaticallyImplyLeading: false,
       ),
       body: Container(
-          decoration: BoxDecoration(gradient: backgroundGradient()),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: screens[screenIndex],
+        decoration: BoxDecoration(gradient: backgroundGradient()),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: screens[screenIndex],
+            ),
+            if (screenIndex == 0)
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                  onPressed: () {
+                    addPumpPoints();
+                    handleContinue();
+                    if (currentActivityIndex < activityCount) {
+                      actualReps = 0;
+                    }
+                  },
+                  icon: const Icon(Icons.arrow_circle_right),
+                ),
               ),
-              if (screenIndex == 0)
-                Expanded(
-                    flex: 1,
-                    child: IconButton(
-                        onPressed: () {
-                          addPumpPoints();
-                          handleContinue();
-                          if (currentActivityIndex < activityCount) {
-                            actualReps = 0;
-                          }
-                        },
-                        icon: const Icon(Icons.arrow_circle_right)))
-            ],
-          )),
+          ],
+        ),
+      ),
     );
   }
 }
