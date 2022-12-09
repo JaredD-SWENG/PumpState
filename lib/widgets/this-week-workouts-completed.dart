@@ -14,7 +14,7 @@ class ThisWeekWorkoutsCompleted extends ConsumerWidget {
     List<CompletedWorkout> lcw = ref.read(configProvider).archive.thisWeeksCompletedWorkouts();
 
     return Container(
-      width: MediaQuery.of(context).size.width * 0.50,
+      width: MediaQuery.of(context).size.width * 0.75,
       height: MediaQuery.of(context).size.height * .19,
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
       decoration: BoxDecoration(

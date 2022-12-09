@@ -14,7 +14,7 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
     List<int> pumpPointsArr = ref.read(configProvider).archive.getPumpPointsThisWeekArr();
 
     return Container(
-      width: MediaQuery.of(context).size.width * 0.50,
+      width: MediaQuery.of(context).size.width * 0.75,
       height: MediaQuery.of(context).size.height * .25,
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
       decoration: BoxDecoration(
@@ -35,10 +35,13 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
             flex: 1,
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                "PumpPoints",
-                style: Theme.of(context).textTheme.headline5,
-                textAlign: TextAlign.left,
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child:Text(
+                  "PumpPoints earned this week:",
+                  style: Theme.of(context).textTheme.headline5,
+                  textAlign: TextAlign.left,
+                )
               ),
             ),
           ),
@@ -51,15 +54,15 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
                   style: TextStyle(color: creek(), fontSize: 40),
                 ),
               )),
-          Expanded(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "This Week",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              )),
+          //Expanded(
+              //flex: 1,
+              //child: Align(
+                //alignment: Alignment.centerLeft,
+               //child: Text(
+                  //"This Week",
+                 // style: Theme.of(context).textTheme.headline6,
+               // ),
+             // )),
           Expanded(
             flex: 3,
             child: Container(
