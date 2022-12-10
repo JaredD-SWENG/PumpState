@@ -168,95 +168,105 @@ class EditExerciseForm extends ConsumerWidget {
     ///The Container returned here is a culmination of all thw widget's custom made in this file put together.
     return Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: slate()),
-        height: MediaQuery.of(context).size.height * 0.4,
+        height: MediaQuery.of(context).size.height * 0.45,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Row(children: [
-            Container(
-                width: MediaQuery.of(context).size.width * .5,
-                decoration: const BoxDecoration(
-                  boxShadow: [
+          Expanded(
+            child:
+            Row(
+                children: [
+              Container(
+                  width: MediaQuery.of(context).size.width * .5,
+                  decoration: const BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      )
+                    ],
+                  ),
+                  child: Card(
+                      color: beaverBlue(),
+                      child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                        Text('Name', style: Theme.of(context).textTheme.headline5),
+                        exerciseName,
+                      ]))),
+              Container(
+                  width: MediaQuery.of(context).size.width * .5,
+                  decoration: const BoxDecoration(boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
                       spreadRadius: 1,
                       blurRadius: 5,
                       offset: Offset(0, 3),
                     )
-                  ],
+                  ]),
+                  child: Card(
+                      color: beaverBlue(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [Text('Favorite', style: Theme.of(context).textTheme.headline5), favoriteToggle],
+                      ))),
+            ]),
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * .5,
+                      decoration: const BoxDecoration(boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        )
+                      ]),
+                      child: Card(
+                          color: beaverBlue(),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text('Sets', style: Theme.of(context).textTheme.headline5),
+                              setDisplay,
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [addSet, removeSet],
+                              )
+                            ],
+                          ))),
                 ),
-                child: Card(
-                    color: beaverBlue(),
-                    child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                      Text('Name', style: Theme.of(context).textTheme.headline5),
-                      exerciseName,
-                    ]))),
-            Container(
-                width: MediaQuery.of(context).size.width * .5,
-                decoration: const BoxDecoration(boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  )
-                ]),
-                child: Card(
-                    color: beaverBlue(),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [Text('Favorite', style: Theme.of(context).textTheme.headline5), favoriteToggle],
-                    ))),
-          ]),
-          Row(
-            children: [
-              Container(
-                  width: MediaQuery.of(context).size.width * .5,
-                  decoration: const BoxDecoration(boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
-                    )
-                  ]),
-                  child: Card(
-                      color: beaverBlue(),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text('Sets', style: Theme.of(context).textTheme.headline5),
-                          setDisplay,
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
+                Expanded(
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * .5,
+                      decoration: const BoxDecoration(boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        )
+                      ]),
+                      child: Card(
+                          color: beaverBlue(),
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [addSet, removeSet],
-                          )
-                        ],
-                      ))),
-              Container(
-                  width: MediaQuery.of(context).size.width * .5,
-                  decoration: const BoxDecoration(boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
-                    )
-                  ]),
-                  child: Card(
-                      color: beaverBlue(),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text('Reps', style: Theme.of(context).textTheme.headline5),
-                          repsDisplay,
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [addRep, removeRep],
-                          )
-                        ],
-                      ))),
-            ],
+                            children: [
+                              Text('Reps', style: Theme.of(context).textTheme.headline5),
+                              repsDisplay,
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [addRep, removeRep],
+                              )
+                            ],
+                          ))),
+                ),
+              ],
+            ),
           ),
           saveButton,
         ]));
