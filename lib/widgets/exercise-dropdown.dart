@@ -84,12 +84,12 @@ class _ExerciseDropdownState extends ConsumerState<ExerciseDropdown> {
                     w.addActivity(newExercise);
                     ref.read(workoutProvider.notifier).state = w;
                   },
-                  child: const Expanded(child: Icon(
+                  child: const Icon(
                     Icons.add,
                     color: Colors.black,
-                  ),)),
+                  ),
             )
-          ],
+            )],
         ),
       ),
     );

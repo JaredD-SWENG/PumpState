@@ -57,7 +57,7 @@ class _SchedulerWorkoutFormState extends ConsumerState<ScheduleWorkoutForm> {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
-        height: MediaQuery.of(context).size.height * .35,
+        height: MediaQuery.of(context).size.height * .4,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           color: slate(),
@@ -80,11 +80,12 @@ class _SchedulerWorkoutFormState extends ConsumerState<ScheduleWorkoutForm> {
                           )
                         ],
                       ),
-                      height: MediaQuery.of(context).size.height * .1,
+                      height: MediaQuery.of(context).size.height * .15,
                       width: MediaQuery.of(context).size.width * .5,
                       child: Card(
                         color: beaverBlue(),
                         child: TimePickerSpinner(
+
                           normalTextStyle: TextStyle(color: whiteOut()),
                           highlightedTextStyle: TextStyle(color: whiteOut(), fontWeight: FontWeight.bold),
                           itemHeight: 30,
@@ -99,69 +100,69 @@ class _SchedulerWorkoutFormState extends ConsumerState<ScheduleWorkoutForm> {
                     ),
                   ),
                   Expanded(
-                    flex: 1,
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        canvasColor: creek(),
-                      ),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              spreadRadius: 1,
-                              blurRadius: 5,
-                              offset: Offset(0, 3),
-                            )
-                          ],
-                        ),
-                        height: MediaQuery.of(context).size.height * .1,
-                        child: Card(
-                          color: beaverBlue(),
-                          child: DropdownButton(
-                            isExpanded: true,
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: creek(),
-                            ),
-                            value: selectedWorkout,
-                            items: ref.read(configProvider).library.getWorkouts().map<DropdownMenuItem<Workout>>((Workout w) {
-                              return DropdownMenuItem<Workout>(
-                                  value: w,
-                                  child: Text(
-                                    w.getName(),
-                                    style: TextStyle(
-                                      color: whiteOut(),
+                      child:Column(
+                        children: [
+                           Theme(
+                              data: Theme.of(context).copyWith(
+                                canvasColor: creek(),
+                              ),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      spreadRadius: 1,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 3),
+                                    )
+                                  ],
+                                ),
+                                height: MediaQuery.of(context).size.height * .08,
+                                child: Card(
+                                  color: beaverBlue(),
+                                  child: DropdownButton(
+                                    isExpanded: true,
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
+                                      color: creek(),
                                     ),
-                                  ));
-                            }).toList(),
-                            onChanged: (w) {
-                              setState(() {
-                                selectedWorkout = w!;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                                    value: selectedWorkout,
+                                    items: ref.read(configProvider).library.getWorkouts().map<DropdownMenuItem<Workout>>((Workout w) {
+                                      return DropdownMenuItem<Workout>(
+                                          value: w,
+                                          child: Text(
+                                            w.getName(),
+                                            style: TextStyle(
+                                              color: whiteOut(),
+                                            ),
+                                          ));
+                                    }).toList(),
+                                    onChanged: (w) {
+                                      setState(() {
+                                        selectedWorkout = w!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                           ElevatedButton(
+                                onPressed: () {
+                                  saveScheduledWorkout(context);
+                                },
+                                child: const Text(
+                                  'Schedule Workout',
+                                  style: TextStyle(color: Colors.black),
+                                ))
+                        ],
+                      ) ),
                 ],
-              ),
-              Expanded(
-                flex: 1,
-                child: ElevatedButton(
-                    onPressed: () {
-                      saveScheduledWorkout(context);
-                    },
-                    child: const Text(
-                      'Schedule Workout',
-                      style: TextStyle(color: Colors.black),
-                    )),
               ),
               Expanded(
                 flex: 2,
                 child: Container(
-                  height: MediaQuery.of(context).size.width * .15,
+                  height: MediaQuery.of(context).size.height * .15,
                   width: MediaQuery.of(context).size.width * .65,
                   child: Card(
                     color: beaverBlue(),
