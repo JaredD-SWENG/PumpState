@@ -168,7 +168,7 @@ class EditExerciseForm extends ConsumerWidget {
     ///The Container returned here is a culmination of all thw widget's custom made in this file put together.
     return Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: slate()),
-        height: MediaQuery.of(context).size.height * 0.33,
+        height: MediaQuery.of(context).size.height * 0.4,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
           Row(children: [
             Container(

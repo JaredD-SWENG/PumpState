@@ -54,15 +54,6 @@ class ThisWeekPumpPointsChart extends ConsumerWidget {
                   style: TextStyle(color: creek(), fontSize: 40),
                 ),
               )),
-          //Expanded(
-              //flex: 1,
-              //child: Align(
-                //alignment: Alignment.centerLeft,
-               //child: Text(
-                  //"This Week",
-                 // style: Theme.of(context).textTheme.headline6,
-               // ),
-             // )),
           Expanded(
             flex: 3,
             child: Container(
